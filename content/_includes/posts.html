@@ -1,0 +1,36 @@
+---
+layout: default
+prism: true
+---
+
+{% import "macros/teaser.html" as teaser %}
+
+<div class="container max-w-3xl mt-6 px-6">
+    <div class="pb-5 mb-5 border-b border-indigo-100">
+        <div class="text-center m-auto mb-2">
+            {% if tags %}
+                <div class="inline-block w-10 mr-4 relative top-0.5">
+                    {{ teaser.icon(tags) }}
+                </div>
+            {% endif %}
+            <div  class="inline-block">
+                <h1 class="inline font-bold text-5xl">{{title}}</h1>
+            </div>
+        </div>
+        <p class="text-center text-base leading-6 font-medium text-blue-500">
+            <time> {{ date | readableDate }}
+                by
+                <a>{{ author }}</a>
+
+            </time>
+        </p>
+
+    </div>
+    <article class="prose lg:prose-xl my-4 mx-auto">
+        {% if imagePath %}
+            {% image imagePath, alt, false, "object-cover h-full w-full rounded ring-2 ring-indigo-500" %}
+        {% endif %}
+        {{ content | safe }}
+    </article>
+
+</div>

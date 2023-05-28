@@ -1,0 +1,54 @@
+  <style webc:keep>
+    /* Todo - Start to abstract vars below as sitewide values */
+    .hero-container {
+      --gdwc-padding: 0;
+      --gdwc-shadow: var(--shadow-4);
+    }
+    .home-hero * {
+      all: revert;
+    }
+    .home-hero {
+        margin: var(--size-8) 0 var(--size-6);
+      }
+    .home-hero__image img {
+      height: 100%;
+      max-width: 100%;
+      object-fit: cover;
+    }
+    .home-hero__body {
+      grid-column: span 2 / span 2;
+      padding: var(--size-8);
+      font-family: var(--font-sans);
+      background-color: var(--gdwc-surface-1);
+    }
+    @media (min-width: 640px) {
+      .home-hero {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+  </style>
+<gdwc-container class="hero-container">
+  <div class="home-hero">
+    <div class="home-hero__image">
+      <!-- Todo - convert to image plugin / picture element -->
+      <img src="static/img/about.jpg"/>
+    </div>
+    <div class="home-hero__body">
+      <h2>Congratulations on visting one of the internet's many websites!</h2>
+      <p>
+        This specific one is mine. I use this site to document
+        <a href="/posts/">things I've been thinking about</a>,
+        <a href="/til/">things I've been learning</a>,
+        <a href="/uses">things I use</a>, and
+        <a href="/jams/">things I really like</a>.
+      </p>
+      <p>
+        I'm a front end developer who lives in the Chicago suburbs, I'm a member
+        of the <a href="https://www.drupal.org/community">Drupal community</a>,
+        I often <a href="https://noti.st/brianperry">present at tech events</a>,
+        I have a super awesome family, and I really like Nintendo.
+      </p>
+    </div>
+  </div>
+</gdwc-container>

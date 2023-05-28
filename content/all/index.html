@@ -1,0 +1,65 @@
+---
+layout: blog
+eleventyExcludeFromCollections: 
+    truetags: post
+title: "All Updates"
+pagination:
+    data: collections.all
+    size: 5
+    alias: postslist
+    reverse: true
+---
+
+<section>
+  {% import "../_includes/macros/teaser.html" as teaser %}
+
+  {% for post in postslist %}
+    <article class="my-8 sm:flex">
+      {% if post.data.imagePath %}
+        <div class="flex-1 order-2 sm:pl-6 pb-6 sm:pb-0">
+          {% image post.data.imagePath, post.data.alt, true, "object-cover h-full w-full rounded ring-2 ring-indigo-500" %}
+        </div>
+      {% endif %}
+      <div class="w-9 mr-4 mb-2">
+        {% if post.data.tags %}
+          {{ teaser.icon(post.data.tags) }}
+        {% else %}
+          <svg class="stroke-current text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+        {% endif %}
+      </div>
+      <div class="flex-2">
+        <h2 class="font-bold text-3xl text-gray-900 mb-2">
+          <a href="{{ post.url | url }}">
+            {% if post.data.title %}
+              {{ post.data.title }}
+            {% else %}
+              Untitled
+            {% endif %}
+          </a>
+        </h2>
+        <p class="text-base leading-6 text-gray-500 mb-3">
+          Updated
+          <time>
+              {{ post.date | readableDate }}
+          </time>
+        </p>
+        {% if post.data.description %}
+          <p class="text-lg text-gray-500 mb-3">
+            {{ post.data.description }}
+          </p>
+        {% endif %}
+
+        <p>
+          <a href="{{ post.url | url }}" class="text-indigo-500 font-bold text-lg">
+            Read more →
+          </a>
+        </p>
+      </div>
+
+    </article>
+  {% endfor %}
+  {% set length = collections.all.length %}
+  {% include "../_includes/partials/pagination.html" %}
+</section>

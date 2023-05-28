@@ -13,6 +13,8 @@ const { title } = Astro.props;
 		<meta name="description" content="Astro description">
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="stylesheet" href="https://unpkg.com/open-props"/>
+		<link rel="stylesheet" href="https://unpkg.com/open-props/normalize.min.css"/>	
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
@@ -21,7 +23,8 @@ const { title } = Astro.props;
 	</body>
 </html>
 <style is:global>
-	:root {
+	@import "https://unpkg.com/open-props";
+	/* :root {
 		--accent: 124, 58, 237;
 		--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #da62c4 30%, white 60%);
 	}
@@ -32,5 +35,5 @@ const { title } = Astro.props;
 	code {
 		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
 			Bitstream Vera Sans Mono, Courier New, monospace;
-	}
+	} */
 </style>

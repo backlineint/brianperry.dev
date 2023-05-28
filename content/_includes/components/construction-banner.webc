@@ -1,0 +1,15 @@
+<style webc:keep>
+  gdwc-container.construction-banner {
+    --gdwc-font-family: var(--font-mono);
+    background: var(--gradient-26);
+    --gdwc-shadow: var(--shadow-3);
+    margin-top: var(--size-7);
+    color: white;
+  }
+</style>
+
+<gdwc-container class="construction-banner"
+  >Alert! Alert! I'm -slowly- working on an active redesign. If things look out
+  of place, it may be related to that, or I may just have bad
+  taste.</gdwc-container
+>

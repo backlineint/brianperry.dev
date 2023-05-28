@@ -1,0 +1,14 @@
+---
+items:
+  - text: About
+    url: "/about/"
+  - text: All
+    url: "/all/"
+  - text: Posts
+    url: "/posts/"    
+  - text: TIL
+    url: "/til/"
+  - text: Jams
+    url: "/jams/"
+  - text: Uses
+    url: "/uses/"

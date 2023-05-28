@@ -1,0 +1,14 @@
+---
+links:
+  - title: Bounteous
+    url: "https://bounteous.com"
+    desc: Evolving bounteous.com using Gatsby and Drupal.
+  - title: Component Integration
+    url: "https://github.com/backlineint/component-integration"
+    desc: "'An Overview of Drupal Component Integration Methods' presentation and development sandbox."
+  - title: Holly Hunt
+    url: "https://hollyhunt.com"
+    desc: An updated web presence for the defining voice in modern luxury interiors.
+  - title: brianperry.dev
+    url: "https://brianperry.dev/"
+    desc: This here website. Experimenting with 11ty, Tailwind and Netlify CMS.
