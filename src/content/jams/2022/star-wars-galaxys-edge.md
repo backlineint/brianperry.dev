@@ -3,7 +3,7 @@ title: "Star Wars: Galaxy's Edge"
 description: Being transported to a galaxy far, far away almost made me forget that I was visiting Disney World during a huge Covid surge.
 author: Brian
 date: 2022-01-04T13:48:59.491Z
-imagePath: ./src/jams/2022/edge1.jpg
+imagePath: edge1.jpg
 alt: The Millennium Falcon at Galaxy's Edge
 ---
 
@@ -13,10 +13,10 @@ Over the holiday break I found myself in Walt Disney World for a last chance at 
 
 All of it was amazing, but the somewhat surprising highlight for me was _Millennium Falcon: Smuggler's Run_. I had heard disappointing things about the ride, but it really hit me hard in the nostalgia zone. I was selected to be one of the pilots, so it was like Star Tours except I was in control. And look how faithful the interior of the ride is.
 
-{% image "./src/jams/2022/edge2.jpg", "A hand sanitizer dispenser inside the Millennium Falcon", false, "object-cover h-full w-full rounded ring-2 ring-indigo-500" %}
+![A hand sanitizer dispenser inside the Millennium Falcon](../../assets/edge2.jpg)
 
 The hand sanitizer dispenser kind of gives it away though. Thanks Covid.
 
 _Rise of The Resistance_ was amazing as well, but still had nothing on piloting the Millennium Falcon. Even my _Star Tours_ trip was great this time around (no prequel trilogy nonsense.) Speaking of _Star Tours_, I was even able to catch up with an old friend at the Cantina. I sure wish he was willing to wear a mask though.
 
-{% image "./src/jams/2022/edge3.jpg", "DJ Rex and I at Oga's Cantina", false, "object-cover h-full w-full rounded ring-2 ring-indigo-500" %}
+![DJ Rex and I at Oga's Cantina](../../assets/edge3.jpg)

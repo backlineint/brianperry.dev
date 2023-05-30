@@ -13,10 +13,65 @@ export async function getStaticPaths() {
 // 2. When it's time to render, you can get the entry directly from the prop
 const { entry } = Astro.props;
 const { Content } = await entry.render();
+const imagePath = `/images/${entry.data.imagePath}`;
 ---
 
 <Layout title={entry.data.title}>
-    <h1>{entry.data.title}</h1>
-    <p>Published by {entry.data.author} on: {entry.data.date.toDateString()}</p>
-    <Content />
+    <main>
+      <h1>{entry.data.title}</h1>
+      <img src={imagePath} alt={entry.data.title} />
+      <div class="main-content">
+        <aside>
+          <p>Content aging process began on: {entry.data.date.toDateString()}</p>
+          <h5>{entry.data.description}</h5>
+        </aside>
+        <article>
+          <!-- <h5>{entry.data.description}</h5> -->
+          <Content />
+        </article>
+      </div>
+    </main>
 </Layout>
+<style>
+  main {
+    max-width: var(--size-lg);
+    margin: 0 auto;
+  }
+  h1 {
+    position: relative;
+    left: -100px;
+    background: var(--surface-3);
+    top: 61px;
+    border-radius: var(--radius-2);
+    padding: var(--size-3);
+  }
+  .main-content img {
+    /* Figure out how to get image to go edge to edge */
+    position: relative;
+    left: -49px !important;
+    max-inline-size: 118% !important;
+  }
+  .main-content {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-gap: var(--size-8);
+    position: relative;
+    top: -100px;
+    left: 100px;
+  }
+  aside h5 {
+    position: sticky;
+    top: 1rem;
+  }
+  aside p {
+    border-radius: var(--radius-blob-1);
+    background-color: var(--surface-3);
+    /* max-width: 200px; */
+    padding: 2rem;
+  }
+  article {
+    background-color: var(--surface-2);
+    border-radius: var(--radius-3);
+    padding:var(--size-8);
+  }
+</style>
