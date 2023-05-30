@@ -19,16 +19,17 @@ const imagePath = `/images/${entry.data.imagePath}`;
 <Layout title={entry.data.title}>
     <main>
       <h1>{entry.data.title}</h1>
-      <img src={imagePath} alt={entry.data.title} />
+      <img src={imagePath} alt={entry.data.title} class="hero-image" />
       <div class="main-content">
-        <aside>
-          <p>Content aging process began on: {entry.data.date.toDateString()}</p>
-          <h5>{entry.data.description}</h5>
-        </aside>
         <article>
           <!-- <h5>{entry.data.description}</h5> -->
           <Content />
         </article>
+        <aside>
+          <p>Content aging process began: {entry.data.date.toDateString()}</p>
+          <h5>{entry.data.description}</h5>
+          <!-- Feature: resources -->
+        </aside>
       </div>
     </main>
 </Layout>
@@ -44,6 +45,10 @@ const imagePath = `/images/${entry.data.imagePath}`;
     top: 61px;
     border-radius: var(--radius-2);
     padding: var(--size-3);
+    z-index: 1;
+  }
+  .hero-image {
+    -webkit-mask: var(--mask-edge-zig-zag-right);
   }
   .main-content img {
     /* Figure out how to get image to go edge to edge */
@@ -53,7 +58,7 @@ const imagePath = `/images/${entry.data.imagePath}`;
   }
   .main-content {
     display: grid;
-    grid-template-columns: 1fr 4fr;
+    grid-template-columns: 4fr 1fr;
     grid-gap: var(--size-8);
     position: relative;
     top: -100px;
@@ -65,7 +70,7 @@ const imagePath = `/images/${entry.data.imagePath}`;
   }
   aside p {
     border-radius: var(--radius-blob-1);
-    background-color: var(--surface-3);
+    background-color: var(--surface-2);
     /* max-width: 200px; */
     padding: 2rem;
   }
@@ -73,5 +78,6 @@ const imagePath = `/images/${entry.data.imagePath}`;
     background-color: var(--surface-2);
     border-radius: var(--radius-3);
     padding:var(--size-8);
+    /* -webkit-mask: var(--mask-edge-zig-zag-right); */
   }
 </style>
