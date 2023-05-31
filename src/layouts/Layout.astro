@@ -42,8 +42,13 @@ const { title } = Astro.props;
 	margin-top: 1.5em;
 }
 body {
-  background-image: url("https://slidechef.net/wp-content/uploads/2022/06/Retro-90s-Background.jpg");
-  background-size: contain;
+  /* background-image: url("https://img.freepik.com/free-vector/80-style-background-with-geometric-shapes_23-2148216130.jpg?w=1380&t=st=1685496794~exp=1685497394~hmac=90ed3cf13767bcaf89f3f65c096dcfe20b586b5a40fc50981e9a8714f463b467");
+  background-image: url("https://img.freepik.com/free-vector/geometric-background-80s-style_23-2148242342.jpg?w=1380&t=st=1685496861~exp=1685497461~hmac=d05da0ad2575eed73d1f3a0113fac60c09f5fdab4a26281a6f85bf6243b0a036"); */
+  background-image: url("https://img.freepik.com/free-vector/hand-drawn-nostalgic-90-s-background_23-2149052482.jpg?w=1380&t=st=1685497087~exp=1685497687~hmac=1191d66844e46910160cff1198466f34b25bdd7479752749209ec4f4213f5eaf");
+  @media (prefers-color-scheme: dark) {
+	background-image: url("https://img.freepik.com/free-vector/80s-geometric-background-design-with-retro-style_23-2148236211.jpg?w=1380&t=st=1685497030~exp=1685497630~hmac=bdd3ade6c4f7293457184ff23099b7de452db832ced97ccd874b4f8a61d84a30");
+  }
+  background-size: cover;
   background-attachment: fixed;
 }
 img {
