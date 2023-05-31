@@ -1,0 +1,68 @@
+<header>
+  <div class="header-wrapper">
+    <h3 class="branding">Brian Perry</h3>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/jams/2022/star-wars-galaxys-edge/">Example Post</a>
+    </nav>
+    <div class="toggle">
+      <a href="#">Adjust Radness</a>
+    </div>
+  </div>
+</header>
+
+<style is:global>
+  body {
+    margin-top: 0;
+  }
+  body.rad {
+    background-image: url("/images/rad_light.jpg");
+    @media (prefers-color-scheme: dark) {
+      background-image: url("/images/rad_dark.jpg");
+    }
+    background-size: cover;
+    background-attachment: fixed;
+  }
+
+  header {
+    background-color: var(--surface-2);
+  }
+  .rad header {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: rgba(255, 255, 255, 0.9);
+    @media (prefers-color-scheme: dark) {
+      background-color: rgba(52, 58, 64, 0.9);
+    }
+  }
+  .header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    max-width: var(--size-xl);
+    margin: 0 auto;
+    padding: var(--size-2) var(--size-4);
+  }
+  .branding {
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  nav {
+    margin-top: 0;
+    align-self: center;
+  }
+  .toggle {
+    margin-top: 0;
+    align-self: center;
+  }
+</style>
+
+<script>
+  // Toggle Radness
+  const toggle = document.querySelector('.toggle a');
+  toggle.addEventListener('click', () => {
+    document.body.classList.toggle('rad');
+  });
+</script>
