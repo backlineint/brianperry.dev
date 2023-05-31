@@ -20,33 +20,60 @@ const { title } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body>
-    <nav>
-      <h3>Brian Perry</h3>
-      <a href="/">Home</a>
-      <a href="/about">About</a>
-    </nav>
+    <div class="nav-wrapper">
+      <nav>
+        <div class="branding">
+          <h3>Brian Perry</h3>
+        </div>
+        <div class="menu">
+          <a href="/">Home</a>
+          <a href="/about">About</a>
+        </div>
+      </nav>
+    </div>
 		<slot />
 	</body>
 </html>
 <style is:global>
+  * + * {
+    margin-top: 1.5em;
+  }
+  .nav-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: rgba(255, 255, 255, 0.9);
+    @media (prefers-color-scheme: dark) {
+      background-color: rgba(52, 58, 64, 0.9);
+    }
+    padding: var(--size-2);
+  }
   nav {
+    display: flex;
+    justify-content: space-between;
     max-width: var(--size-xl);
     margin: 0 auto;
   }
+  .branding {
+    display: inline-block;
+  }
   h3 {
+    display: inline-block;
     background: var(--gradient-1);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
-  * + * {
-	margin-top: 1.5em;
-}
+  .menu {
+    margin-top: 0;
+    align-self: center;
+  }
 body {
+  margin-top: 0;
   /* background-image: url("https://img.freepik.com/free-vector/80-style-background-with-geometric-shapes_23-2148216130.jpg?w=1380&t=st=1685496794~exp=1685497394~hmac=90ed3cf13767bcaf89f3f65c096dcfe20b586b5a40fc50981e9a8714f463b467");
   background-image: url("https://img.freepik.com/free-vector/geometric-background-80s-style_23-2148242342.jpg?w=1380&t=st=1685496861~exp=1685497461~hmac=d05da0ad2575eed73d1f3a0113fac60c09f5fdab4a26281a6f85bf6243b0a036"); */
   background-image: url("/images/rad_light.jpg");
   @media (prefers-color-scheme: dark) {
-	background-image: url("/images/rad_dark.jpg");
+	  background-image: url("/images/rad_dark.jpg");
   }
   background-size: cover;
   background-attachment: fixed;
