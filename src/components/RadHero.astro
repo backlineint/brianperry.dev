@@ -1,0 +1,34 @@
+---
+export interface Props {
+	title: string;
+  imgSrc: string;
+  imgAlt: string;
+}
+
+const { title, imgSrc, imgAlt } = Astro.props;
+console.log(imgSrc);
+---
+
+<div class="hero">
+  <h1>{title}</h1>
+  {imgSrc && <img src={imgSrc} alt={imgAlt} />}
+</div>
+
+<style is:global>
+  .hero h1 {
+    display: inline-block;
+    margin-top: var(--size-4);
+  }
+  .rad .hero h1 {
+    position: relative;
+    right: var(--size-8);
+    top: var(--size-4);
+    background: var(--surface-3);
+    border-radius: var(--radius-2);
+    padding: var(--size-3);
+    z-index: 1;
+    transform: rotate(-5deg);
+    box-sizing: content-box;
+    border: 4px dashed var(--purple-6);
+  }
+</style>

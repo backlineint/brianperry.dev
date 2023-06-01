@@ -1,4 +1,6 @@
 ---
+import RadHero from '../components/RadHero.astro';
+
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 
@@ -13,11 +15,16 @@ export async function getStaticPaths() {
 // 2. When it's time to render, you can get the entry directly from the prop
 const { entry } = Astro.props;
 const { Content } = await entry.render();
-const imagePath = `/images/${entry.data.imagePath}`;
+const imagePath = entry.data.imagePath ? `/images/${entry.data.imagePath}` : '';
 ---
 
 <Layout title={entry.data.title}>
     <main>
+      <RadHero
+        title={entry.data.title}
+        imgSrc={imagePath}
+        imgAlt={entry.data.title}
+      />
       <h1>{entry.data.title}</h1>
       <img src={imagePath} alt={entry.data.title} class="hero-image" />
       <div class="main-content">
