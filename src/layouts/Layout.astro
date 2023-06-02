@@ -28,6 +28,9 @@ const { title } = Astro.props;
 </html>
 
 <style is:global>
+  :root {
+    --default-padding: var(--size-4);
+  }
   * + * {
     margin-top: var(--size-5);
   }

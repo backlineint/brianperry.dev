@@ -40,12 +40,18 @@ const imagePath = entry.data.imagePath ? `/images/${entry.data.imagePath}` : '';
       </div>
     </main>
 </Layout>
-<style>
+<style is:global>
   main {
     max-width: var(--size-lg);
     margin: 0 auto;
   }
-  h1 {
+  .rad main {
+    margin: 0 var(--size-8);
+    @media (min-width: 1100px) {
+        margin: 0 auto;
+    }
+  }
+  /* h1 {
     position: relative;
     left: -100px;
     background: var(--surface-3);
@@ -60,7 +66,6 @@ const imagePath = entry.data.imagePath ? `/images/${entry.data.imagePath}` : '';
     -webkit-mask: var(--mask-edge-zig-zag-right);
   }
   .main-content img {
-    /* Figure out how to get image to go edge to edge */
     position: relative;
     left: -49px !important;
     max-inline-size: 118% !important;
@@ -80,13 +85,11 @@ const imagePath = entry.data.imagePath ? `/images/${entry.data.imagePath}` : '';
   aside p {
     border-radius: var(--radius-blob-1);
     background-color: var(--surface-2);
-    /* max-width: 200px; */
     padding: 2rem;
   }
   article {
     background-color: var(--surface-2);
     border-radius: var(--radius-3);
     padding:var(--size-8);
-    /* -webkit-mask: var(--mask-edge-zig-zag-right); */
-  }
+  } */
 </style>
