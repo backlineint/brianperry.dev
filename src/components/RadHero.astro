@@ -17,6 +17,12 @@ const { title, imgSrc, imgAlt } = Astro.props;
   .hero {
     padding: 0 var(--default-padding);
   }
+  .rad .hero {
+    padding: 0;
+    @media (min-width: 768px) {
+      padding: 0 var(--default-padding);
+    }
+  }
 
   .hero h1 {
     display: inline-block;
@@ -24,7 +30,10 @@ const { title, imgSrc, imgAlt } = Astro.props;
   }
   .rad .hero h1 {
     position: relative;
-    right: var(--size-8);
+    right: var(--size-2);
+    @media (min-width: 768px) {
+      right: var(--size-8);
+    }
     top: var(--size-4);
     background: var(--surface-3);
     border-radius: var(--radius-2);

@@ -34,4 +34,10 @@ const { title } = Astro.props;
   * + * {
     margin-top: var(--size-5);
   }
+  h1 {
+	font-size: var(--font-size-4);
+	@media (min-width: 768px) {
+		font-size: var(--font-size-8);
+	}
+  }
 </style>

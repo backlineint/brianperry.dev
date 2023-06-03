@@ -46,7 +46,10 @@ const imagePath = entry.data.imagePath ? `/images/${entry.data.imagePath}` : '';
     margin: 0 auto;
   }
   .rad main {
-    margin: 0 var(--size-8);
+    margin: 0 var(--default-padding);
+    @media (min-width: 768px) {
+      margin: 0 var(--size-8);
+    }
     @media (min-width: 1100px) {
         margin: 0 auto;
     }
