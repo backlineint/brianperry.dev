@@ -25,18 +25,15 @@ const imagePath = entry.data.imagePath ? `/images/${entry.data.imagePath}` : '';
         imgSrc={imagePath}
         imgAlt={entry.data.title}
       />
-      <h1>{entry.data.title}</h1>
-      <img src={imagePath} alt={entry.data.title} class="hero-image" />
       <div class="main-content">
-        <article>
-          <!-- <h5>{entry.data.description}</h5> -->
-          <Content />
-        </article>
         <aside>
           <p>Content aging process began: {entry.data.date.toDateString()}</p>
           <h5>{entry.data.description}</h5>
           <!-- Feature: resources -->
         </aside>
+        <article>
+          <Content />
+        </article>
       </div>
     </main>
 </Layout>
@@ -54,20 +51,25 @@ const imagePath = entry.data.imagePath ? `/images/${entry.data.imagePath}` : '';
         margin: 0 auto;
     }
   }
-  /* h1 {
-    position: relative;
-    left: -100px;
-    background: var(--surface-3);
-    top: 61px;
-    border-radius: var(--radius-2);
-    padding: var(--size-3);
-    z-index: 1;
-    transform: rotate(-5deg);
-    border: 2px dotted var(--purple-6);
+  .main-content {
+    margin: 0 var(--default-padding);
+    @media (min-width: 1024px) {
+      margin: 0 auto;
+      padding: 0 var(--default-padding);
+    }
   }
-  .hero-image {
-    -webkit-mask: var(--mask-edge-zig-zag-right);
+  aside {
+    background-color: var(--surface-2);
+    margin: var(--size-5) calc(var(--default-padding) * -1);
+    padding:var(--default-padding);
   }
+  article {
+    padding-bottom: var(--size-5);
+    /* background-color: var(--surface-2);
+    border-radius: var(--radius-3);
+    padding:var(--default-padding); */
+  }
+  /*
   .main-content img {
     position: relative;
     left: -49px !important;
