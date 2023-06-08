@@ -54,17 +54,31 @@ const imagePath = entry.data.imagePath ? `/images/${entry.data.imagePath}` : '';
   .main-content {
     margin: 0 var(--default-padding);
     @media (min-width: 1024px) {
+      display: grid;
+      grid-template-columns: 5fr 2fr;
       margin: 0 auto;
       padding: 0 var(--default-padding);
     }
   }
   aside {
-    background-color: var(--surface-2);
+    /* Pick up - fix aside layout on tablet */
+    height: fit-content;
     margin: var(--size-5) calc(var(--default-padding) * -1);
     padding:var(--default-padding);
+    background-color: var(--surface-2);
+    @media (min-width: 1024px) {
+      order: 2;
+      margin: var(--size-5) 0;
+    }
   }
   article {
+    width: fit-content;
+    margin: 0 auto;
     padding-bottom: var(--size-5);
+    @media (min-width: 1024px) {
+      order: 1;
+      margin: var(--size-5) 0
+    }
     /* background-color: var(--surface-2);
     border-radius: var(--radius-3);
     padding:var(--default-padding); */
