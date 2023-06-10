@@ -42,9 +42,12 @@ const { title, imgSrc, imgAlt } = Astro.props;
     transform: rotate(-5deg);
     box-sizing: content-box;
     border: 4px dashed var(--purple-6);
+    box-shadow: var(--shadow-5);
   }
 
   .rad .hero img {
+    border: 3px solid var(--yellow-3);
+    border-right: 0;
     -webkit-mask: var(--mask-edge-zig-zag-right);
   }
 </style>

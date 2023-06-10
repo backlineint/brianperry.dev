@@ -61,7 +61,6 @@ const imagePath = entry.data.imagePath ? `/images/${entry.data.imagePath}` : '';
     }
   }
   aside {
-    /* Pick up - fix aside layout on tablet */
     height: fit-content;
     margin: var(--size-5) calc(var(--default-padding) * -1);
     padding:var(--default-padding);
@@ -79,9 +78,20 @@ const imagePath = entry.data.imagePath ? `/images/${entry.data.imagePath}` : '';
       order: 1;
       margin: var(--size-5) 0
     }
-    /* background-color: var(--surface-2);
-    border-radius: var(--radius-3);
-    padding:var(--default-padding); */
+  }
+  .rad article {
+    margin: var(--size-5) calc(var(--default-padding) * -1);
+    padding:var(--default-padding);
+    background-color: var(--surface-2);
+    box-shadow: var(--shadow-5);
+  }
+  .rad article img {
+    border: 4px solid var(--purple-6);
+    transform: rotate(1deg);
+  }
+  .rad aside {
+    background-color: var(--surface-2);
+    box-shadow: var(--shadow-5);
   }
   /*
   .main-content img {
