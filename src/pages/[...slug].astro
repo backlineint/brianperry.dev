@@ -16,6 +16,8 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await entry.render();
 const imagePath = entry.data.imagePath ? `/images/${entry.data.imagePath}` : '';
+
+const mainContentClasses = imagePath ? 'main-content with-image' : 'main-content no-image';
 ---
 
 <Layout title={entry.data.title}>
@@ -25,7 +27,7 @@ const imagePath = entry.data.imagePath ? `/images/${entry.data.imagePath}` : '';
         imgSrc={imagePath}
         imgAlt={entry.data.title}
       />
-      <div class="main-content">
+      <div class={mainContentClasses}>
         <aside>
           <p class="post-date">Content aging process began: {entry.data.date.toDateString()}</p>
           <p class="description">{entry.data.description}</p>
@@ -61,11 +63,17 @@ const imagePath = entry.data.imagePath ? `/images/${entry.data.imagePath}` : '';
       grid-gap: var(--default-padding);
     }
   }
-  .rad .main-content {
+  .rad .main-content.with-image {
     @media (min-width: 1024px) {
       position: relative;
       top: calc(var(--size-9) * -1);
       left: var(--size-7);
+    }
+  }
+  .rad .main-content.no-image {
+    @media (min-width: 1024px) {
+      position: relative;
+      top: var(--size-7);
     }
   }
   article {
