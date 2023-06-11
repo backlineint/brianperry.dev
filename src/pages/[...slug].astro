@@ -27,8 +27,8 @@ const imagePath = entry.data.imagePath ? `/images/${entry.data.imagePath}` : '';
       />
       <div class="main-content">
         <aside>
-          <p>Content aging process began: {entry.data.date.toDateString()}</p>
-          <h5>{entry.data.description}</h5>
+          <p class="post-date">Content aging process began: {entry.data.date.toDateString()}</p>
+          <p class="description">{entry.data.description}</p>
           <!-- Feature: resources -->
         </aside>
         <article>
@@ -58,16 +58,14 @@ const imagePath = entry.data.imagePath ? `/images/${entry.data.imagePath}` : '';
       grid-template-columns: 5fr 2fr;
       margin: 0 auto;
       padding: 0 var(--default-padding);
+      grid-gap: var(--default-padding);
     }
   }
-  aside {
-    height: fit-content;
-    margin: var(--size-5) calc(var(--default-padding) * -1);
-    padding:var(--default-padding);
-    background-color: var(--surface-2);
+  .rad .main-content {
     @media (min-width: 1024px) {
-      order: 2;
-      margin: var(--size-5) 0;
+      position: relative;
+      top: calc(var(--size-9) * -1);
+      left: var(--size-7);
     }
   }
   article {
@@ -84,15 +82,57 @@ const imagePath = entry.data.imagePath ? `/images/${entry.data.imagePath}` : '';
     padding:var(--default-padding);
     background-color: var(--surface-2);
     box-shadow: var(--shadow-5);
+    border: var(--border-size-2) solid var(--cyan-3);
+    @media (min-width: 1024px) {
+      margin: var(--size-5) auto;
+    }
   }
   .rad article img {
-    border: 4px solid var(--purple-6);
+    border: 4px dotted var(--pink-6);
     transform: rotate(1deg);
   }
+  aside {
+    height: fit-content;
+    margin: var(--size-5) calc(var(--default-padding) * -1);
+    padding:var(--default-padding);
+    background-color: var(--surface-2);
+    @media (min-width: 1024px) {
+      order: 2;
+      margin: var(--size-5) 0;
+    }
+  }
   .rad aside {
+    height: unset;
     background-color: var(--surface-2);
     box-shadow: var(--shadow-5);
+    @media (min-width: 1024px) {
+      margin-top: 0;
+      background-color: unset;
+      box-shadow: unset;
+    }
   }
+  .rad aside .post-date {
+    @media (min-width: 1024px) {
+      padding: 2rem;
+      border-radius: var(--radius-blob-1);
+      background-color: var(--surface-2);
+      border: 3px solid var(--purple-6);
+      box-shadow: var(--shadow-5);
+    }
+  }
+  .rad aside .description {
+    @media (min-width: 1024px) {
+      position: sticky;
+      top: 6rem;
+      padding: 2rem;
+      background-color: var(--surface-2);
+      border: 2px solid var(--yellow-3);
+      box-shadow: var(--shadow-5);
+      border-radius: 10px;
+      font-weight: var(--font-weight-6);
+    }
+  }
+  
   /*
   .main-content img {
     position: relative;
