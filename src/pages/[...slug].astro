@@ -63,6 +63,9 @@ const mainContentClasses = imagePath ? 'main-content with-image' : 'main-content
       grid-gap: var(--default-padding);
     }
   }
+  .rad .main-content {
+    padding-bottom: var(--default-padding);
+  }
   .rad .main-content.with-image {
     @media (min-width: 1024px) {
       position: relative;
@@ -113,10 +116,12 @@ const mainContentClasses = imagePath ? 'main-content with-image' : 'main-content
     height: unset;
     background-color: var(--surface-2);
     box-shadow: var(--shadow-5);
+    border: 3px solid var(--purple-6);
     @media (min-width: 1024px) {
       margin-top: 0;
       background-color: unset;
       box-shadow: unset;
+      border: unset;
     }
   }
   .rad aside .post-date {
@@ -140,7 +145,7 @@ const mainContentClasses = imagePath ? 'main-content with-image' : 'main-content
       font-weight: var(--font-weight-6);
     }
   }
-  
+
   /*
   .main-content img {
     position: relative;
