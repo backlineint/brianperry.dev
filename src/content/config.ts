@@ -3,12 +3,12 @@ import { z, defineCollection } from 'astro:content';
 // 2. Define your collection(s)
 const jamsCollection = defineCollection({
     type: 'content', // v2.5.0 and later
-    schema: z.object({
+    schema: ({image}) => z.object({
       title: z.string(),
       description: z.string(),
       author: z.string(),
       date: z.date(),
-      imagePath: z.string().optional(),
+      imagePath: image().optional(),
       alt: z.string().optional(),
     }),
   });

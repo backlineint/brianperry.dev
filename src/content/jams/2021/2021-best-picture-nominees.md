@@ -3,9 +3,10 @@ title: 2021 Best Picture Nominees
 description: I watched all the best picture nominees so you don't have to.
 author: Brian
 date: 2021-04-25T13:46:34.030Z
-imagePath: ./src/jams/2021/metal.jpeg
+imagePath: ./metal.jpeg
 alt: Riz Ahmed at a drum kit
 ---
+
 I've always wanted to watch all of the best picture nominees, but in past years I've never been able to make it through the whole list. Thanks to the pandemic, I was finally able to achieve my goal this year. All of the films were easily streamable, and staying home and watching movies all the time was much more socially acceptable for some reason. Since no one asked, here are some quick thoughts on the films:
 
 ---
@@ -27,10 +28,11 @@ I've always wanted to watch all of the best picture nominees, but in past years 
 **Trial of the Chicago 7** - I get the shit talking about this one a little more than I did Mank. Felt more like a TV movie, but an admittedly entertaining one. And I found Sacha Baron Cohen's accent to be distractingly awful.
 
 Other nominated films I've seen:
-* **Time** - the juxtaposition of modern and archival footage was really haunting, but I ended up a little confused about the message I was supposed to be taking away. Maybe that was the point?
-* **Ma Rainey's Black Bottom** - finishing this one up, so not sure on my thoughts on the movie as a whole. Chadwick Boseman's performance really is incredible. Viola Davis' performance is a little to showy for me, but sure is Oscary.
-* **Borat Subsequent Moviefilm** - give Maria Bakalova the Oscar you cowards!
-* **Soul** - I think watching this in two parts tanked the emotional effectiveness. Whoops.
+
+- **Time** - the juxtaposition of modern and archival footage was really haunting, but I ended up a little confused about the message I was supposed to be taking away. Maybe that was the point?
+- **Ma Rainey's Black Bottom** - finishing this one up, so not sure on my thoughts on the movie as a whole. Chadwick Boseman's performance really is incredible. Viola Davis' performance is a little to showy for me, but sure is Oscary.
+- **Borat Subsequent Moviefilm** - give Maria Bakalova the Oscar you cowards!
+- **Soul** - I think watching this in two parts tanked the emotional effectiveness. Whoops.
 
 Films I still want to see: One Night in Miami, Another Round, Collective, If Anything Happens I Love You.
 

@@ -3,10 +3,11 @@ title: "Bartees Strange: Live Forever"
 description: A great debut that has no interest in adhering to genres.
 author: Brian
 date: 2021-02-21
-imagePath: ./src/jams/2021/bartees_strange.jpg
+imagePath: ./bartees_strange.jpg
 alt: Live forever album cover
 feed_excerpt: "Hard to pin the sound down on this one, so I'm not even going to try. After a mood setting intro the album opens up with two absolutely killer songs. Having those two massive songs up front initially made things feel really front loaded, but this album has been a real grower for me that has balanced out over time. Looking forward to following his work in the future."
 ---
+
 Hard to pin the sound down on this one, so I'm not even going to try.
 
 After a mood setting intro the album opens up with two absolutely killer songs:

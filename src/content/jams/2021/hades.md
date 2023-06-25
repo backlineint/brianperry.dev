@@ -1,5 +1,5 @@
 ---
-imagePath: ./src/jams/2021/hades.jpg
+imagePath: ./hades.jpg
 alt: Entering the underworld
 title: Hades
 description: A narratively complex roguelike on Nintendo Switch
@@ -8,7 +8,8 @@ date: 2021-02-01
 tags:
   - games
 ---
-[Hades](https://www.supergiantgames.com/games/hades/) has hooked me in a way that no [roguelike](https://en.wikipedia.org/wiki/Roguelike#:~:text=Roguelike%20(or%20rogue%2Dlike),death%20of%20the%20player%20character.) before has. There has been no shortage of virtual ink spilled on [why this game is so great](https://www.polygon.com/22167819/hades-game-of-the-year-2020), but for me it comes down to a few main things: improvisational combat, evolving systems, and story.
+
+[Hades](https://www.supergiantgames.com/games/hades/) has hooked me in a way that no [roguelike](<https://en.wikipedia.org/wiki/Roguelike#:~:text=Roguelike%20(or%20rogue%2Dlike),death%20of%20the%20player%20character.>) before has. There has been no shortage of virtual ink spilled on [why this game is so great](https://www.polygon.com/22167819/hades-game-of-the-year-2020), but for me it comes down to a few main things: improvisational combat, evolving systems, and story.
 
 ---
 

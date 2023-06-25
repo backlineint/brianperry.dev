@@ -15,16 +15,15 @@ export async function getStaticPaths() {
 // 2. When it's time to render, you can get the entry directly from the prop
 const { entry } = Astro.props;
 const { Content } = await entry.render();
-const imagePath = entry.data.imagePath ? `/images/${entry.data.imagePath}` : '';
 
-const mainContentClasses = imagePath ? 'main-content with-image' : 'main-content no-image';
+const mainContentClasses = entry.data.imagePath ? 'main-content with-image' : 'main-content no-image';
 ---
 
 <Layout title={entry.data.title}>
     <main>
       <RadHero
         title={entry.data.title}
-        imgSrc={imagePath}
+        imgSrc={entry.data.imagePath}
         imgAlt={entry.data.title}
       />
       <div class={mainContentClasses}>

@@ -1,16 +1,25 @@
 ---
 export interface Props {
 	title: string;
-  imgSrc: string;
+  imgSrc: {
+    src: string;
+    width: number;
+    height: number;
+    format: string;
+    orientation: string;
+  };
   imgAlt: string;
 }
 
+import { Image } from 'astro:assets'
+
 const { title, imgSrc, imgAlt } = Astro.props;
+
 ---
 
 <div class="hero">
   <h1>{title}</h1>
-  {imgSrc && <img src={imgSrc} alt={imgAlt} />}
+  {imgSrc && <Image src={imgSrc.src} width={imgSrc.width} height={imgSrc.height} alt={imgAlt} />}
 </div>
 
 <style is:global>
