@@ -87,6 +87,10 @@ const mainContentClasses = entry.data.imagePath ? 'main-content with-image' : 'm
       margin: var(--size-5) 0
     }
   }
+  article iframe {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+  }
   .rad article {
     margin: var(--size-5) calc(var(--default-padding) * -1);
     padding:var(--default-padding);
@@ -144,33 +148,4 @@ const mainContentClasses = entry.data.imagePath ? 'main-content with-image' : 'm
       font-weight: var(--font-weight-6);
     }
   }
-
-  /*
-  .main-content img {
-    position: relative;
-    left: -49px !important;
-    max-inline-size: 118% !important;
-  }
-  .main-content {
-    display: grid;
-    grid-template-columns: 4fr 1fr;
-    grid-gap: var(--size-8);
-    position: relative;
-    top: -100px;
-    left: 100px;
-  }
-  aside h5 {
-    position: sticky;
-    top: 1rem;
-  }
-  aside p {
-    border-radius: var(--radius-blob-1);
-    background-color: var(--surface-2);
-    padding: 2rem;
-  }
-  article {
-    background-color: var(--surface-2);
-    border-radius: var(--radius-3);
-    padding:var(--size-8);
-  } */
 </style>

@@ -16,4 +16,4 @@ But more than anything, this is an album I can just get lost in. It will also fo
 
 Likely to be my favorite album of the year, and one that I expect to revisit for years to come.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/fXTBQQU191Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/fXTBQQU191Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
