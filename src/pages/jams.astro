@@ -1,0 +1,25 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+
+const jamsEntries = await getCollection('jams');
+---
+
+<Layout title="Jams">
+	<main>
+		<h1>Jams</h1>
+		{
+			jamsEntries.map((entry) => (
+				<p><a href={"/jams/" + entry.slug}>{entry.data.title}</a></p>
+			))
+		}
+	</main>
+</Layout>
+
+<style>
+	main {
+		margin: auto;
+		padding: 1.5rem;
+		max-width: 60ch;
+	}
+</style>
