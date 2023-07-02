@@ -29,7 +29,7 @@ const mainContentClasses = entry.data.imagePath ? 'main-content with-image' : 'm
       <div class={mainContentClasses}>
         <aside>
           <p class="post-date">Content aging process began: {entry.data.date.toDateString()}</p>
-          <p class="description">{entry.data.description}</p>
+          <p class="description"><span>{entry.data.title}</span><br /><br />{entry.data.description}</p>
           <!-- Feature: resources -->
         </aside>
         <article>
@@ -53,17 +53,21 @@ const mainContentClasses = entry.data.imagePath ? 'main-content with-image' : 'm
     }
   }
   .main-content {
-    margin: 0 var(--default-padding);
+    margin: var(--default-padding);
     @media (min-width: 1024px) {
       display: grid;
       grid-template-columns: 5fr 2fr;
-      margin: 0 auto;
+      margin: var(--default-padding) auto;
       padding: 0 var(--default-padding);
       grid-gap: var(--default-padding);
     }
   }
   .rad .main-content {
     padding-bottom: var(--default-padding);
+    margin: 0 var(--default-padding);
+    @media (min-width: 1024px) {
+      margin: 0 auto;
+    }
   }
   .rad .main-content.with-image {
     @media (min-width: 1024px) {
@@ -145,6 +149,10 @@ const mainContentClasses = entry.data.imagePath ? 'main-content with-image' : 'm
       border: 2px solid var(--yellow-3);
       box-shadow: var(--shadow-5);
       border-radius: 10px;
+    }
+  }
+  .rad aside .description span {
+    @media (min-width: 1024px) {
       font-weight: var(--font-weight-6);
     }
   }

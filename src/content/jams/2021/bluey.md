@@ -11,10 +11,8 @@ As we've been waiting for the weather here in Chicago to fully break in the dire
 
 Bluey centers around an Australian family of [blue heeler dogs](https://en.wikipedia.org/wiki/Australian_Cattle_Dog). There are [tons of reasons to love the show](https://geekmom.com/2019/09/12-reasons-why-you-will-love-bluey/), but for me the hook is the [surprisingly realistic depiction of parenting](https://www.the-father-hood.com/article/bluey-how-a-cartoon-dog-became-your-ultimate-guide-to-fatherhood/). They have fun, make mistakes, and sometimes just want their kids to leave them alone. I've never seen anything like it on a show for preschoolers.
 
----
-
 To top it all off, 'Sleepytime' isn't just a great episode of a kids show, I'd rank it as one of my all time favorite episodes of television period.
 
-https://www.youtube.com/watch?v=hfkyGAQyNvg
+<iframe src="https://www.youtube.com/embed/hfkyGAQyNvg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 I'd put Bluey right up there with vaccines on the list of things that have kept us going the past few months. 🐾
