@@ -1,8 +1,8 @@
 ---
-import { getCollection } from 'astro:content';
+import getSortedCollection from "../lib/getSortedCollection";
 import Layout from '../layouts/Layout.astro';
 
-const jamsEntries = await getCollection('jams');
+const jamsEntries = await getSortedCollection('jams');
 ---
 
 <Layout title="Jams">
@@ -10,7 +10,7 @@ const jamsEntries = await getCollection('jams');
 		<h1>Jams</h1>
 		{
 			jamsEntries.map((entry) => (
-				<p><a href={"/jams/" + entry.slug}>{entry.data.title}</a></p>
+				<p><a href={"/jams/" + entry['slug']}>{entry['data']['title']}</a></p>
 			))
 		}
 	</main>
