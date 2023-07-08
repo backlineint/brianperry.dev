@@ -1,11 +1,18 @@
 ---
+import getSortedCollection from "../lib/getSortedCollection";
 import Layout from '../layouts/Layout.astro';
+
+const entries = await getSortedCollection('posts');
 ---
 
 <Layout title="Posts">
 	<main>
 		<h1>Posts</h1>
-        <p><a href="/jams">Jams</a></p>
+		{
+			entries.map((entry) => (
+				<p><a href={"/posts/" + entry['slug']}>{entry['data']['title']}</a></p>
+			))
+		}
 	</main>
 </Layout>
 
