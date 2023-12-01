@@ -5,7 +5,8 @@
  */
 
 :root {
-	--accent: #2337ff;
+	/* --accent: #2337ff; */
+  --accent: var(--link);
 	--accent-dark: #000d8a;
 	--black: 15, 18, 25;
 	--gray: 96, 115, 159;
@@ -33,7 +34,7 @@
 }
 
 body {
-	font-family: 'Atkinson', sans-serif;
+	/* font-family: 'Atkinson', sans-serif; */
 	margin: 0;
 	padding: 0;
 	text-align: left;
