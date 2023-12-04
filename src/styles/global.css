@@ -6,7 +6,7 @@
 
 :root {
 	/* --accent: #2337ff; */
-  --accent: var(--link);
+	--accent: var(--link);
 	--accent-dark: #000d8a;
 	--black: 15, 18, 25;
 	--gray: 96, 115, 159;
@@ -43,12 +43,13 @@ body {
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	/* color: rgb(var(--gray-dark)); */
-	font-size: 20px;
+	/* font-size: 20px; */
 	line-height: 1.7;
 }
 
 main {
-	width: 720px;
+	/* width: 720px; */
+	width: 760px;
 	max-width: calc(100% - 2em);
 	margin: auto;
 	padding: 3em 1em;
@@ -62,10 +63,10 @@ h5,
 h6 {
 	margin: 0 0 0.5rem 0;
 	/* color: rgb(var(--black)); */
-	line-height: 1.2;
+	/* line-height: 1.2; */
 }
 
-h1 {
+/* h1 {
 	font-size: 3.052em;
 }
 
@@ -83,7 +84,7 @@ h4 {
 
 h5 {
 	font-size: 1.25em;
-}
+} */
 
 strong,
 b {
@@ -99,7 +100,8 @@ a:hover {
 } */
 
 p {
-	margin-bottom: 1em;
+	/* margin-bottom: 1em; */
+	margin: 1em 0;
 }
 
 .prose p {
@@ -178,4 +180,9 @@ hr {
 	clip-path: inset(50%);
 	/* added line to stop words getting smushed together (as they go onto seperate lines and some screen readers do not understand line feeds as a space */
 	white-space: nowrap;
+}
+
+/* Open Props Adjustments */
+:where(p, ul, ol, dl, h6) {
+	font-size: var(--font-size-3);
 }
