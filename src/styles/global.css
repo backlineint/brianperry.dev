@@ -106,7 +106,7 @@ p {
 }
 
 .prose p {
-	margin-bottom: 2em;
+	/* margin-bottom: 2em; */
 }
 
 textarea {
@@ -153,6 +153,7 @@ blockquote {
 hr {
 	border: none;
 	border-top: 1px solid rgb(var(--gray-light));
+  margin-block: var(--size-8) var(--size-1);
 }
 
 @media (max-width: 720px) {
@@ -186,4 +187,37 @@ hr {
 /* Open Props Adjustments */
 :where(p, ul, ol, dl, h6) {
 	font-size: var(--font-size-3);
+}
+
+:where(pre) {
+  max-inline-size: none;
+  margin: var(--size-3) 0;
+}
+
+:where(blockquote) {
+  display: block;
+}
+
+:where(blockquote p) {
+  font-size: var(--font-size-4);
+}
+
+:where(blockquote,:not(blockquote)>cite) {
+  border-inline-start-width: 0;
+}
+
+:where(sup) {
+  font-size: smaller;
+}
+
+:where(table) {
+  margin: var(--size-3) 0;
+}
+
+:where(ol, ul) {
+  margin: var(--size-3) 0;
+  & ol, & ul {
+    margin: 0;
+    padding-inline-start: var(--size-3);
+  }
 }
