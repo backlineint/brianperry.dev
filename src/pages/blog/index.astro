@@ -2,6 +2,7 @@
 import BaseHead from "../../components/BaseHead.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
+import RadPostTeaser from "../../components/rad/RadPostTeaser.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
 import { Image } from "astro:assets";
 import FormattedDate from "../../components/FormattedDate.astro";
@@ -67,16 +68,15 @@ const sortedEntries = sortEntries(allEntries);
 			ul li a {
 				display: block;
 			}
-			.title {
+			/* .title {
 				margin: 0;
 				color: var(--text-1);
 				line-height: 1;
-			}
-			.date {
+			} */
+			/* .date {
 				margin: 0;
-				/* color: rgb(var(--gray)); */
 				color: var(--text-2);
-			}
+			} */
 			ul li a:hover h4,
 			ul li a:hover .date {
 				color: rgb(var(--accent));
@@ -131,29 +131,32 @@ const sortedEntries = sortEntries(allEntries);
 				<ul>
 					{
 						sortedEntries.map((entry) => (
-							<li>
-								<a
-									href={`/${entry["collection"]}/${entry["slug"]}`}
-								>
-									<h4 class="title">
-										{entry["data"]["title"]}
-									</h4>
-									<p class="date">
-										<FormattedDate
-											date={entry["data"]["date"]}
-										/>
-									</p>
-                  {entry["data"]["imagePath"] && (
-										<Image
-											src={entry["data"]["imagePath"]}
-											alt={entry["data"]["alt"]}
-										/>
-									)}
-                  {!entry["data"]["imagePath"] && (
-										<div class="description">{entry["data"]["description"]}</div>
-									)}
-								</a>
-							</li>
+              <li>
+                <RadPostTeaser post={entry} />
+              </li>
+							// <li>
+							// 	<a
+							// 		href={`/${entry["collection"]}/${entry["slug"]}`}
+							// 	>
+							// 		<h4 class="title">
+							// 			{entry["data"]["title"]}
+							// 		</h4>
+							// 		<p class="date">
+							// 			<FormattedDate
+							// 				date={entry["data"]["date"]}
+							// 			/>
+							// 		</p>
+              //     {entry["data"]["imagePath"] && (
+							// 			<Image
+							// 				src={entry["data"]["imagePath"]}
+							// 				alt={entry["data"]["alt"]}
+							// 			/>
+							// 		)}
+              //     {!entry["data"]["imagePath"] && (
+							// 			<div class="description">{entry["data"]["description"]}</div>
+							// 		)}
+							// 	</a>
+							// </li>
 						))
 					}
 				</ul>

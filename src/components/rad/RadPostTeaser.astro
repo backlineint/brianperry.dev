@@ -1,0 +1,37 @@
+---
+import FormattedDate from "../../components/FormattedDate.astro";
+
+interface Props {
+	post: Object;
+}
+
+const { title, date, description } = Astro.props.post.data;
+---
+
+<rad-post-teaser>
+  <h4 class="title">
+    {title}
+  </h4>
+  <p class="date">
+    <FormattedDate
+      date={date}
+    />
+  </p>
+  <p>
+    {description}
+  </p>
+</rad-post-teaser>
+
+<style>
+  rad-post-teaser {
+    & .title {
+      margin: 0;
+      color: var(--text-1);
+      line-height: 1;
+    }
+    & .date {
+      margin: 0;
+      color: var(--text-2);
+    }
+  }
+</style>
