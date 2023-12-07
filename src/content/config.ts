@@ -28,4 +28,6 @@ const postCollection = defineCollection({
 export const collections = {
 	blog,
 	'jams': postCollection,
+  'posts': postCollection,
+  'til': postCollection,
 };
