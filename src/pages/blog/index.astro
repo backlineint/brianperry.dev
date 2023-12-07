@@ -63,7 +63,7 @@ const sortedEntries = sortEntries(allEntries);
 			}
 			ul li img {
 				/* margin-bottom: 0.5rem; */
-				margin-bottom: var(--size-3);
+				margin-top: var(--size-3);
 				border-radius: 12px;
 				aspect-ratio: 16 / 9;
 				/* aspect-ratio: 1 / 0.5; */
@@ -86,10 +86,25 @@ const sortedEntries = sortEntries(allEntries);
 			ul li a:hover .date {
 				color: rgb(var(--accent));
 			}
-			ul a:hover img {
-				/* box-shadow: var(--box-shadow); */
+			ul a:hover img,
+      ul a:hover .description {
 				box-shadow: var(--shadow-4);
 			}
+      .description {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        flex-direction: column;
+        padding: var(--size-6);
+        margin-top: var(--size-3);
+        background-color: var(--surface-2);
+        border-radius: 12px;
+				aspect-ratio: 16 / 9;
+        color: var(--text-1);
+        text-wrap: balance;
+        font-family: var(--font-mono);
+        text-align: center;
+      }
 			/* Open Props Tweaks */
 			:where(h4, p, li) {
 				max-inline-size: none;
@@ -125,12 +140,6 @@ const sortedEntries = sortEntries(allEntries);
 								<a
 									href={`/${entry["collection"]}/${entry["slug"]}`}
 								>
-									{entry["data"]["imagePath"] && (
-										<Image
-											src={entry["data"]["imagePath"]}
-											alt={entry["data"]["alt"]}
-										/>
-									)}
 									<h4 class="title">
 										{entry["data"]["title"]}
 									</h4>
@@ -139,6 +148,15 @@ const sortedEntries = sortEntries(allEntries);
 											date={entry["data"]["date"]}
 										/>
 									</p>
+                  {entry["data"]["imagePath"] && (
+										<Image
+											src={entry["data"]["imagePath"]}
+											alt={entry["data"]["alt"]}
+										/>
+									)}
+                  {!entry["data"]["imagePath"] && (
+										<div class="description">{entry["data"]["description"]}</div>
+									)}
 								</a>
 							</li>
 						))
