@@ -11,14 +11,10 @@ import getSortedCollection from "../../lib/getSortedCollection";
 import sortEntries from "../../lib/sortEntries";
 
 const jamsEntries = await getSortedCollection("jams");
-const postsEntries = await getSortedCollection('posts');
-const tilEntries = await getSortedCollection('til');
+const postsEntries = await getSortedCollection("posts");
+const tilEntries = await getSortedCollection("til");
 
-const allEntries = [
-	...jamsEntries,
-	...postsEntries,
-	...tilEntries
-];
+const allEntries = [...jamsEntries, ...postsEntries, ...tilEntries];
 
 const sortedEntries = sortEntries(allEntries);
 ---
@@ -40,7 +36,7 @@ const sortedEntries = sortEntries(allEntries);
 				padding: 0;
 			}
 			ul li {
-				width: calc(50% - 1rem);
+				/* width: calc(50% - 1rem); */
 			}
 			ul li * {
 				text-decoration: none;
@@ -57,14 +53,14 @@ const sortedEntries = sortEntries(allEntries);
 			ul li:first-child .title {
 				font-size: 2.369rem;
 			}
-			ul li img {
-				/* margin-bottom: 0.5rem; */
+			/* ul li img {
+				margin-bottom: 0.5rem;
 				margin-top: var(--size-3);
 				border-radius: 12px;
 				aspect-ratio: 16 / 9;
-				/* aspect-ratio: 1 / 0.5; */
+				aspect-ratio: 1 / 0.5;
 				object-fit: cover;
-			}
+			} */
 			ul li a {
 				display: block;
 			}
@@ -82,24 +78,24 @@ const sortedEntries = sortEntries(allEntries);
 				color: rgb(var(--accent));
 			}
 			ul a:hover img,
-      ul a:hover .description {
+			ul a:hover .description {
 				box-shadow: var(--shadow-4);
 			}
-      .description {
-        display: flex;
-        justify-content: center;
-        align-content: center;
-        flex-direction: column;
-        padding: var(--size-6);
-        margin-top: var(--size-3);
-        background-color: var(--surface-2);
-        border-radius: 12px;
+			.description {
+				display: flex;
+				justify-content: center;
+				align-content: center;
+				flex-direction: column;
+				padding: var(--size-6);
+				margin-top: var(--size-3);
+				background-color: var(--surface-2);
+				border-radius: 12px;
 				aspect-ratio: 16 / 9;
-        color: var(--text-1);
-        text-wrap: balance;
-        font-family: var(--font-mono);
-        text-align: center;
-      }
+				color: var(--text-1);
+				text-wrap: balance;
+				font-family: var(--font-mono);
+				text-align: center;
+			}
 			/* Open Props Tweaks */
 			:where(h4, p, li) {
 				max-inline-size: none;
@@ -131,9 +127,9 @@ const sortedEntries = sortEntries(allEntries);
 				<ul>
 					{
 						sortedEntries.map((entry) => (
-              <li>
-                <RadPostTeaser post={entry} />
-              </li>
+							<li>
+								<RadPostTeaser post={entry} />
+							</li>
 							// <li>
 							// 	<a
 							// 		href={`/${entry["collection"]}/${entry["slug"]}`}
@@ -146,13 +142,13 @@ const sortedEntries = sortEntries(allEntries);
 							// 				date={entry["data"]["date"]}
 							// 			/>
 							// 		</p>
-              //     {entry["data"]["imagePath"] && (
+							//     {entry["data"]["imagePath"] && (
 							// 			<Image
 							// 				src={entry["data"]["imagePath"]}
 							// 				alt={entry["data"]["alt"]}
 							// 			/>
 							// 		)}
-              //     {!entry["data"]["imagePath"] && (
+							//     {!entry["data"]["imagePath"] && (
 							// 			<div class="description">{entry["data"]["description"]}</div>
 							// 		)}
 							// 	</a>

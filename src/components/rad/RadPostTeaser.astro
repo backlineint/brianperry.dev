@@ -1,11 +1,12 @@
 ---
 import FormattedDate from "../../components/FormattedDate.astro";
+import { Image } from "astro:assets";
 
 interface Props {
-	post: Object;
+  post: Object;
 }
 
-const { title, date, description } = Astro.props.post.data;
+const { title, date, description, imagePath, alt } = Astro.props.post.data;
 ---
 
 <rad-post-teaser>
@@ -13,10 +14,9 @@ const { title, date, description } = Astro.props.post.data;
     {title}
   </h4>
   <p class="date">
-    <FormattedDate
-      date={date}
-    />
+    <FormattedDate date={date} />
   </p>
+  {imagePath && <Image src={imagePath} alt={alt} />}
   <p>
     {description}
   </p>
@@ -32,6 +32,14 @@ const { title, date, description } = Astro.props.post.data;
     & .date {
       margin: 0;
       color: var(--text-2);
+    }
+    & img {
+      /* margin-bottom: 0.5rem; */
+      margin-top: var(--size-3);
+      border-radius: 12px;
+      aspect-ratio: 16 / 9;
+      /* aspect-ratio: 1 / 0.5; */
+      object-fit: cover;
     }
   }
 </style>
