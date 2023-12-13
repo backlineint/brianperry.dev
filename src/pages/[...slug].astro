@@ -1,27 +1,27 @@
 ---
 import { getCollection } from "astro:content";
-import Layout from "../layouts/BlogPost.astro";
+import Layout from "../layouts/Post.astro";
 
 // 1. Generate a new path for every collection entry
 export async function getStaticPaths() {
-    const jamsEntries = await getCollection("jams");
-    const jamsPaths = jamsEntries.map((entry) => ({
-        params: { slug: `jams/${entry.slug}` },
-        props: { entry },
-    }));
-    const postsEntries = await getCollection("posts");
-    const postsPaths = postsEntries.map((entry) => ({
-        params: { slug: `posts/${entry.slug}` },
-        props: { entry },
-    }));
-    const tilEntries = await getCollection("til");
-    const tilPaths = tilEntries.map((entry) => ({
-        params: { slug: `til/${entry.slug}` },
-        props: { entry },
-    }));
+  const jamsEntries = await getCollection("jams");
+  const jamsPaths = jamsEntries.map((entry) => ({
+    params: { slug: `jams/${entry.slug}` },
+    props: { entry },
+  }));
+  const postsEntries = await getCollection("posts");
+  const postsPaths = postsEntries.map((entry) => ({
+    params: { slug: `posts/${entry.slug}` },
+    props: { entry },
+  }));
+  const tilEntries = await getCollection("til");
+  const tilPaths = tilEntries.map((entry) => ({
+    params: { slug: `til/${entry.slug}` },
+    props: { entry },
+  }));
 
-    // TODO - Fix TS issue.
-    return jamsPaths.concat(postsPaths).concat(tilPaths);
+  // TODO - Fix TS issue.
+  return jamsPaths.concat(postsPaths).concat(tilPaths);
 }
 
 const { entry } = Astro.props;
@@ -30,10 +30,10 @@ const { Content } = await entry.render();
 ---
 
 <Layout
-    title={title}
-    description={description}
-    pubDate={date}
-    heroImage={imagePath?.src}
+  title={title}
+  description={description}
+  pubDate={date}
+  heroImage={imagePath?.src}
 >
-    <Content />
+  <Content />
 </Layout>
