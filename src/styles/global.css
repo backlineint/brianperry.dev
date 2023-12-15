@@ -172,6 +172,10 @@ hr {
 	main {
 		padding: 1em;
 	}
+
+	:where(h1) {
+		font-size: var(--font-size-6);
+	}
 }
 
 .sr-only {
@@ -194,7 +198,9 @@ hr {
 
 /* Open Props Adjustments */
 :where(p, ul, ol, dl, h6) {
-	font-size: var(--font-size-3);
+	@media (min-width: 720px) {
+		font-size: var(--font-size-3);
+	}
 }
 
 :where(pre) {
