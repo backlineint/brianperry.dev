@@ -12,7 +12,6 @@ import RadPostTeaser from "../components/rad/RadPostTeaser.astro";
 import homeImage from "../assets/perry_weather.jpg";
 
 const posts = await getSortedPosts(3);
-console.log(posts);
 ---
 
 <!doctype html>
@@ -46,7 +45,7 @@ console.log(posts);
             }
           </ul>
         </div>
-        <div>
+        <div class="secondary">
           <Image
             src={homeImage}
             alt="Brian with a weather station"
@@ -150,6 +149,11 @@ console.log(posts);
         ul a:hover img,
         ul a:hover .description {
           box-shadow: var(--shadow-4);
+        }
+      }
+      .secondary {
+        ul {
+          max-inline-size: var(--size-content-3);
         }
       }
     </style>
