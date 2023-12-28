@@ -24,7 +24,7 @@ console.log(posts);
     <Header title={SITE_TITLE} />
     <main>
       <RadTwoCol>
-        <div>
+        <div class="primary">
           <h1>BrianPerry.dev</h1>
           <h3>A serious and professional website</h3>
           <p>
@@ -53,19 +53,44 @@ console.log(posts);
             class="home-image"
           />
           <h3>Recent Projects</h3>
-          <p>
-            Welcome to the official <a href="https://astro.build/">Astro</a>
-             blog starter template. This template serves as a lightweight,
-            minimally-styled starting point for anyone looking to build a
-            personal website, blog, or portfolio with Astro.
-          </p>
+          <ul>
+            <li>
+              <a href="https://github.com/backlineint/brianperry.dev"
+                >brianperry.dev</a
+              > - migrated this site from <a href="https://www.11ty.dev/"
+                >11ty</a
+              > to my long time crush <a href="https://astro.build/">Astro</a>.
+            </li>
+            <li>
+              <a href="https://www.drupal.org/project/api_client"
+                >Drupal API Client</a
+              > - A JSON:API Client for Drupal funded by The Pitch-burgh
+              Innovation Contest.
+            </li>
+            <li>
+              <a href="https://www.drupal.org/project/view_transitions"
+                >Drupal View Transitions Module</a
+              > - Easily enable cross-page transitions on your Drupal site.
+            </li>
+          </ul>
           <h3>Currently Enjoying</h3>
-          <p>
-            Welcome to the official <a href="https://astro.build/">Astro</a>
-             blog starter template. This template serves as a lightweight,
-            minimally-styled starting point for anyone looking to build a
-            personal website, blog, or portfolio with Astro.
-          </p>
+          <ul>
+            <li>
+              <a href="https://seaofstarsgame.co/">Sea of Stars</a> - a
+              throwback 16-bit RPG.
+            </li>
+            <li>
+              <a
+                href="https://www.nintendo.com/us/store/products/super-mario-rpg-switch/"
+                >Super Mario RPG</a
+              > - A remaster of the SNES classic (ironically a major influence
+              of Sea of Stars).
+            </li>
+            <li>
+              <a href="https://www.sho.com/the-curse">The Curse</a> - a
+              nightmare fuel dramedy created by Nathan Fielder and Benny Safdie.
+            </li>
+          </ul>
         </div>
       </RadTwoCol>
     </main>
@@ -94,36 +119,38 @@ console.log(posts);
         margin: var(--size-5) 0 var(--size-5) 0;
       }
       /* TODO: Abstract list styles into a list component */
-      ul {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 2rem;
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-      }
-      ul li {
-        width: 100%;
-        padding-bottom: var(--size-7);
-        border-bottom: 2px solid var(--surface-2);
-      }
-      ul li:last-of-type {
-        border-bottom: 0;
-      }
-      ul li * {
-        text-decoration: none;
-        transition: 0.2s ease;
-      }
-      ul li a {
-        display: block;
-      }
-      ul li a:hover h4,
-      ul li a:hover .date {
-        color: rgb(var(--accent));
-      }
-      ul a:hover img,
-      ul a:hover .description {
-        box-shadow: var(--shadow-4);
+      .primary {
+        ul {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 2rem;
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+        }
+        ul li {
+          width: 100%;
+          padding-bottom: var(--size-7);
+          border-bottom: 2px solid var(--surface-2);
+        }
+        ul li:last-of-type {
+          border-bottom: 0;
+        }
+        ul li * {
+          text-decoration: none;
+          transition: 0.2s ease;
+        }
+        ul li a {
+          display: block;
+        }
+        ul li a:hover h4,
+        ul li a:hover .date {
+          color: rgb(var(--accent));
+        }
+        ul a:hover img,
+        ul a:hover .description {
+          box-shadow: var(--shadow-4);
+        }
       }
     </style>
   </body>
