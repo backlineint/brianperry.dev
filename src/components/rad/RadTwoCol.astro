@@ -1,0 +1,13 @@
+<rad-two-col>
+  <slot />
+</rad-two-col>
+
+<style>
+  rad-two-col {
+    display: grid;
+    @media (min-width: 1024px) {
+      grid-template-columns: 3fr 2fr;
+      grid-gap: var(--default-padding);
+    }
+  }
+</style>

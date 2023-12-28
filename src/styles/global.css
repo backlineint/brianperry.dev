@@ -17,6 +17,7 @@
 		0 16px 32px rgba(var(--gray), 33%); */
 	--box-shadow: var(--shadow-5);
 	--link-visited: var(--link);
+	--default-padding: var(--size-7);
 }
 
 @font-face {

@@ -1,8 +1,18 @@
 ---
+import { Image } from "astro:assets";
+import { getSortedPosts } from "../lib/getSortedPosts";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import RadTwoCol from "../components/rad/RadTwoCol.astro";
+import RadPostTeaser from "../components/rad/RadPostTeaser.astro";
+
+import homeImage from "../assets/perry_weather.jpg";
+
+const posts = await getSortedPosts(3);
+console.log(posts);
 ---
 
 <!doctype html>
@@ -13,53 +23,108 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
   <body>
     <Header title={SITE_TITLE} />
     <main>
-      <h1>BrianPerry.dev</h1>
-      <h3>A serious and professional website</h3>
-      <p>
-        Welcome to the official <a href="https://astro.build/">Astro</a> blog
-        starter template. This template serves as a lightweight,
-        minimally-styled starting point for anyone looking to build a personal
-        website, blog, or portfolio with Astro.
-      </p>
-      <p>
-        This template comes with a few integrations already configured in your
-        <code>astro.config.mjs</code> file. You can customize your setup with
-        <a href="https://astro.build/integrations">Astro Integrations</a> to add
-        tools like Tailwind, React, or Vue to your project.
-      </p>
-      <p>Here are a few ideas on how to get started with the template:</p>
-      <ul>
-        <li>Edit this page in <code>src/pages/index.astro</code></li>
-        <li>
-          Edit the site header items in <code>src/components/Header.astro</code>
-        </li>
-        <li>
-          Add your name to the footer in <code>src/components/Footer.astro</code
-          >
-        </li>
-        <li>
-          Check out the included blog posts in <code>src/pages/blog/</code>
-        </li>
-        <li>
-          Customize the blog post page layout in <code
-            >src/layouts/BlogPost.astro</code
-          >
-        </li>
-      </ul>
-      <p>
-        Have fun! If you get stuck, remember to <a
-          href="https://docs.astro.build/"
-          >read the docs
-        </a> or <a href="https://astro.build/chat">join us on Discord</a> to ask
-        questions.
-      </p>
-      <p>
-        Looking for a blog template with a bit more personality? Check out <a
-          href="https://github.com/Charca/astro-blog-template"
-          >astro-blog-template
-        </a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-      </p>
+      <RadTwoCol>
+        <div>
+          <h1>BrianPerry.dev</h1>
+          <h3>A serious and professional website</h3>
+          <p>
+            I'm a <a href="https://github.com/backlineint">web developer</a>
+             and a <a href="https://www.drupal.org/u/brianperry"
+              >member of the Drupal community</a
+            > who often <a href="https://noti.st/brianperry">presents</a> at
+            tech events. I live with a super awesome family in the Chicago
+            suburbs and I really like Nintendo.
+          </p>
+          <h3>Latest Posts</h3>
+          <ul>
+            {
+              posts.map((entry) => (
+                <li>
+                  <RadPostTeaser post={entry} />
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div>
+          <Image
+            src={homeImage}
+            alt="Brian with a weather station"
+            class="home-image"
+          />
+          <h3>Recent Projects</h3>
+          <p>
+            Welcome to the official <a href="https://astro.build/">Astro</a>
+             blog starter template. This template serves as a lightweight,
+            minimally-styled starting point for anyone looking to build a
+            personal website, blog, or portfolio with Astro.
+          </p>
+          <h3>Currently Enjoying</h3>
+          <p>
+            Welcome to the official <a href="https://astro.build/">Astro</a>
+             blog starter template. This template serves as a lightweight,
+            minimally-styled starting point for anyone looking to build a
+            personal website, blog, or portfolio with Astro.
+          </p>
+        </div>
+      </RadTwoCol>
     </main>
     <Footer />
+    <style>
+      main {
+        width: 1250px;
+      }
+      img {
+        box-shadow: var(--box-shadow);
+        &.home-image {
+          @media (max-width: 1024px) {
+            width: 100%;
+            max-width: var(--size-content-2);
+            margin: var(--size-3) auto var(--size-7) auto;
+          }
+        }
+      }
+      :where(li) {
+        padding-inline-start: 0;
+      }
+      :where(li) {
+        max-inline-size: unset;
+      }
+      h3 {
+        margin: var(--size-5) 0 var(--size-5) 0;
+      }
+      /* TODO: Abstract list styles into a list component */
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+      ul li {
+        width: 100%;
+        padding-bottom: var(--size-7);
+        border-bottom: 2px solid var(--surface-2);
+      }
+      ul li:last-of-type {
+        border-bottom: 0;
+      }
+      ul li * {
+        text-decoration: none;
+        transition: 0.2s ease;
+      }
+      ul li a {
+        display: block;
+      }
+      ul li a:hover h4,
+      ul li a:hover .date {
+        color: rgb(var(--accent));
+      }
+      ul a:hover img,
+      ul a:hover .description {
+        box-shadow: var(--shadow-4);
+      }
+    </style>
   </body>
 </html>
