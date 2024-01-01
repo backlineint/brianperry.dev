@@ -6,7 +6,7 @@ const postCollection = defineCollection({
 		title: z.string(),
 		description: z.string(),
 		author: z.string(),
-		date: z.date(),
+		date: z.coerce.date(),
 		imagePath: image().optional(),
 		alt: z.string().optional(),
 		feed_excerpt: z.string().optional()

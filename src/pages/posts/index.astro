@@ -5,16 +5,9 @@ import Footer from "../../components/Footer.astro";
 import RadPostTeaser from "../../components/rad/RadPostTeaser.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
 
-import getSortedCollection from "../../lib/getSortedCollection";
-import sortEntries from "../../lib/sortEntries";
+import { getSortedPosts } from "../../lib/getSortedPosts";
 
-const jamsEntries = await getSortedCollection("jams");
-const postsEntries = await getSortedCollection("posts");
-const tilEntries = await getSortedCollection("til");
-
-const allEntries = [...jamsEntries, ...postsEntries, ...tilEntries];
-
-const sortedEntries = sortEntries(allEntries);
+const posts = await getSortedPosts();
 ---
 
 <!doctype html>
@@ -86,9 +79,9 @@ const sortedEntries = sortEntries(allEntries);
       <section>
         <ul>
           {
-            sortedEntries.map((entry) => (
+            posts.map((post) => (
               <li>
-                <RadPostTeaser post={entry} />
+                <RadPostTeaser post={post} />
               </li>
             ))
           }

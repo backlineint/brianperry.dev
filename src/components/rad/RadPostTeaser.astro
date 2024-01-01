@@ -1,17 +1,25 @@
 ---
 import FormattedDate from "../../components/FormattedDate.astro";
+import type { CollectionEntry } from "astro:content";
 import { Image } from "astro:assets";
 
-interface Props {
-  post: Object;
-}
+type Props = {
+  post:
+    | CollectionEntry<"posts">
+    | CollectionEntry<"til">
+    | CollectionEntry<"jams">;
+};
 
 const { title, date, description, imagePath, alt } = Astro.props.post.data;
 const { collection, slug } = Astro.props.post;
 ---
 
 <rad-post-teaser>
-  {imagePath && <Image src={imagePath} alt={alt} />}
+  {
+    imagePath && (
+      <Image src={imagePath} alt={alt ? alt : null} width="672" height="378" />
+    )
+  }
   <div class="text">
     <h4 class="title">
       <a href={`/${collection}/${slug}`}>
@@ -19,7 +27,7 @@ const { collection, slug } = Astro.props.post;
       </a>
     </h4>
     <p class="date">
-      <FormattedDate date={date} />
+      <FormattedDate date={new Date(date)} />
     </p>
     <p>
       {description}
@@ -48,7 +56,6 @@ const { collection, slug } = Astro.props.post;
       box-shadow: var(--box-shadow);
       border-radius: 12px;
       aspect-ratio: 16 / 9;
-      /* aspect-ratio: 1 / 0.5; */
       object-fit: cover;
       @media (min-width: 720px) {
         width: 35%;
