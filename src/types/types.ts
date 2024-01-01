@@ -1,8 +1,7 @@
-export type collections = "jams" | "posts" | "assets";
+import type { CollectionEntry } from "astro:content";
 
-// TODO - Re-work to use zod content schemas
-export interface post {
-    data: {
-        date: String
-    }
-}
+export type collections = "jams" | "posts" | "til";
+
+export type post = CollectionEntry<"posts">
+| CollectionEntry<"jams">
+| CollectionEntry<"til">;
