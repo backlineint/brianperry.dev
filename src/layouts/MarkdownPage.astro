@@ -9,6 +9,7 @@ interface Props {
     description: string;
     heroImage: string;
     alt: string;
+    imageAlignment?: string;
   };
 }
 
@@ -36,6 +37,9 @@ const { frontmatter } = Astro.props;
         box-shadow: var(--box-shadow);
         aspect-ratio: 16 / 9;
         object-fit: cover;
+        &.top {
+          object-position: top;
+        }
       }
       .prose {
         width: 760px;
@@ -77,6 +81,11 @@ const { frontmatter } = Astro.props;
                 height={510}
                 src={frontmatter.heroImage}
                 alt={frontmatter.alt}
+                class={
+                  frontmatter.imageAlignment
+                    ? frontmatter.imageAlignment
+                    : "center"
+                }
               />
             </div>
           )
