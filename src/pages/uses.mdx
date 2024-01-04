@@ -1,20 +1,68 @@
 ---
 title: 'Uses'
 description: 'a living document that outlines all of the hardware, software, and other gadgets that I use in my day-to-day setup.'
-pubDate: 'Jan 02 2024'
-heroImage: '/blog-placeholder-about.jpg'
-alt: 'blog placeholder'
+pubDate: 'Feb 04 2021'
+updatedDate: 'Jan 03 2024'
+heroImage: '/uses_desk.jpg'
+alt: 'My desk setup'
 layout: ../layouts/MarkdownPage.astro
 ---
 
-Last updated: Jan 2, 2024
+import FormattedDate from '../components/FormattedDate.astro';
+import RadCallout from '../components/rad/RadCallout.astro';
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo
-    integer malesuada nunc vel risus commodo viverra. Adipiscing enim eu turpis
-    egestas pretium. Euismod elementum nisi quis eleifend quam adipiscing. In
-    hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat.
-    Netus et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu
-    non diam phasellus vestibulum lorem. Varius sit amet mattis vulputate enim.
-    Habitasse platea dictumst quisque sagittis. Integer quis auctor elit sed
-    vulputate mi. Dictumst quisque sagittis purus sit amet.
+*Last updated: <FormattedDate date={new Date(frontmatter.updatedDate)} />*
+
+Inspired by [Wes Bos](https://wesbos.com/uses) and [uses.tech](https://uses.tech/), this is a living document that outlines all of the hardware, software, and other gadgets that I use in my day-to-day setup.
+
+## Hardware
+
+* Personal - 2020 M1 MacBook Pro 13' - despite the stupid touch bar this is the best computer I've ever had. I like the slightly smaller form factor and the battery life and performance are incredible.
+* Work - 2019 Intel MacBook Pro 16' - really struggling at this point but I keep putting off the upgrade because... reasons.
+* Tablet - 11' iPad Pro (First Gen). Getting a little long in the tooth, but usually just a media consumption device for me.
+* Phone - iPhone 14 Pro Max - this is also happens to be my favorite phone of all time. The max is large, but still practical (for me anyway) and with the [Peak Design Everyday Case](https://www.peakdesign.com/products/everyday-case-for-iphone-14-pro-max?variant=40139548065869) it really feels like all screen.
+
+<RadCallout>*The most accurate representation of my software config now lives in [my dotfiles repo](https://github.com/backlineint/.dotfiles). An out of date long form version is also archived in [Documenting My Mac Setup](/posts/2021/documenting-mac-setup/)*</RadCallout>
+
+## Apps and Utilities
+
+I keep a relatively stock Mac config so I can wipe my machine easily, but can't live without the following:
+
+* [Unclutter](https://unclutterapp.com/) - Keeps the digital mess hidden away.
+* Chrome - primary browser for work machine, secondary for personal.
+* [Arc](https://arc.net/) - primary browser for personal machine, secondary for work.
+* [Notion](https://www.notion.so/product) - Migrated from Evernote in early 2023 due to frustrations with the Evernote apps. Also use for task management for work. 
+* [Things](https://culturedcode.com/things/) I use it to follow some form of [GTD](https://gettingthingsdone.com/) for personal tasks.
+* [YNAB](https://www.youneedabudget.com/) - changed my life financially
+* [Bartender](https://www.macbartender.com/) - hide menu bar clutter
+* [Oh My ZSH](https://ohmyz.sh/) - terminal themes and other niceties
+* [Raycast](https://raycast.com/) - highly configurable alternative to Spotlight. Complete tasks like launching your next Zoom meeting or creating a Jira ticket with just a few keystrokes.
+
+<RadCallout>More of the software I rely on is captured in the [brewfile in my dotfiles repo](https://github.com/backlineint/.dotfiles/blob/main/Brewfile).</RadCallout>
+
+## IDE
+
+In 2020 I made the switch from [PHP Storm](https://www.jetbrains.com/phpstorm/) to [VS Code](https://code.visualstudio.com/). The only thing I miss from PHP Storm is the merge conflict resolution tool, which is much better than VS Code. Hopefully that will change eventually.
+
+## Desk Setup
+
+* [Electric Standing Desk](https://www.homedepot.com/p/mount-it-Black-Electric-Standing-Desk-with-Memory-Control-Panel-55-1-in-x-23-6-in-MI-7999/317131934?cm_mmc=ecc-_-THD_ORDER_CONFIRMATION_BOSS_STH-_-V1_M1_CA-_-Product_URL&ecc_ord=W879442709&em_id=bc7265a5850bdc01f7b2274bbc18df660e1e94514bc320c9e56320217ab6ce9f) - Standing in the morning and sitting in the afternoon helps me avoid wrist issues. Need to be better with this - have been sitting too much lately.
+* Headphones - god help me, I love my Air Pods Pro Max. Use them for conference calls every day.
+* [Rain mStand](https://www.amazon.com/Rain-Design-mStand-Laptop-Patented/dp/B000OOYECC/ref=sxin_12?ascsubtag=amzn1.osa.a568865d-3149-4901-b636-46aee2b6a581.ATVPDKIKX0DER.en_US&creativeASIN=B000OOYECC&crid=1CSF35G102PR9&cv_ct_cx=laptop+stand&cv_ct_id=amzn1.osa.a568865d-3149-4901-b636-46aee2b6a581.ATVPDKIKX0DER.en_US&cv_ct_pg=search&cv_ct_we=asin&cv_ct_wn=osp-single-source-earns-comm&dchild=1&keywords=laptop+stand&linkCode=oas&pd_rd_i=B000OOYECC&pd_rd_r=edf414fd-ba76-4443-a356-87789fa0037d&pd_rd_w=8YELr&pd_rd_wg=hx94f&pf_rd_p=09ff20e9-945b-4b59-906b-be3bf2ef914a&pf_rd_r=01SZPXNFK7ZJNEAKH1Y0&qid=1612500618&sprefix=Laptop+S%2Caps%2C176&sr=1-1-64f3a41a-73ca-403a-923c-8152c45485fe&tag=tgl0a3-20) - keep the lapptop screen level with my secondary monitor.
+* [LG Monitor](https://www.amazon.com/LG-27MK600M-B-Technology-Virtually-Borderless/dp/B07FFC14SZ) - Pretty Basic and issued by work, but I like it.
+* Magic Trackpad 2 (taught myself to use a trackpad left handed due to RSI issues) and Magic Keyboard.
+* [8Bitdo NES Mechanical Keyboard](https://www.amazon.com/Mechanical-Keyboard-Bluetooth-Swappable-Programmable-PC/dp/B0CCP8KYGG/ref=sr_1_1?crid=2MY6X6MXBR0ZA) - impractical in a bunch of ways, but I love it and stuck with it.
+
+## Office Setup
+
+![Question Block opened](/office_back_wall.jpg)
+
+## Coffee
+
+Dueling subscriptions from [Driftaway](https://driftaway.coffee/) and [Five & Hoek](https://www.fiveandhoek.com/). I really enjoy coffee.
+
+## Video Games
+
+* Nintendo Switch OLED
+* Xbox Series S - mainly for Game Pass
+* Arcade1Up [Ms. Pac-Man Cocktail Table](https://arcade1up.com/collections/head-to-head/products/ms-pac-man-40th-anniversary-black-head-to-head-arcade-table)
