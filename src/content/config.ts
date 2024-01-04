@@ -9,7 +9,8 @@ const postCollection = defineCollection({
 		date: z.coerce.date(),
 		imagePath: image().optional(),
 		alt: z.string().optional(),
-		feed_excerpt: z.string().optional()
+		feed_excerpt: z.string().optional(),
+		tags: z.array(z.string()).optional(),
 	}),
 });
 
