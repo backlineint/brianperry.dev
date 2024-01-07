@@ -48,6 +48,9 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
         img {
           box-shadow: var(--box-shadow);
         }
+        & :where(li, dd, figcaption) {
+          max-inline-size: none;
+        }
       }
       .title {
         margin-bottom: 1em;
