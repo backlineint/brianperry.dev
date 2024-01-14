@@ -2,7 +2,6 @@
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import Layout from "../layouts/Post.astro";
-import { SITE_TITLE } from "../consts";
 
 interface Path {
   params: {
@@ -47,7 +46,7 @@ const { Content } = await entry.render();
 ---
 
 <Layout
-  title={`${title} - ${SITE_TITLE}`}
+  title={title}
   description={description}
   pubDate={date}
   heroImage={imagePath?.src}
