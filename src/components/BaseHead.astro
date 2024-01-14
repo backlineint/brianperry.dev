@@ -7,6 +7,12 @@ import "open-props/open-props.min.css";
 import "open-props/normalize.min.css";
 import "../styles/global.css";
 
+declare global {
+  interface Window {
+    dataLayer: any[];
+  }
+}
+
 interface Props {
   title: string;
   description: string;
@@ -18,13 +24,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const { title, description, image = "/og_image.jpg" } = Astro.props;
 ---
 
-<script
-  type="text/partytown"
-  src="https://www.googletagmanager.com/gtag/js?id=G-R4YJ3X82V6"></script>
-<script type="text/partytown">
+<script src="https://www.googletagmanager.com/gtag/js?id=G-R4YJ3X82V6"></script>
+<script>
   window.dataLayer = window.dataLayer || [];
-  function gtag() {
-    dataLayer.push(arguments);
+  function gtag(_a: string, _b: string | object) {
+    window.dataLayer.push(arguments);
   }
   gtag("js", new Date());
   gtag("config", "G-R4YJ3X82V6");

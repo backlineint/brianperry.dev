@@ -13,10 +13,13 @@ const posts = await getSortedPosts();
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <BaseHead title={`Posts - ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
     <style>
       main {
         width: 1000px;
+      }
+      h1 {
+        margin: 0 0 var(--size-7) 0;
       }
       ul {
         display: flex;
@@ -77,6 +80,7 @@ const posts = await getSortedPosts();
     <Header />
     <main>
       <section>
+        <h1>Posts</h1>
         <ul>
           {
             posts.map((post) => (
