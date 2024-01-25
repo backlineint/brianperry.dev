@@ -25,7 +25,7 @@ const posts = await getSortedPosts(3);
       <RadTwoCol>
         <div class="primary">
           <h1>BrianPerry.dev</h1>
-          <h3>A serious and professional website</h3>
+          <h2 class="subhead">A serious and professional website</h2>
           <p>
             I'm a <a href="https://github.com/backlineint">web developer</a>
             and a <a href="https://www.drupal.org/u/brianperry"
@@ -122,8 +122,13 @@ const posts = await getSortedPosts(3);
       h3 {
         margin: var(--size-5) 0 var(--size-5) 0;
       }
-      /* TODO: Abstract list styles into a list component */
+
       .primary {
+        & h2.subhead {
+          font-size: var(--font-size-5);
+          line-height: var(--font-lineheight-2);
+        }
+        /* TODO: Abstract list styles into a list component */
         & ul {
           display: flex;
           flex-wrap: wrap;
