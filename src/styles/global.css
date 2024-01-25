@@ -66,45 +66,14 @@ h4,
 h5,
 h6 {
 	margin: 0 0 0.5rem 0;
-	/* color: rgb(var(--black)); */
-	/* line-height: 1.2; */
 }
-
-/* h1 {
-	font-size: 3.052em;
-}
-
-h2 {
-	font-size: 2.441em;
-}
-
-h3 {
-	font-size: 1.953em;
-}
-
-h4 {
-	font-size: 1.563em;
-}
-
-h5 {
-	font-size: 1.25em;
-} */
 
 strong,
 b {
 	font-weight: 700;
 }
 
-/* a {
-	color: var(--accent);
-}
-
-a:hover {
-	color: var(--accent);
-} */
-
 p {
-	/* margin-bottom: 1em; */
 	margin: 1em 0;
 }
 
@@ -139,7 +108,6 @@ img {
 
 code {
 	padding: 2px 5px;
-	/* background-color: rgb(var(--gray-light)); */
 	border-radius: 2px;
 }
 
@@ -237,6 +205,11 @@ hr {
 		margin: 0;
 		padding-inline-start: var(--size-3);
 	}
+}
+
+:where(a):where(:not(:hover)) {
+    text-decoration: underline;
+	text-decoration-color: var(--link);
 }
 
 :where(a):where([href]):where(:visited) {
