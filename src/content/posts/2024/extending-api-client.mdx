@@ -5,19 +5,21 @@ author: Brian
 date: 2024-01-22
 ---
 
-As a result of our [Pitch-burgh funding](https://www.drupal.org/innovation/pitchburgh-2023), the current primary goal of [the Drupal API Client](https://www.drupal.org/project/api_client) is to create a fully featured client for Drupal's JSON:API implementation. Even with that goal, we've focused on making our work extensible for other API formats in the future through the implementation of an `ApiClient` base class. Functionality that could apply to any API client is added to the base class, while anything specific to JSON:API is added to the `JsonApiClient` class (which extends `ApiClient`.)
+import RadCallout from '../../../components/rad/RadCallout.astro';
+
+As a result of our [Pitch-burgh funding](https://www.drupal.org/innovation/pitchburgh-2023), the current focus of [the Drupal API Client](https://www.drupal.org/project/api_client) is to create a fully featured client for Drupal's JSON:API implementation. Even with that goal, we've focused on making our work extensible for other API formats in the future through the implementation of an `ApiClient` base class. Functionality that could apply to any API client is added to the base class, while anything specific to JSON:API is added to the `JsonApiClient` class (which extends `ApiClient`.)
 
 Recently, we have been working on adding [Decoupled Router](https://www.drupal.org/project/decoupled_router) support to [our JSON:API Client](https://www.npmjs.com/package/@drupal-api-client/json-api-client). I found this implementation to be a great example of the extensibility of the library, so I wanted elaborate on it in a blog post for those who may want to extend the API Client in the future.
 
-Our end goal was that as an alternative to our existing JsonApiClient.getResource method:
+The result we were aiming for was that as an alternative to our existing JsonApiClient.getResource method:
 
-```
+```ts
 const myArticle = client.getResource('node--article', '3347c400-302d-4f6c-8fcb-3e74beb002c8');
 ```
 
-Users of Decoupled Router could also get an identical response by resolving a path:
+users of Decoupled Router could also get an identical response by resolving a path:
 
-```
+```ts
 const theSameArticle = client.getResource('/articles/give-it-a-go-and-grow-your-own-herbs');
 ```
 
@@ -58,19 +60,21 @@ Given a path like `/articles/give-it-a-go-and-grow-your-own-herbs` the endpoint 
 }
 ```
 
-It is worth noting that while easy to make sense of, this response technically doesn't follow the JSON:API spec, so we can't use our existing JSON:API Client without modification. We could write a small amount of custom code to fetch and handle data from this endpoint, but just as we're doing for the JSON:API Client itself, this case is exactly what our ApiClient base class is intended for. With a similarly small amount of code we can extend the ApiClient class to add only what is unique to the Decoupled Router endpoint, while getting access to all of the features of the base class at the same time.
+While easy to make sense of, this response technically doesn't follow the JSON:API spec, which prevents us from using our existing JSON:API Client without modification. We could write a small amount of custom code in JsonApiClient to fetch and handle data from this endpoint, but this case is exactly what our ApiClient base class is intended for. With a similarly small amount of code we can extend the ApiClient class to add only what is unique to the Decoupled Router endpoint, while getting access to all of the features of the base class at the same time.
 
-A simple Decoupled Router client that extends ApiClient could look like this:
+So rather than writing code specific to JsonApiClient, we decided to create a new DecoupledRouterClient class that our JsonApiClient could then make use of.
 
-TODO: Figure out how to annotate the file name for prisma.
+## Extending ApiClient
+
+For the sake of example, a simple Decoupled Router client could look like this:
 
 ```ts
 // DecoupledRouterClient.ts
 
 import {
   ApiClient,
-  ApiClientOptions,
-  BaseUrl,
+  type ApiClientOptions,
+  type BaseUrl,
 } from "@drupal-api-client/api-client";
 
 export class DecoupledRouterClient extends ApiClient {
@@ -89,9 +93,9 @@ export class DecoupledRouterClient extends ApiClient {
 }
 ```
 
-After extending the class we call the constructor, followed by super() to ensure that all of the properties of the base class are set. At this point, the only modification we want to make is the default value for the API prefix - Decoupled Router uses `router/translate-path`. This way if an instance of the Decoupled Router class is created without this option, it will work with the usual decoupled router endpoint.
+After extending the ApiClient class we add a constructor to ensure that all of the properties of the base class are set. At this point, the only modification we need to make in the constructor is the default value for the API prefix - Decoupled Router uses `router/translate-path`. Now if an instance of the Decoupled Router class is created without this option, it will use the default.
 
-We then define a translatePath method that takes a path of type string, uses the provided fetch method to make a request to Decoupled Router, and returns a promise with the provided json data.
+We then define a `translatePath` method that takes a path of type string, uses the fetch method provided by the base class to make a request to Decoupled Router, and returns a promise with the provided json data.
 
 Using an instance of this class would look something like:
 
@@ -100,13 +104,19 @@ Using an instance of this class would look something like:
 
 import { DecoupledRouterClient } from "./DecoupledRouterClient.ts";
 
-const baseUrl = "https://dev-drupal-api-client-poc.pantheonsite.io";
-const decoupledRouterClient = new DecoupledRouterClient(baseUrl);
+const decoupledRouterClient = new DecoupledRouterClient("https://dev-drupal-api-client-poc.pantheonsite.io");
 
-const translatedPath = await decoupledRouterClient.translatePath(
-  "/articles/give-it-a-go-and-grow-your-own-herbs"
-);
+const translatedPath =
+  await decoupledRouterClient.translatePath(
+    "/articles/give-it-a-go-and-grow-your-own-herbs"
+  );
 ```
+
+> There are easily hundreds of other sites available on the internet. Thanks for visiting mine.
+
+<RadCallout>Wondering aboutTT the tech I use? Check out my [uses page](/uses).</RadCallout>
+
+## Taking Advantage of Additional ApiClient Features
 
 We're up and running, but the real power comes when we look beyond this hello world example. Want your API requests to be authenticated? Since we extended the ApiClient class we have access to all provided authentication options:
 
@@ -115,6 +125,8 @@ We're up and running, but the real power comes when we look beyond this hello wo
 ```
 
 Maybe another example? Locale?
+
+Fetch, etc.
 
 Add any other specific work necessary for this implementation.
 
