@@ -1,21 +1,35 @@
 ---
-title: Extending the Drupal API Client
+title: Extending The Drupal API Client
 description: We're building the Drupal API Client to be easily extended. This post demonstrates that extensibility by creating a client for the Decoupled Router module.
 author: Brian
 date: 2024-01-22
 ---
 
-As a result of our Pitch-burgh funding, the current primary goal of the Drupal API Client project is to create a fully featured client for Drupal's JSON:API implementation. Even with that goal, we've focused on making our work extensible for other API formats in the future. A large part of this has been creating an `ApiClient` base class. Functionality that could apply to any API client is added to the base class, while anything specific to JSON:API is added to the `JsonApiClient` class (which extends `ApiClient`.)
+As a result of our [Pitch-burgh funding](https://www.drupal.org/innovation/pitchburgh-2023), the current primary goal of [the Drupal API Client](https://www.drupal.org/project/api_client) is to create a fully featured client for Drupal's JSON:API implementation. Even with that goal, we've focused on making our work extensible for other API formats in the future through the implementation of an `ApiClient` base class. Functionality that could apply to any API client is added to the base class, while anything specific to JSON:API is added to the `JsonApiClient` class (which extends `ApiClient`.)
 
-Recently, we have been working on adding support for the Decoupled Router endpoint. This implementation has proven to be a great example of the extensibility of the library, so I thought elaborating on it in a blog post could be useful for those who want to extend the API Client in the future.
+Recently, we have been working on adding [Decoupled Router](https://www.drupal.org/project/decoupled_router) support to [our JSON:API Client](https://www.npmjs.com/package/@drupal-api-client/json-api-client). I found this implementation to be a great example of the extensibility of the library, so I wanted elaborate on it in a blog post for those who may want to extend the API Client in the future.
+
+Our end goal was that as an alternative to our existing JsonApiClient.getResource method:
+
+```
+const myArticle = client.getResource('node--article', '3347c400-302d-4f6c-8fcb-3e74beb002c8');
+```
+
+Users of Decoupled Router could also get an identical response by resolving a path:
+
+```
+const theSameArticle = client.getResource('/articles/give-it-a-go-and-grow-your-own-herbs');
+```
+
+To achieve this, we first needed to provide a way to reliably get data from Decoupled Router.
 
 ## The Decoupled Router Endpoint
 
-The Decoupled Router endpoint uses the following structure:
+With the module enabled, Decoupled Router exposes an endpoint with the following structure:
 
 `/router/translate-path?path=<path>`
 
-And given a path `/articles/give-it-a-go-and-grow-your-own-herbs` could return something similar to:
+Given a path like `/articles/give-it-a-go-and-grow-your-own-herbs` the endpoint could provide a response similar to:
 
 ```json
 {
@@ -44,7 +58,7 @@ And given a path `/articles/give-it-a-go-and-grow-your-own-herbs` could return s
 }
 ```
 
-It is worth noting that while easy to make sense of, this response technically doesn't follow the JSON:API spec. We could write a small amount of custom code to fetch and handle data from this endpoint, but this case is exactly what our ApiClient base class is intended for. With a similarly small amount of code we can extend the ApiClient class to add only what is unique to the Decoupled Router endpoint, while getting access to all of the features of the base class at the same time.
+It is worth noting that while easy to make sense of, this response technically doesn't follow the JSON:API spec, so we can't use our existing JSON:API Client without modification. We could write a small amount of custom code to fetch and handle data from this endpoint, but just as we're doing for the JSON:API Client itself, this case is exactly what our ApiClient base class is intended for. With a similarly small amount of code we can extend the ApiClient class to add only what is unique to the Decoupled Router endpoint, while getting access to all of the features of the base class at the same time.
 
 A simple Decoupled Router client that extends ApiClient could look like this:
 
@@ -100,8 +114,10 @@ We're up and running, but the real power comes when we look beyond this hello wo
 // Revised main.ts with authentication example
 ```
 
-Maybe another example?
+Maybe another example? Locale?
 
 Add any other specific work necessary for this implementation.
 
 Routing is a common problem, so we're adding this to our JSON:API Client so you don't have to. But working through this really helped validate the extensible nature of this library. Our routing methods just use an instance of this new class...
+
+While we can use our the clients caching functionality, getResourceByPath still makes multiple API calls for uncached data, which is not ideal. We could optimize this by supporting subrequests in the future. That is yet another type of Drupal API that could use this base class...
