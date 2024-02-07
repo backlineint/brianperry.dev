@@ -1,0 +1,181 @@
+---
+title: Extending The Drupal API Client
+description: We're building the Drupal API Client to be easily extended. This post demonstrates that extensibility by creating a client for the Decoupled Router module.
+author: Brian
+date: 2024-02-07
+---
+
+import RadCallout from '../../../components/rad/RadCallout.astro';
+
+As a result of our [Pitch-burgh funding](https://www.drupal.org/innovation/pitchburgh-2023), the current focus of [the Drupal API Client](https://www.drupal.org/project/api_client) is to create a fully featured client for Drupal's JSON:API implementation. Even with that goal, we've focused on making our work extensible for other API formats in the future through the implementation of an `ApiClient` base class. Functionality that could apply to any API client is added to the base class, while anything specific to JSON:API is added to the `JsonApiClient` class (which extends `ApiClient`.)
+
+Recently, we have been working on adding [Decoupled Router](https://www.drupal.org/project/decoupled_router) support to [our JSON:API Client](https://www.npmjs.com/package/@drupal-api-client/json-api-client). I found this implementation to be a great example of the extensibility of the library, so I wanted elaborate on it in a blog post for those who may want to extend the API Client in the future.
+
+The existing JsonApiClient has the following method to retrieve data for a resource:
+
+```ts
+await client.getResource('node--article', '3347c400-302d-4f6c-8fcb-3e74beb002c8');
+```
+
+Ideally, users of Decoupled Router could also get an identical response by resolving a path:
+
+```ts
+await client.getResource('/articles/give-it-a-go-and-grow-your-own-herbs');
+```
+
+To achieve this, we first needed to provide a way to reliably get data from Decoupled Router.
+
+## The Decoupled Router Endpoint
+
+With the module enabled, Decoupled Router exposes an endpoint with the following structure:
+
+`/router/translate-path?path=<path>`
+
+Given a path like `/articles/give-it-a-go-and-grow-your-own-herbs` the endpoint could provide a response similar to:
+
+```json
+{
+  "resolved": "https://dev-drupal-api-client-poc.pantheonsite.io/en/articles/give-it-a-go-and-grow-your-own-herbs",
+  "isHomePath": false,
+  "entity": {
+    "canonical": "https://dev-drupal-api-client-poc.pantheonsite.io/en/articles/give-it-a-go-and-grow-your-own-herbs",
+    "type": "node",
+    "bundle": "article",
+    "id": "11",
+    "uuid": "3347c400-302d-4f6c-8fcb-3e74beb002c8"
+  },
+  "label": "Give it a go and grow your own herbs",
+  "jsonapi": {
+    "individual": "https://dev-drupal-api-client-poc.pantheonsite.io/en/jsonapi/node/article/3347c400-302d-4f6c-8fcb-3e74beb002c8",
+    "resourceName": "node--article",
+    "pathPrefix": "jsonapi",
+    "basePath": "/jsonapi",
+    "entryPoint": "https://dev-drupal-api-client-poc.pantheonsite.io/en/jsonapi"
+  },
+  "meta": {
+    "deprecated": {
+      "jsonapi.pathPrefix": "This property has been deprecated and will be removed in the next version of Decoupled Router. Use basePath instead."
+    }
+  }
+}
+```
+
+While easy to make sense of, this response technically doesn't follow the JSON:API spec, which prevents us from using our existing JSON:API Client without modification. We could write a small amount of custom code in JsonApiClient to fetch and handle data from this endpoint, but this case is exactly what our ApiClient base class is intended for. With a similarly small amount of code we can extend the ApiClient class to add only what is unique to the Decoupled Router endpoint, while getting access to all of the features of the base class at the same time.
+
+So rather than writing code specific to JsonApiClient, we decided to create a new DecoupledRouterClient class that our JsonApiClient could then make use of.
+
+## Extending ApiClient
+
+For the sake of example, a simple Decoupled Router client could look like this:
+
+```ts
+// DecoupledRouterClient.ts
+import {
+  ApiClient,
+  type ApiClientOptions,
+  type BaseUrl,
+} from "@drupal-api-client/api-client";
+
+export class DecoupledRouterClient extends ApiClient {
+  constructor(baseUrl: BaseUrl, options?: ApiClientOptions) {
+    super(baseUrl, options);
+    const { apiPrefix } = options || {};
+    this.apiPrefix = apiPrefix || "router/translate-path";
+  }
+
+  async translatePath(path: string) {
+    const apiUrl = `${this.baseUrl}/${this.apiPrefix}?path=${path}`;
+    const response = await this.fetch(apiUrl);
+
+    return response.json();
+  }
+}
+```
+
+In our constructor, the only modification we need to make is the default value for the API prefix. While the base class doesn't have a default, Decoupled Router uses `router/translate-path`. Now when instance of `DecoupledRouter` is created without this option, it will use the default.
+
+We then define a `translatePath` method that:
+* Takes a path of type string
+* Uses the fetch method provided by the base class to make a request to Decoupled Router
+* Returns a promise with the provided json data
+
+Using an instance of this class would look something like:
+
+```ts
+// main.ts
+import { DecoupledRouterClient } from "./DecoupledRouterClient.ts";
+
+const decoupledRouterClient = 
+  new DecoupledRouterClient("https://dev-drupal-api-client-poc.pantheonsite.io");
+
+const translatedPath =
+  await decoupledRouterClient.translatePath(
+    "/articles/give-it-a-go-and-grow-your-own-herbs"
+  );
+```
+
+<RadCallout>[Check out this code sandbox](https://codesandbox.io/p/devbox/extending-drupal-api-client-32wt3c) for a live version of the example above.</RadCallout>
+
+## Taking Advantage of Additional ApiClient Features
+
+With this example we already have a functional client, but quite a bit more is possible using the features of the ApiClient class we extended. For examplem, We can already make authenticated requests using any of the supported authentication methods:
+
+```ts
+// main.ts
+import { DecoupledRouterClient } from "./DecoupledRouterClient.ts";
+
+const decoupledRouterClient = 
+  new DecoupledRouterClient("https://dev-drupal-api-client-poc.pantheonsite.io", {
+    authentication: {
+      type: "OAuth",
+      credentials: {
+        clientId: "client-id",
+        clientSecret: "client-secret"
+      }
+    },
+  });
+
+// API requests will now be authenticated
+const translatedPath =
+  await decoupledRouterClient.translatePath(
+    "/articles/give-it-a-go-and-grow-your-own-herbs"
+  );
+```
+
+Our example Decoupled Router client could be updated to take advantage of built in caching, logging, or locale support. For example, the following modification would allow us to make use of the `defaultLocale` option if our Drupal site supports multiple languages:
+
+```ts
+// DecoupledRouterClient.ts
+import {
+  ApiClient,
+  type ApiClientOptions,
+  type BaseUrl,
+} from "@drupal-api-client/api-client";
+
+export class DecoupledRouterClient extends ApiClient {
+  constructor(baseUrl: BaseUrl, options?: ApiClientOptions) {
+    super(baseUrl, options);
+    const { apiPrefix } = options || {};
+    this.apiPrefix = apiPrefix || "router/translate-path";
+  }
+
+  async translatePath(path: string) {
+    // If it exists, incorporate the default locale
+    // into the apiUrl
+    const apiUrlObject = new URL(
+      `${localeSegment ?? ""}/${this.apiPrefix}?path=${path}`,
+      this.baseUrl,
+    );
+    const apiUrl = apiUrlObject.toString();
+    const response = await this.fetch(apiUrl);
+
+    return response.json();
+  }
+}
+```
+
+Routing is a common problem, so we've added a fully featured [getResourceByPath method](https://project.pages.drupalcode.org/api_client/classes/_drupal_api_client_json_api_client.JsonApiClient.html#getResourceByPath) to our latest [@drupal-api-client/json-api-client release](https://www.npmjs.com/package/@drupal-api-client/json-api-client) so you don't have to. We've also published the [Decoupled Router client](https://www.npmjs.com/package/@drupal-api-client/decoupled-router-client) that powers this as package for anyone who wants to use it separately.
+
+While the caching functionality of the client can lessen the impact, getResourceByPath still makes multiple API calls for uncached data, which could be improved. We could optimize this in the future by providing support for the [subrequests module](https://www.drupal.org/project/subrequests) in the future. That is yet another client for a type of Drupal API that could use the ApiClient base class as a starting point.
+
+We're closing in on the 1.0 release of [@drupal-api-client/json-api-client](https://www.npmjs.com/package/@drupal-api-client/json-api-client). If you’re interested in contributing, check out our project page on Drupal.org, and join us in the [#api-client](https://www.drupal.org/community/contributor-guide/reference-information/talk/tools/slack) channel on Drupal Slack.
