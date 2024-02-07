@@ -120,7 +120,7 @@ const translatedPath =
 
 ## Taking Advantage of Additional ApiClient Features
 
-With this example we already have a functional client, but quite a bit more is possible using the features of the ApiClient class we extended. For examplem, We can already make authenticated requests using any of the supported authentication methods:
+With this example we already have a functional client, but quite a bit more is possible using the features of the ApiClient class we extended. For example, We can already make authenticated requests using any of the supported authentication methods:
 
 ```ts
 // main.ts
@@ -165,7 +165,7 @@ export class DecoupledRouterClient extends ApiClient {
     // If it exists, incorporate the default locale
     // into the apiUrl
     const apiUrlObject = new URL(
-      `${localeSegment ?? ""}/${this.apiPrefix}?path=${path}`,
+      `${this.defaultLocale ?? ""}/${this.apiPrefix}?path=${path}`,
       this.baseUrl,
     );
     const apiUrl = apiUrlObject.toString();
@@ -176,8 +176,8 @@ export class DecoupledRouterClient extends ApiClient {
 }
 ```
 
-Routing is a common problem, so we've added a fully featured [getResourceByPath method](https://project.pages.drupalcode.org/api_client/classes/_drupal_api_client_json_api_client.JsonApiClient.html#getResourceByPath) to our latest [@drupal-api-client/json-api-client release](https://www.npmjs.com/package/@drupal-api-client/json-api-client) so you don't have to. We've also published the [Decoupled Router client](https://www.npmjs.com/package/@drupal-api-client/decoupled-router-client) that powers this as package for anyone who wants to use it separately.
+Routing is a common problem, so we've added a fully featured [getResourceByPath method](https://project.pages.drupalcode.org/api_client/classes/_drupal_api_client_json_api_client.JsonApiClient.html#getResourceByPath) to our latest [@drupal-api-client/json-api-client](https://www.npmjs.com/package/@drupal-api-client/json-api-client) release. We've also published the [Decoupled Router client](https://www.npmjs.com/package/@drupal-api-client/decoupled-router-client) as a standalone package for anyone who wants to use it separately.
 
-While the caching functionality of the client can lessen the impact, getResourceByPath still makes multiple API calls for uncached data, which could be improved. We could optimize this in the future by providing support for the [subrequests module](https://www.drupal.org/project/subrequests) in the future. That is yet another client for a type of Drupal API that could use the ApiClient base class as a starting point.
+While the caching functionality of the client can lessen the impact, getResourceByPath still makes multiple API calls for uncached data, which leaves room for improvement. We could optimize this in the future by providing support for the [subrequests module](https://www.drupal.org/project/subrequests). That is yet another client for a type of Drupal API that could use the ApiClient base class as a starting point.
 
 We're closing in on the 1.0 release of [@drupal-api-client/json-api-client](https://www.npmjs.com/package/@drupal-api-client/json-api-client). If you’re interested in contributing, check out our project page on Drupal.org, and join us in the [#api-client](https://www.drupal.org/community/contributor-guide/reference-information/talk/tools/slack) channel on Drupal Slack.
