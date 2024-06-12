@@ -2,7 +2,7 @@
 title: Talking Drupal API Client on Talking Drupal
 description: I was a guest on a recent episode of Talking Drupal to discuss the Drupal API Client.
 author: Brian
-date: 2024-06-13
+date: 2024-06-12
 ---
 
 I was a guest on a recent episode of [Talking Drupal](https://talkingdrupal.com/) to discuss the Drupal API Client. Always a great time participating in the show. Thanks to my [bio page](https://talkingdrupal.com/brian-perry) on their new website, I see that this is my 8th appearance on the show - four times as a guest, and four times as a guest host.
