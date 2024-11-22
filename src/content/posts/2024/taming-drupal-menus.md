@@ -2,7 +2,7 @@
 title: Two Modules to Help Tame Large Drupal Menus
 description: I recently used the Big Menu and Menu Select Modules to address client struggles managing a large menu in Drupal.
 author: Brian
-date: 2024-11-23
+date: 2024-11-22
 tags:
   - drupal
 ---
