@@ -13,7 +13,7 @@ Had a wonderful two weeks off for the holidays this year, and I wanted to take a
 
 I have a habit of taking on elaborate and unnecessary holiday related projects every year. My theory is that I still get as excited for the Christmas as I did when I was a kid, and as an 'adult' this is how I channel that energy.
 
-The largest of these projects is my now 6-year tradition of surprising my family with a light show in my basement on Christmas morning. The first couple of years, the light show itself was the surprise, but the past few years I've been finding ways to challenge expectations of what a 'light show' could even be. This year that resulted in me secretly renting a U-Haul and pre-loading it with lights. My family reached a basement with only one light, packages containing winter clothes, and instructions to go outside. Pretty proud of how it all turned out.
+The largest of these projects is my now 6-year tradition of surprising my family with a light show in my basement on Christmas morning. The first couple of years, the light show itself was the surprise, but the past few years I've been finding ways to challenge expectations of what a 'light show' could even be. This year that resulted in me secretly renting a U-Haul and pre-loading it with lights. My family awoke to a basement with only one light set up, packages containing winter clothes, and instructions to go outside. Pretty proud of how it all turned out.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/A66dFP40ItU?si=f8GdG3rgiLLZRz7W" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
