@@ -1,5 +1,5 @@
 ---
-title: The Perils of Inline and Third-Party Scripts in Next.js
+title: The Perils ofThird-Party Scripts in Next.js
 description: In cases where using a third party script tag in Next.js is unavoidable, be aware of these potential stumbling blocks.
 author: Brian
 date: 2025-01-10
