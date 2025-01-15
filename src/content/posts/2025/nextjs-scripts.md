@@ -1,8 +1,8 @@
 ---
-title: The Perils ofThird-Party Scripts in Next.js
+title: The Perils of Third-Party Scripts in Next.js
 description: In cases where using a third party script tag in Next.js is unavoidable, be aware of these potential stumbling blocks.
 author: Brian
-date: 2025-01-10
+date: 2025-01-15
 ---
 
 In [Next.js](https://nextjs.org/) if you find yourself needing to integrate a script outside of the Node ecosystem (basically something you can't `import`,) you've probably already lost. It can sometimes be unavoidable though. I recently faced this with some third-party ad code that needed to be included in a project and it was tricky to get right.
@@ -74,7 +74,7 @@ Having the control provided by the `loadingStrategy` prop is helpful, but I stil
 - Once that loads, run custom ad code that defines ad slots and sets targeting. This code was provided by a another vendor, and was not written with Next.js in mind.
 - After the ad slots have been defined, display them based on the current page's content.
 
-The Next `<Script>` component offers [`onLoad`](https://nextjs.org/docs/pages/api-reference/components/script#onload) and [`onReady`](https://nextjs.org/docs/pages/api-reference/components/script#onready) props that can help with this. I initially assumed that `onLoad` would be the right choice, but has some important limitations. It can't be used with `beforeInteractive` and also does not yet work with Server Components. That makes `onReady` the only viable option here. Since `onReady` only runs on the client, we'd also need to move the script outside of the `Document` component as well.
+The Next `<Script>` component offers [`onLoad`](https://nextjs.org/docs/pages/api-reference/components/script#onload) and [`onReady`](https://nextjs.org/docs/pages/api-reference/components/script#onready) props that can help with this. I initially assumed that `onLoad` would be the right choice, but it has some important limitations. It can't be used with `beforeInteractive` and also does not yet work with Server Components. That makes `onReady` the only viable option here. Since `onReady` only runs on the client, we'd also need to move the script outside of the `Document` component as well.
 
 ```jsx
 import Script from "next/script";
@@ -112,7 +112,7 @@ useEffect(() => {
 }, [router]);
 ```
 
-handleRouteChange is a function that re-runs the ad targeting code, considering the new route.
+`handleRouteChange` is a function that re-runs the ad targeting code, considering the new route.
 
 ## Always Open to a Cleaner Solution
 
