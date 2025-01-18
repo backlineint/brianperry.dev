@@ -1,8 +1,8 @@
 ---
-title: HTML Web Components are a Great Fit for Drupal
-description: Paired with Single Directory Components, HTML Web Components are an excellent way to provide well encapsulated interactivity when needed.
+title: My Single Directory Components Workflow
+description: A walkthrough of the workflow I used to build a custom Drupal theme that relies heavily on Single Directory Components
 author: Brian
-date: 2024-11-17
+date: 2025-01-18
 tags:
   - drupal
 ---
