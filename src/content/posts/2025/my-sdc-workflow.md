@@ -7,7 +7,11 @@ tags:
   - drupal
 ---
 
-Recently I've been working on my first honest to God Drupal theme in years after primarily building decoupled front ends. This also proved to be the first time I could really put [Single Directory Components](https://www.drupal.org/docs/develop/theming-drupal/using-single-directory-components) (SDCs) to the test, after following along with development and experimenting in small side projects. I found pretty quickly that SDCs offered a bridge to the component based workflow I was familiar with that felt pretty comfortable. Further more, as my workflow established itself an interesting pattern emerged around progressive enhancement and custom elements.
+Recently I've been working on my first honest to God Drupal theme in years after primarily building decoupled front ends. This also proved to be the first time I could really put [Single Directory Components](https://www.drupal.org/docs/develop/theming-drupal/using-single-directory-components) (SDCs) to the test, after following along with development and experimenting in small side projects. I found pretty quickly that SDCs offered a bridge to the component based workflow I was familiar with that felt pretty comfortable. Further more, as my workflow established itself, an interesting pattern emerged around progressive enhancement and custom elements.
+
+### Identify Your Components
+
+This is kind of self explanatory, but is still an important part of the process. And it isn't necessarily Drupal specific. Look at your design, and identify the components that you'll need to build. I used astro for prototyping.
 
 ### Initial Component Scaffolding
 
