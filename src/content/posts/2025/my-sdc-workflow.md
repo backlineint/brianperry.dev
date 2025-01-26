@@ -9,11 +9,22 @@ tags:
 
 Recently I've been working on my first honest to God Drupal theme in years after primarily building decoupled front ends. This also proved to be the first time I could really put [Single Directory Components](https://www.drupal.org/docs/develop/theming-drupal/using-single-directory-components) (SDCs) to the test, after following along with development and experimenting in small side projects. I found pretty quickly that SDCs offered a bridge to the component based workflow I was familiar with that felt pretty comfortable. Further more, as my workflow established itself, an interesting pattern emerged around progressive enhancement and custom elements.
 
-### Identify Your Components
+### Initial Prototyping
 
-This is kind of self explanatory, but is still an important part of the process. And it isn't necessarily Drupal specific. Look at your design, and identify the components that you'll need to build. I used astro for prototyping.
+When possible, I prefer to do initial prototyping outside of Drupal. This often allows front end work to proceed before the back end functionality it depends on has been implemented. It also allows me to work in a lighter weight environment, and to focus on the design and user experience without the constraints of a CMS.
 
-### Initial Component Scaffolding
+My current tool of choice for this is [Astro](https://astro.build/). But maybe for you it is [Storybook](https://storybook.js.org/), or a simple HTML file. The important thing is that it is a familiar environment that allows you to iterate as quickly as possible. And ideally this should also be something that you can easily deploy somewhere for others to see and provide early feedback.
+
+At this point, I also include a few libraries or frameworks that I know I'll be using in the final build. For many, this might be something like adding [Tailwind](https://tailwindcss.com/). For me, I currently lean on the following in custom Drupal themes:
+
+- [Pico](https://picocss.com/) - a minimal CSS framework based on semantic HTML.
+- [Open Props](https://open-props.style/) - pre-packaged CSS variables for common design tokens.
+
+With that out of the way, pour over your design and identify the reusable components that you'll need to build.
+
+I won't get too deep into the Astro worflow, but in general you have your HTML, CSS, Props, etc which you'll find translate to your SDCs nicely.
+
+### Component Scaffolding
 
 When I identified a component that I needed to build, I'd start by creating the simplest possible representation of it as a single directory component. First I'd create a `component.yml` file in the `components` directory of my theme. The simplest possible version would be.
 
