@@ -101,6 +101,6 @@ This is verbose (as advertised) but pretty essential information, especially if 
 
 I'd often find myself either reviewing the source code of a recipe, or skimming the module page in the admin UI to understand what was actually included. This verbose output is a much quicker way to get that info.
 
-From what I can tell, `-v` and `-vv` provide the same output. `-vvv` is more verbose, but I haven't found the extra info super useful as of yet. None of these options seem to provide debug output for config actions, which is the only thing I could see as a useful addition.
+From what I can tell, `-v` and `-vv` provide the same output. `-vvv` is more verbose, but I haven't found the extra info super useful as of yet. None of these options seem to provide debug output for config actions, which is the only thing I could see as a useful addition. (Update: there is an [open issue for this](https://www.drupal.org/project/distributions_recipes/issues/3459304).)
 
 I realize that 'try running it with debug output' is hardly a groundbreaking tip, but in the case of recipes this additional info is really handy. Going forward, I'll be using `-v` by default when applying new recipes so that I can get a better sense of what's being added to my site.
