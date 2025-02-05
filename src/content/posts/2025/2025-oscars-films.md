@@ -5,7 +5,7 @@ author: Brian
 date: 2025-01-25
 ---
 
-_This is a living post that will be updated as I watch many, many movies. Last update: 2025-01-25_
+_This is a living post that will be updated as I watch many, many movies. Last update: 2025-02-05_
 
 For the past handful of years I've made a point to watch all of the films nominated for Best Picture at the Oscars. Here are my quick thoughts on what I've seen so far this year, along with some bonus films I've seen from other nominated categories.
 
@@ -16,6 +16,8 @@ For the past handful of years I've made a point to watch all of the films nomina
 ### Best Picture Nominees
 
 - [The Substance](https://www.imdb.com/title/tt17526714/) - I love that a movie this fucked up made the cut. I have some structural problems with it, especially in the third act, but I don't think a movie like this really cares about structure, logic, or reality. Enjoyed the disorienting way it was shot once I settled in, and boy oh boy those last few scenes. Too many needles though.
+
+- [Dune: Part Two](https://www.imdb.com/title/tt15239678/) - did nothing for me unfortunately. Couldn't remember enough of the first one, and generally found most of the movie baffling. Impressive to look at though.
 
 ### Other Nominated Films
 
