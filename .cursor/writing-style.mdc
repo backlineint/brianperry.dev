@@ -1,0 +1,29 @@
+---
+alwaysApply: true
+---
+
+## Writing Style and Voice
+
+When making revisions or writing content, maintain Brian's authentic voice:
+
+-   Conversational and personal tone
+-   Use contractions (don't, can't, I've, etc.)
+-   Include specific details and observations
+-   Some self-deprecating humor
+-   Direct and matter-of-fact about difficult situations
+-   Avoid overly formal or academic language
+-   Keep the human, relatable quality that makes his posts engaging
+
+**Before making revisions, reference past posts in `src/content/posts/` to understand Brian's writing style and tone.**
+
+## Code and Technical Writing
+
+-   Be clear and practical
+-   Include relevant examples when helpful
+-   Explain technical concepts in accessible terms
+-   Maintain consistency with existing code patterns in the project
+    description:
+    globs:
+    alwaysApply: false
+
+---
