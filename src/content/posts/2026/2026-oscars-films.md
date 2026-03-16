@@ -35,32 +35,34 @@ It's Oscars time, so here's a quick rundown of my thoughts on all ten Best Pictu
 
 ### My Picks
 
-| Category | Pick |
-|---|---|
-| Best Picture | One Battle After Another |
-| Best Director | Paul Thomas Anderson, One Battle After Another |
-| Best Actor | Michael B. Jordan, Sinners |
-| Best Actress | Jessie Buckley, Hamnet |
-| Best Supporting Actor | Sean Penn, One Battle After Another |
-| Best Supporting Actress | Amy Madigan, Weapons |
-| Original Screenplay | Sinners |
-| Adapted Screenplay | One Battle After Another |
-| Casting | Sinners |
-| Editing | One Battle After Another |
-| Animated Feature | KPop Demon Hunters |
-| Documentary Feature | The Perfect Neighbor |
-| International Feature | Sentimental Value (Norway) |
-| Production Design | Frankenstein |
-| Costume Design | Frankenstein |
-| Cinematography | One Battle After Another |
-| Makeup and Hairstyling | Frankenstein |
-| Sound | F1 |
-| Visual Effects | Avatar: Fire and Ash |
-| Original Score | Sinners |
-| Original Song | "Golden" (KPop Demon Hunters) |
-| Animated Short | Butterfly |
-| Documentary Short | All the Empty Rooms |
-| Live-Action Short | Two People Exchanging Saliva |
+20/24 correct.
+
+| Category | My Pick | Winner |
+|---|---|---|
+| Best Picture | One Battle After Another | ✓ |
+| Best Director | Paul Thomas Anderson, One Battle After Another | ✓ |
+| Best Actor | Michael B. Jordan, Sinners | ✓ |
+| Best Actress | Jessie Buckley, Hamnet | ✓ |
+| Best Supporting Actor | Sean Penn, One Battle After Another | ✓ |
+| Best Supporting Actress | Amy Madigan, Weapons | ✓ |
+| Original Screenplay | Sinners | ✓ |
+| Adapted Screenplay | One Battle After Another | ✓ |
+| Casting | Sinners | ✗ One Battle After Another |
+| Editing | One Battle After Another | ✓ |
+| Animated Feature | KPop Demon Hunters | ✓ |
+| Documentary Feature | The Perfect Neighbor | ✗ Mr. Nobody Against Putin |
+| International Feature | Sentimental Value (Norway) | ✓ |
+| Production Design | Frankenstein | ✓ |
+| Costume Design | Frankenstein | ✓ |
+| Cinematography | One Battle After Another | ✗ Sinners |
+| Makeup and Hairstyling | Frankenstein | ✓ |
+| Sound | F1 | ✓ |
+| Visual Effects | Avatar: Fire and Ash | ✓ |
+| Original Score | Sinners | ✓ |
+| Original Song | "Golden" (KPop Demon Hunters) | ✓ |
+| Animated Short | Butterfly | ✗ The Girl Who Cried Pearls |
+| Documentary Short | All the Empty Rooms | ✓ |
+| Live-Action Short | Two People Exchanging Saliva | ✓ (tie with The Singers) |
 
 ### Other Thoughts
 
