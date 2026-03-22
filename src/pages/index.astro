@@ -25,7 +25,7 @@ const posts = await getSortedPosts(4);
       <RadTwoCol>
         <div class="primary">
           <h1>BrianPerry.dev</h1>
-          <h2 class="subhead">A serious and professional website</h2>
+          <p class="subhead">A serious and professional website</p>
           <p>
             I'm a <a href="https://github.com/backlineint">web developer</a>
             and a <a href="https://www.drupal.org/u/brianperry"
@@ -101,46 +101,51 @@ const posts = await getSortedPosts(4);
       :where(li) {
         max-inline-size: unset;
       }
+      h1 {
+        margin-bottom: 0;
+      }
+      .subhead {
+        font-size: var(--font-size-4);
+        color: var(--text-2);
+        margin-top: var(--size-2);
+        margin-bottom: var(--size-5);
+      }
       h3 {
-        margin: var(--size-5) 0 var(--size-5) 0;
+        margin: var(--size-7) 0 var(--size-3) 0;
+        font-size: var(--font-size-3);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--text-2);
+        border-bottom: 1px solid var(--surface-3);
+        padding-bottom: var(--size-2);
       }
 
       .primary {
-        & h2.subhead {
-          font-size: var(--font-size-5);
-          line-height: var(--font-lineheight-2);
-        }
         /* TODO: Abstract list styles into a list component */
         & ul {
           display: flex;
           flex-wrap: wrap;
-          gap: 2rem;
+          gap: var(--size-5);
           list-style-type: none;
           margin: 0;
           padding: 0;
         }
         & ul li {
           width: 100%;
-          padding-bottom: var(--size-7);
-          border-bottom: 2px solid var(--surface-2);
+          padding-bottom: var(--size-5);
+          border-bottom: 1px solid var(--surface-3);
         }
         & ul li:last-of-type {
           border-bottom: 0;
         }
         & ul li * {
           text-decoration: none;
-          transition: 0.2s ease;
         }
         & ul li a {
           display: block;
         }
-        & ul li a:hover h4,
-        & ul li a:hover .date {
-          color: rgb(var(--accent));
-        }
-        & ul a:hover img,
-        & ul a:hover .description {
-          box-shadow: var(--shadow-4);
+        & ul li a:hover h4 {
+          color: var(--link);
         }
       }
       .secondary {

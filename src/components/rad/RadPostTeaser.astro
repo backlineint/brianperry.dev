@@ -29,10 +29,10 @@ const { collection, slug } = Astro.props.post;
     <p class="date">
       <FormattedDate date={new Date(date)} />
     </p>
-    <p>
+    <p class="description">
       {description}
     </p>
-    <a href={`/${collection}/${slug}`}>Read more →</a>
+    <a class="read-more" href={`/${collection}/${slug}`}>Read more &rarr;</a>
   </div>
 </rad-post-teaser>
 
@@ -45,21 +45,39 @@ const { collection, slug } = Astro.props.post;
     & .title {
       margin: 0;
       color: var(--text-1);
-      line-height: 1;
+      line-height: 1.2;
+      font-size: var(--font-size-3);
+    }
+    & .title a {
+      text-decoration: none;
+      color: inherit;
+    }
+    & .title a:hover {
+      color: var(--link);
     }
     & .date {
-      margin: 0;
+      margin: var(--size-1) 0 0;
       color: var(--text-2);
+      font-size: var(--font-size-1);
+    }
+    & .description {
+      color: var(--text-2);
+      font-size: var(--font-size-2);
+      line-height: 1.5;
+    }
+    & .read-more {
+      font-size: var(--font-size-1);
+      font-weight: 600;
     }
     & img {
-      margin: 0 0 var(--size-7) 0;
+      margin: 0 0 var(--size-5) 0;
       box-shadow: var(--box-shadow);
-      border-radius: 12px;
+      border-radius: var(--radius-2);
       aspect-ratio: 16 / 9;
       object-fit: cover;
       @media (min-width: 720px) {
         width: 35%;
-        margin: 0 0 0 var(--size-3);
+        margin: 0 0 0 var(--size-5);
       }
     }
   }
