@@ -10,62 +10,35 @@ type Props = {
     | CollectionEntry<"jams">;
 };
 
-const { title, date, description, imagePath, alt } = Astro.props.post.data;
+const { title, date, description, imagePath, alt, tags } = Astro.props.post.data;
 const { collection, slug } = Astro.props.post;
+const href = `/${collection}/${slug}`;
 ---
 
-<rad-post-teaser>
+<article class:list={["row", { noimg: !imagePath }]}>
+  <div>
+    <div class="kicker rk">
+      <FormattedDate date={new Date(date)} />
+    </div>
+    <h3>
+      <a href={href}>{title} <span class="arr">→</span></a>
+    </h3>
+    <p>{description}</p>
+    {
+      tags && tags.length > 0 && (
+        <div class="tags">
+          {tags.map((tag) => (
+            <span class="tag">{tag}</span>
+          ))}
+        </div>
+      )
+    }
+  </div>
   {
     imagePath && (
-      <Image src={imagePath} alt={alt ? alt : null} width="672" height="378" />
+      <a href={href} class="thumb">
+        <Image src={imagePath} alt={alt ? alt : ""} width="336" height="231" />
+      </a>
     )
   }
-  <div class="text">
-    <h4 class="title">
-      <a href={`/${collection}/${slug}`}>
-        {title}
-      </a>
-    </h4>
-    <p class="date">
-      <FormattedDate date={new Date(date)} />
-    </p>
-    <p>
-      {description}
-    </p>
-    <a href={`/${collection}/${slug}`}>Read more →</a>
-  </div>
-</rad-post-teaser>
-
-<style>
-  rad-post-teaser {
-    @media (min-width: 720px) {
-      display: flex;
-      justify-content: space-between;
-    }
-    & .title {
-      margin: 0;
-      color: var(--text-1);
-      line-height: 1;
-    }
-    & .date {
-      margin: 0;
-      color: var(--text-2);
-    }
-    & img {
-      margin: 0 0 var(--size-7) 0;
-      box-shadow: var(--box-shadow);
-      border-radius: 12px;
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
-      @media (min-width: 720px) {
-        width: 35%;
-        margin: 0 0 0 var(--size-3);
-      }
-    }
-  }
-  rad-post-teaser:has(img) {
-    @media (min-width: 720px) {
-      flex-direction: row-reverse;
-    }
-  }
-</style>
+</article>

@@ -24,82 +24,31 @@ const { frontmatter } = Astro.props;
       description={frontmatter.description}
       image={frontmatter.heroImage}
     />
-    <style>
-      main {
-        width: 100%;
-        max-width: 100%;
-        margin: 0;
-        padding: var(--size-3);
-      }
-      .hero-image {
-        width: 100%;
-        margin-top: var(--size-7);
-      }
-      .hero-image img {
-        display: block;
-        margin: 0 auto;
-        border-radius: 12px;
-        box-shadow: var(--box-shadow);
-        aspect-ratio: 16 / 9;
-        object-fit: cover;
-        &.top {
-          object-position: top;
-        }
-      }
-      .prose {
-        width: 760px;
-        max-width: 100%;
-        margin: auto;
-        padding: 1em;
-        img {
-          box-shadow: var(--box-shadow);
-        }
-      }
-      .title {
-        margin-bottom: 1em;
-        padding: 1em 0;
-        text-align: center;
-        line-height: 1;
-      }
-      .title h1 {
-        margin: 0 0 0.5em 0;
-      }
-      .date {
-        margin-bottom: 0.5em;
-        color: var(--text-2);
-      }
-      .last-updated-on {
-        font-style: italic;
-      }
-    </style>
   </head>
 
   <body>
     <Header />
     <main>
-      <article>
+      <article class="article">
+        <h1 class="title">{frontmatter.title}</h1>
+
         {
           frontmatter.heroImage && (
-            <div class="hero-image">
+            <div class="post-hero">
               <img
                 width={1020}
                 height={510}
                 src={frontmatter.heroImage}
                 alt={frontmatter.alt}
-                class={
-                  frontmatter.imageAlignment
-                    ? frontmatter.imageAlignment
-                    : "center"
-                }
+                class={frontmatter.imageAlignment ? frontmatter.imageAlignment : "center"}
               />
             </div>
           )
         }
+
+        <hr class="rule" />
+
         <div class="prose">
-          <div class="title">
-            <h1>{frontmatter.title}</h1>
-            <hr />
-          </div>
           <slot />
         </div>
       </article>

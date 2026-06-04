@@ -1,17 +1,13 @@
 ---
-import { Image } from "astro:assets";
 import { getSortedPosts } from "../lib/getSortedPosts";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import RadTwoCol from "../components/rad/RadTwoCol.astro";
 import RadPostTeaser from "../components/rad/RadPostTeaser.astro";
 
-import homeImage from "../assets/perry_weather.jpg";
-
-const posts = await getSortedPosts(4);
+const posts = await getSortedPosts(3);
 ---
 
 <!doctype html>
@@ -20,134 +16,98 @@ const posts = await getSortedPosts(4);
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
   <body>
-    <Header title={SITE_TITLE} />
-    <main>
-      <RadTwoCol>
-        <div class="primary">
-          <h1>BrianPerry.dev</h1>
-          <h2 class="subhead">A serious and professional website</h2>
-          <p>
-            I'm a <a href="https://github.com/backlineint">web developer</a>
-            and a <a href="https://www.drupal.org/u/brianperry"
-              >member of the Drupal community</a
-            > who often <a href="https://noti.st/brianperry">presents</a> at tech
-            events. I live with a super awesome family in the Chicago suburbs and
-            I really like Nintendo.
-          </p>
-          <h3>Latest Posts</h3>
-          <ul>
-            {
-              posts.map((entry) => (
-                <li>
-                  <RadPostTeaser post={entry} />
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-        <div class="secondary">
-          <Image
-            src={homeImage}
-            alt="Brian with a weather station"
-            class="home-image"
-          />
-          <h3>Recent Projects</h3>
-          <ul>
-            <li>
-              <a href="https://actual.ai"
-                >Actual AI</a
-              > - Guardrails for AI-Powered Software Development
-            </li>
-            <li>
-              Stealth Read Later App - Side project city. More to come soon.
-            </li>
-          </ul>
-          <h3>Currently Enjoying</h3>
-          <ul>
-            <li>
-              <a href="/posts/2026/2026-oscars-films/">2026 Oscars Films</a> - unusually crowd pleasing list this year.
-            </li>
-            <li>
-              <a href="https://www.residentevil.com/requiem/en-us/">Resident Evil Requiem</a> - enjoying playing this like a total wuss and saving every five seconds. Runs great on Switch 2.
-            </li>
-            <li>
-              <a href="https://www.nintendo.com/us/store/products/pokemon-pokopia-switch-2">Pokopia</a> - Scratching the Animal Crossing itch. Also the perfect cozy game balance to Resident Evil.
-            </li>
-            <li>
-              <a href="https://www.youtube.com/playlist?list=PLcZMZxR9uxC8Wgves165_y4Kakqq5F5hZ">I Used to Go to This Bar - Joyce Manor</a> - perfect 19 minute punk album
-            </li>
-          </ul>
-        </div>
-      </RadTwoCol>
-    </main>
-    <Footer />
-    <style>
-      main {
-        width: 1250px;
-      }
-      img {
-        box-shadow: var(--box-shadow);
-        &.home-image {
-          @media (max-width: 1024px) {
-            width: 100%;
-            max-width: var(--size-content-2);
-            margin: var(--size-3) auto var(--size-7) auto;
-          }
-        }
-      }
-      :where(li) {
-        padding-inline-start: 0;
-      }
-      :where(li) {
-        max-inline-size: unset;
-      }
-      h3 {
-        margin: var(--size-5) 0 var(--size-5) 0;
-      }
+    <Header />
 
-      .primary {
-        & h2.subhead {
-          font-size: var(--font-size-5);
-          line-height: var(--font-lineheight-2);
+    <svg class="rings" width="1100" height="900" style="top:60px" viewBox="0 0 1100 900" aria-hidden="true">
+      <circle cx="550" cy="240" r="220"></circle><circle cx="550" cy="240" r="340"></circle>
+      <circle cx="550" cy="240" r="470"></circle><circle cx="550" cy="240" r="600"></circle>
+    </svg>
+
+    <header class="hero wrap">
+      <span class="pill">A serious &amp; professional website</span>
+      <h1 class="mast">Brian<span class="l2">Perry.dev</span></h1>
+      <p class="bio">
+        I'm a <a href="https://github.com/backlineint">web developer</a> and a
+        <a href="https://www.drupal.org/u/brianperry">member of the Drupal community</a>
+        who often <a href="https://noti.st/brianperry">presents</a> at tech events.
+        I live with a super awesome family in the Chicago suburbs and I really like Nintendo.
+      </p>
+
+      <div class="findme">
+        <a href="https://bsky.app/profile/brianperry.dev" target="_blank">
+          <svg viewBox="0 0 576 512" aria-hidden="true"><path d="M407.8 294.7c-3.3-.4-6.7-.8-10-1.3c3.4.4 6.7.9 10 1.3M288 227.1c-26.1-50.7-97.1-145.2-163.1-191.8C61.6-9.4 37.5-1.7 21.6 5.5C3.3 13.8 0 41.9 0 58.4S9.1 194 15 213.9c19.5 65.7 89.1 87.9 153.2 80.7c3.3-.5 6.6-.9 10-1.4c-3.3.5-6.6 1-10 1.4c-93.9 14-177.3 48.2-67.9 169.9C220.6 589.1 265.1 437.8 288 361.1c22.9 76.7 49.2 222.5 185.6 103.4c102.4-103.4 28.1-156-65.8-169.9c-3.3-.4-6.7-.8-10-1.3c3.4.4 6.7.9 10 1.3c64.1 7.1 133.6-15.1 153.2-80.7C566.9 194 576 75 576 58.4s-3.3-44.7-21.6-52.9c-15.8-7.1-40-14.9-103.2 29.8C385.1 81.9 314.1 176.4 288 227.1"/></svg>Bluesky
+        </a>
+        <a href="https://github.com/backlineint" target="_blank">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub
+        </a>
+        <a href="/feed.xml">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM3 9.5V13c4.4 0 8 3.6 8 8h3.5C14.5 14.6 9.4 9.5 3 9.5Zm0-6V7c7.7 0 14 6.3 14 14h3.5C20.5 11.6 12.4 3.5 3 3.5Z"/></svg>RSS
+        </a>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <div class="sec-head">
+        <h2>Latest</h2>
+        <span class="count">writing · recent</span>
+      </div>
+
+      <ul class="rows">
+        {
+          posts.map((entry) => (
+            <li>
+              <RadPostTeaser post={entry} />
+            </li>
+          ))
         }
-        /* TODO: Abstract list styles into a list component */
-        & ul {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 2rem;
-          list-style-type: none;
-          margin: 0;
-          padding: 0;
-        }
-        & ul li {
-          width: 100%;
-          padding-bottom: var(--size-7);
-          border-bottom: 2px solid var(--surface-2);
-        }
-        & ul li:last-of-type {
-          border-bottom: 0;
-        }
-        & ul li * {
-          text-decoration: none;
-          transition: 0.2s ease;
-        }
-        & ul li a {
-          display: block;
-        }
-        & ul li a:hover h4,
-        & ul li a:hover .date {
-          color: rgb(var(--accent));
-        }
-        & ul a:hover img,
-        & ul a:hover .description {
-          box-shadow: var(--shadow-4);
-        }
-      }
-      .secondary {
-        & ul {
-          max-inline-size: var(--size-content-3);
-        }
-      }
-    </style>
+      </ul>
+
+      <div class="sec-head">
+        <h2>Off the clock</h2>
+        <span class="count">projects · &amp; · enjoying</span>
+      </div>
+
+      <div class="two">
+        <div class="card">
+          <h4><span class="dot" style="background:var(--gold)"></span>Recent Projects</h4>
+          <ul>
+            <li>
+              <a href="https://actual.ai">Actual AI</a>
+              <span class="meta">— Guardrails for AI-Powered Software Development.</span>
+            </li>
+            <li>
+              <span class="meta">Stealth Read Later App — Side project city. More to come soon.</span>
+            </li>
+            <li>
+              <a href="https://github.com/backlineint/brianperry.dev">brianperry.dev</a>
+              <span class="meta">— This site, rebuilt more times than is reasonable.</span>
+            </li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4><span class="dot" style="background:var(--coral)"></span>Currently Enjoying</h4>
+          <ul>
+            <li>
+              <a href="/posts/2026/2026-oscars-films/">2026 Oscars Films</a>
+              <span class="meta">— unusually crowd-pleasing list this year.</span>
+            </li>
+            <li>
+              <a href="https://www.residentevil.com/requiem/en-us/">Resident Evil Requiem</a>
+              <span class="meta">— playing like a total wuss, saving every five seconds. Runs great on Switch 2.</span>
+            </li>
+            <li>
+              <a href="https://www.nintendo.com/us/store/products/pokemon-pokopia-switch-2">Pokopia</a>
+              <span class="meta">— scratching the Animal Crossing itch.</span>
+            </li>
+            <li>
+              <a href="https://www.youtube.com/playlist?list=PLcZMZxR9uxC8Wgves165_y4Kakqq5F5hZ">I Used to Go to This Bar — Joyce Manor</a>
+              <span class="meta">— perfect 19-minute punk album.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </main>
+
+    <Footer />
   </body>
 </html>
