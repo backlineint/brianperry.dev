@@ -20,6 +20,13 @@
 	--line: rgba(255, 255, 255, 0.12);
 	--line-2: rgba(255, 255, 255, 0.06);
 
+	/* Constant dark text used on the bright accent badges, regardless of theme. */
+	--badge-ink: #160c2b;
+	/* Soft top glow + dot-grid color + long-form prose ink (theme-aware). */
+	--glow: #2a1550;
+	--dot: rgba(255, 255, 255, 0.05);
+	--prose-ink: #ece6fa;
+
 	/* Map Open Props normalize tokens onto the Arcade palette so any
 	   component or prose that still references them stays on-theme. */
 	--text-1: var(--ink);
@@ -40,6 +47,32 @@
 	color-scheme: dark;
 }
 
+/* ---- Light mode: same arcade energy, daylit plum ---- */
+:root[data-theme="light"] {
+	--bg: #f6f2ff;
+	--bg-2: #ece4fb;
+	--surface: #ffffff;
+	--surface-2: #f1ebfd;
+	--ink: #1b1033;
+	--muted: #5b4d80;
+	--faint: #8678a3;
+	/* Accents deepened just enough to stay legible on light surfaces. */
+	--red: #e23a5c;
+	--gold: #c98a0f;
+	--green: #1a9f5c;
+	--cyan: #0f8aa6;
+	--line: rgba(27, 16, 51, 0.16);
+	--line-2: rgba(27, 16, 51, 0.07);
+
+	--glow: #e7dcff;
+	--dot: rgba(27, 16, 51, 0.06);
+	--prose-ink: #2c2342;
+
+	--black: 246, 242, 255;
+
+	color-scheme: light;
+}
+
 * {
 	box-sizing: border-box;
 }
@@ -55,7 +88,7 @@ body {
 	min-height: 100vh;
 	text-align: left;
 	background:
-		radial-gradient(110% 70% at 50% 0%, #2a1550 0%, rgba(42, 21, 80, 0) 50%),
+		radial-gradient(110% 70% at 50% 0%, var(--glow) 0%, transparent 50%),
 		var(--bg);
 	color: var(--ink);
 	font-family: var(--font-sans);
@@ -73,7 +106,7 @@ body::before {
 	inset: 0;
 	z-index: 0;
 	pointer-events: none;
-	background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1.4px, transparent 1.4px);
+	background-image: radial-gradient(var(--dot) 1.4px, transparent 1.4px);
 	background-size: 26px 26px;
 }
 
@@ -147,7 +180,7 @@ img {
 	font-size: 11px;
 	letter-spacing: 0.12em;
 	text-transform: uppercase;
-	color: var(--bg);
+	color: var(--badge-ink);
 	background: var(--gold);
 	padding: 5px 11px;
 	border-radius: 7px;
@@ -160,17 +193,17 @@ img {
 
 .badge.green {
 	background: var(--green);
-	color: var(--bg);
+	color: var(--badge-ink);
 }
 
 .badge.cyan {
 	background: var(--cyan);
-	color: var(--bg);
+	color: var(--badge-ink);
 }
 
 .badge.gold {
 	background: var(--gold);
-	color: var(--bg);
+	color: var(--badge-ink);
 }
 
 .badge.ghost {
@@ -206,6 +239,21 @@ img {
 	letter-spacing: 0.12em;
 	text-transform: uppercase;
 	color: var(--faint);
+}
+
+/* ---- theme toggle icon swap ---- */
+/* Dark mode shows the sun (tap for light); light mode shows the moon. */
+.theme-toggle .i-moon {
+	display: none;
+}
+.theme-toggle .i-sun {
+	display: block;
+}
+:root[data-theme="light"] .theme-toggle .i-sun {
+	display: none;
+}
+:root[data-theme="light"] .theme-toggle .i-moon {
+	display: block;
 }
 
 /* ---- accent text helpers ---- */
@@ -254,7 +302,7 @@ img {
 .prose {
 	font-size: 18.5px;
 	line-height: 1.72;
-	color: #ece6fa;
+	color: var(--prose-ink);
 }
 
 .prose p {
@@ -383,7 +431,7 @@ img {
 
 .prose mark {
 	background: var(--gold);
-	color: var(--bg);
+	color: var(--badge-ink);
 	padding: 0 4px;
 	border-radius: 3px;
 }

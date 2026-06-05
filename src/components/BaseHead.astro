@@ -34,6 +34,34 @@ const { title, description, image = "/og_image.jpg" } = Astro.props;
   gtag("config", "G-R4YJ3X82V6");
 </script>
 
+<!-- Color theme: apply before paint, persist choice, survive view transitions -->
+<script is:inline>
+  (() => {
+    const KEY = "theme";
+    const root = document.documentElement;
+    const preferred = () => {
+      const stored = localStorage.getItem(KEY);
+      if (stored === "light" || stored === "dark") return stored;
+      return window.matchMedia("(prefers-color-scheme: light)").matches
+        ? "light"
+        : "dark";
+    };
+    const apply = (t) => root.setAttribute("data-theme", t);
+    apply(preferred());
+    // ViewTransitions swaps <html> attributes on navigation — reapply after.
+    document.addEventListener("astro:after-swap", () => apply(preferred()));
+    // Delegated so it keeps working after the header is swapped.
+    document.addEventListener("click", (e) => {
+      const target = e.target;
+      if (!(target instanceof Element) || !target.closest("[data-theme-toggle]"))
+        return;
+      const next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
+      localStorage.setItem(KEY, next);
+      apply(next);
+    });
+  })();
+</script>
+
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
