@@ -115,12 +115,20 @@ import HeaderLink from "./HeaderLink.astro";
     fill: var(--cyan);
     color: var(--cyan);
   }
-  @media (max-width: 520px) {
+  /* Mid widths: the centered grid forces symmetric side columns and the
+     wordmark outgrows its column (~620px). Drop to a single space-between row. */
+  @media (max-width: 720px) {
     .nav {
       display: flex;
+      justify-content: space-between;
+    }
+  }
+  /* Narrow: let the three groups wrap and center. */
+  @media (max-width: 620px) {
+    .nav {
       flex-wrap: wrap;
       justify-content: center;
-      gap: 10px;
+      gap: 10px 14px;
     }
   }
 </style>
