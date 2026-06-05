@@ -10,7 +10,11 @@ import HeaderLink from "./HeaderLink.astro";
       <HeaderLink href="/about">About</HeaderLink>
     </div>
     <div class="ico">
-      <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle light and dark theme">
+      <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch color theme (auto, light, dark)">
+        <svg class="i-auto" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"></circle>
+          <path fill="currentColor" d="M12 3a9 9 0 0 0 0 18z"></path>
+        </svg>
         <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true" fill="none">
           <circle cx="12" cy="12" r="4.2" fill="currentColor"></circle>
           <g stroke="currentColor" stroke-width="2" stroke-linecap="round">

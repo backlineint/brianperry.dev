@@ -38,26 +38,37 @@ const { title, description, image = "/og_image.jpg" } = Astro.props;
 <script is:inline>
   (() => {
     const KEY = "theme";
+    const MODES = ["auto", "light", "dark"];
     const root = document.documentElement;
-    const preferred = () => {
-      const stored = localStorage.getItem(KEY);
-      if (stored === "light" || stored === "dark") return stored;
-      return window.matchMedia("(prefers-color-scheme: light)").matches
+    const system = () =>
+      window.matchMedia("(prefers-color-scheme: light)").matches
         ? "light"
         : "dark";
+    // Stored value is the explicit override; absence means "auto" (follow OS).
+    const mode = () => {
+      const m = localStorage.getItem(KEY);
+      return m === "light" || m === "dark" ? m : "auto";
     };
-    const apply = (t) => root.setAttribute("data-theme", t);
-    apply(preferred());
+    const apply = () => {
+      const m = mode();
+      root.setAttribute("data-theme-mode", m);
+      root.setAttribute("data-theme", m === "auto" ? system() : m);
+    };
+    apply();
     // ViewTransitions swaps <html> attributes on navigation — reapply after.
-    document.addEventListener("astro:after-swap", () => apply(preferred()));
+    document.addEventListener("astro:after-swap", apply);
+    // In Auto mode this updates the theme when the OS theme changes.
+    window
+      .matchMedia("(prefers-color-scheme: light)")
+      .addEventListener("change", apply);
     // Delegated so it keeps working after the header is swapped.
     document.addEventListener("click", (e) => {
-      const target = e.target;
-      if (!(target instanceof Element) || !target.closest("[data-theme-toggle]"))
-        return;
-      const next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
-      localStorage.setItem(KEY, next);
-      apply(next);
+      const t = e.target;
+      if (!(t instanceof Element) || !t.closest("[data-theme-toggle]")) return;
+      const next = MODES[(MODES.indexOf(mode()) + 1) % MODES.length];
+      if (next === "auto") localStorage.removeItem(KEY);
+      else localStorage.setItem(KEY, next);
+      apply();
     });
   })();
 </script>

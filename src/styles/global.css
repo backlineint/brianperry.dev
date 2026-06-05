@@ -241,18 +241,17 @@ img {
 	color: var(--faint);
 }
 
-/* ---- theme toggle icon swap ---- */
-/* Dark mode shows the sun (tap for light); light mode shows the moon. */
-.theme-toggle .i-moon {
+/* ---- theme toggle icon (reflects the current mode: auto / light / dark) ---- */
+.theme-toggle svg {
 	display: none;
 }
-.theme-toggle .i-sun {
+:root[data-theme-mode="auto"] .theme-toggle .i-auto,
+:root[data-theme-mode="light"] .theme-toggle .i-sun,
+:root[data-theme-mode="dark"] .theme-toggle .i-moon {
 	display: block;
 }
-:root[data-theme="light"] .theme-toggle .i-sun {
-	display: none;
-}
-:root[data-theme="light"] .theme-toggle .i-moon {
+/* Fallback before the inline script sets data-theme-mode. */
+:root:not([data-theme-mode]) .theme-toggle .i-auto {
 	display: block;
 }
 
