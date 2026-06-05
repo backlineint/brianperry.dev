@@ -27,6 +27,11 @@
 	--dot: rgba(255, 255, 255, 0.05);
 	--prose-ink: #ece6fa;
 
+	/* Duotone sticker (hero portrait): shadow + highlight tint, frame shadow. */
+	--duo-shadow: #1b1140;
+	--duo-light: #46d4ea;
+	--duo-frame-shadow: rgba(0, 0, 0, 0.34);
+
 	/* Map Open Props normalize tokens onto the Arcade palette so any
 	   component or prose that still references them stays on-theme. */
 	--text-1: var(--ink);
@@ -67,6 +72,10 @@
 	--glow: #e7dcff;
 	--dot: rgba(27, 16, 51, 0.06);
 	--prose-ink: #2c2342;
+
+	--duo-shadow: #3a1f63;
+	--duo-light: #df3258;
+	--duo-frame-shadow: rgba(29, 16, 51, 0.16);
 
 	--black: 246, 242, 255;
 
