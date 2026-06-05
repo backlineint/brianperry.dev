@@ -63,10 +63,10 @@ const duos = [1, 3, 2, 4, 6, 5];
               width={600}
               height={668}
             />
-            <div class="ov lighten"></div>
-            <div class="ov multiply"></div>
+            <div class="ov tint"></div>
+            <div class="ov holo"></div>
           </div>
-          <span class="tape">// brian.exe</span>
+          <span class="tape">// brian</span>
           <svg class="starbadge" width="50" height="50" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M12 0C13 7 17 11 24 12 17 13 13 17 12 24 11 17 7 13 0 12 7 11 11 7 12 0Z" />
           </svg>
@@ -269,20 +269,60 @@ const duos = [1, 3, 2, 4, 6, 5];
         height: 100%;
         object-fit: cover;
         border-radius: 0;
-        filter: grayscale(1) contrast(1.18) brightness(1.05);
+        /* Untreated by default — the holographic effects develop on hover. */
+        filter: saturate(1.03);
+        transition: filter 0.35s ease;
       }
       .duo-clip .ov {
         position: absolute;
         inset: 0;
         pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.35s ease;
       }
-      .duo-clip .ov.lighten {
-        background: var(--duo-shadow);
-        mix-blend-mode: lighten;
-      }
-      .duo-clip .ov.multiply {
+      /* Gentle theme-colored wash so the sticker still ties to the palette. */
+      .duo-clip .ov.tint {
         background: var(--duo-light);
-        mix-blend-mode: multiply;
+        mix-blend-mode: soft-light;
+      }
+      /* Holographic foil sheen — a diagonal iridescent streak. */
+      .duo-clip .ov.holo {
+        background: linear-gradient(
+          125deg,
+          rgba(255, 255, 255, 0) 12%,
+          rgba(255, 120, 190, 0.55) 26%,
+          rgba(125, 205, 255, 0.55) 38%,
+          rgba(160, 255, 200, 0.55) 50%,
+          rgba(255, 228, 135, 0.55) 62%,
+          rgba(206, 150, 255, 0.55) 74%,
+          rgba(255, 255, 255, 0) 88%
+        );
+        background-size: 200% 200%;
+        mix-blend-mode: color-dodge;
+      }
+      /* Hover develops the foil: tint + shimmering rainbow + a little pop. */
+      .frame.duo:hover :global(img) {
+        filter: contrast(1.06) saturate(1.16) brightness(1.03);
+      }
+      .frame.duo:hover .ov.tint {
+        opacity: 0.3;
+      }
+      .frame.duo:hover .ov.holo {
+        opacity: 0.55;
+        animation: holo-shimmer 6s ease-in-out infinite alternate;
+      }
+      @keyframes holo-shimmer {
+        0% {
+          background-position: 0% 50%;
+        }
+        100% {
+          background-position: 100% 50%;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .frame.duo:hover .ov.holo {
+          animation: none;
+        }
       }
       .frame.duo .tape {
         position: absolute;
