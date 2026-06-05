@@ -24,23 +24,24 @@ const tlbl = (tags && tags.length ? tags[0] : collection).toLowerCase();
 const badges = (tags && tags.length ? tags : [collection]).slice(0, 2);
 ---
 
-<article class:list={["scard", { feat: featured }]}>
-  <div class:list={["top", `duo-${duo}`]}>
-    {
-      imagePath && (
+<article class:list={["scard", { feat: featured, "no-img": !imagePath }]}>
+  {
+    imagePath && (
+      <div class:list={["top", `duo-${duo}`]}>
         <Image
           src={imagePath}
           alt={alt ? alt : ""}
           width={featured ? 600 : 640}
           height={featured ? 700 : 320}
         />
-      )
-    }
-    {featured && <span class="badge red tbadge">★ Latest</span>}
-    <span class="tlbl">{tlbl}</span>
-  </div>
+        {featured && <span class="badge red tbadge">★ Latest</span>}
+        <span class="tlbl">{tlbl}</span>
+      </div>
+    )
+  }
   <div class="body">
     <div class="kk">
+      {featured && !imagePath && <span class="badge red">★ Latest</span>}
       <span>{epLabel}</span><span class="sep">·</span>
       <span><FormattedDate date={new Date(date)} /></span>
     </div>
@@ -119,6 +120,13 @@ const badges = (tags && tags.length ? tags : [collection]).slice(0, 2);
     flex-direction: column;
     gap: 10px;
     flex: 1;
+  }
+  /* Text-only cards (no thumbnail) get a touch more breathing room up top. */
+  .scard.no-img .body {
+    padding-top: 24px;
+  }
+  .scard.no-img .kk .badge {
+    margin-right: 2px;
   }
   .kk {
     font-family: "JetBrains Mono", monospace;

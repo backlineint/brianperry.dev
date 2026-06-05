@@ -19,7 +19,6 @@ interface Props {
 const { title, description, pubDate, updatedDate, heroImage, ep, tag } =
   Astro.props;
 const epLabel = ep ? `EP ${String(ep).padStart(3, "0")}` : null;
-const duo = ep ? (ep % 6) + 1 : 6;
 ---
 
 <html lang="en">
@@ -41,6 +40,7 @@ const duo = ep ? (ep % 6) + 1 : 6;
         </a>
         <div class="pmeta">
           {epLabel && <span class="badge red">★ {epLabel}</span>}
+          {!heroImage && tag && <span class="badge ghost">{tag}</span>}
           <span class="mono date">
             <FormattedDate date={new Date(pubDate)} />
           </span>
@@ -55,19 +55,15 @@ const duo = ep ? (ep % 6) + 1 : 6;
         }
 
         {
-          heroImage ? (
+          heroImage && (
             <figure class="phero">
               <img src={heroImage} alt="" />
-              {tag && <figcaption class="tlbl">{tag}</figcaption>}
-            </figure>
-          ) : (
-            <figure class:list={["phero", "ph-gradient", `duo-${duo}`]}>
               {tag && <figcaption class="tlbl">{tag}</figcaption>}
             </figure>
           )
         }
 
-        <div class="prose body">
+        <div class:list={["prose", "body", { "no-hero": !heroImage }]}>
           <slot />
         </div>
       </article>
@@ -146,14 +142,15 @@ const duo = ep ? (ep % 6) + 1 : 6;
         letter-spacing: 0.1em;
         text-transform: uppercase;
         font-weight: 700;
-        color: rgba(20, 12, 40, 0.7);
-      }
-      .phero:not(.ph-gradient) .tlbl {
         color: rgba(255, 255, 255, 0.85);
         text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
       }
       .body {
         margin-top: 34px;
+      }
+      /* No hero image — tighten the gap under the headline. */
+      .body.no-hero {
+        margin-top: 28px;
       }
       @media (max-width: 720px) {
         .article h1 {
