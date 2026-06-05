@@ -55,7 +55,7 @@ const duos = [1, 3, 2, 4, 6, 5];
       </div>
 
       <div class="portrait-stage">
-        <div class="frame duo">
+        <a class="frame duo" href="/about" aria-label="About Brian Perry">
           <div class="duo-clip">
             <Image
               src={portrait}
@@ -63,14 +63,13 @@ const duos = [1, 3, 2, 4, 6, 5];
               width={600}
               height={668}
             />
-            <div class="ov tint"></div>
             <div class="ov holo"></div>
           </div>
           <span class="tape">// brian</span>
           <svg class="starbadge" width="50" height="50" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M12 0C13 7 17 11 24 12 17 13 13 17 12 24 11 17 7 13 0 12 7 11 11 7 12 0Z" />
           </svg>
-        </div>
+        </a>
       </div>
     </header>
 
@@ -245,6 +244,7 @@ const duos = [1, 3, 2, 4, 6, 5];
         order: -1;
       }
       .frame.duo {
+        display: block;
         position: relative;
         width: 300px;
         aspect-ratio: 4 / 5;
@@ -253,9 +253,16 @@ const duos = [1, 3, 2, 4, 6, 5];
         box-shadow: 8px 10px 0 var(--duo-frame-shadow);
         transform: rotate(-3deg);
         transition: transform 0.2s;
+        text-decoration: none;
+        color: inherit;
       }
-      .frame.duo:hover {
+      .frame.duo:hover,
+      .frame.duo:focus-visible {
         transform: rotate(0deg) scale(1.015);
+      }
+      .frame.duo:focus-visible {
+        outline: 3px solid var(--cyan);
+        outline-offset: 4px;
       }
       .duo-clip {
         position: absolute;
@@ -270,21 +277,14 @@ const duos = [1, 3, 2, 4, 6, 5];
         height: 100%;
         object-fit: cover;
         border-radius: 0;
-        /* Untreated by default — the holographic effects develop on hover. */
         filter: saturate(1.03);
-        transition: filter 0.35s ease;
       }
       .duo-clip .ov {
         position: absolute;
         inset: 0;
         pointer-events: none;
         opacity: 0;
-        transition: opacity 0.35s ease;
-      }
-      /* Gentle theme-colored wash so the sticker still ties to the palette. */
-      .duo-clip .ov.tint {
-        background: var(--duo-light);
-        mix-blend-mode: soft-light;
+        transition: opacity 0.3s ease;
       }
       /* Holographic foil sheen — a diagonal iridescent streak. */
       .duo-clip .ov.holo {
@@ -300,52 +300,36 @@ const duos = [1, 3, 2, 4, 6, 5];
         );
         background-size: 200% 200%;
         mix-blend-mode: color-dodge;
-        /* Idle: a quick glint sweeps across every ~7s, then rests. */
-        animation: holo-glint 7s ease-in-out infinite;
+      }
+      /* On hover/focus, a quick glint sweeps across, then repeats. */
+      .frame.duo:hover .ov.holo,
+      .frame.duo:focus-visible .ov.holo {
+        animation: holo-glint 2.6s ease-out infinite;
       }
       @keyframes holo-glint {
-        0%,
-        90% {
+        0% {
           opacity: 0;
           background-position: 0% 50%;
         }
-        93% {
+        4% {
           opacity: 0.5;
         }
-        96% {
+        18% {
           opacity: 0.52;
           background-position: 65% 50%;
         }
-        99% {
-          opacity: 0.25;
-        }
-        100% {
+        27% {
           opacity: 0;
           background-position: 100% 50%;
         }
-      }
-      /* Hover develops the foil: tint + shimmering rainbow + a little pop. */
-      .frame.duo:hover :global(img) {
-        filter: contrast(1.06) saturate(1.16) brightness(1.03);
-      }
-      .frame.duo:hover .ov.tint {
-        opacity: 0.3;
-      }
-      .frame.duo:hover .ov.holo {
-        opacity: 0.55;
-        animation: holo-shimmer 6s ease-in-out infinite alternate;
-      }
-      @keyframes holo-shimmer {
-        0% {
-          background-position: 0% 50%;
-        }
         100% {
+          opacity: 0;
           background-position: 100% 50%;
         }
       }
       @media (prefers-reduced-motion: reduce) {
-        .duo-clip .ov.holo,
-        .frame.duo:hover .ov.holo {
+        .frame.duo:hover .ov.holo,
+        .frame.duo:focus-visible .ov.holo {
           animation: none;
         }
       }
