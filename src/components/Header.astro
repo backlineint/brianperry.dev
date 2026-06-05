@@ -4,7 +4,7 @@ import HeaderLink from "./HeaderLink.astro";
 
 <header>
   <nav class="nav">
-    <a class="brand" href="/">brianperry<span class="dot">.dev</span></a>
+    <a class="brand" href="/">brian<span class="mid">perry</span>.dev<span class="caret" aria-hidden="true">_</span></a>
     <div class="links">
       <HeaderLink href="/posts">Posts</HeaderLink>
       <HeaderLink href="/about">About</HeaderLink>
@@ -65,6 +65,7 @@ import HeaderLink from "./HeaderLink.astro";
     font-family: "Archivo Black", sans-serif;
     font-size: 18px;
     letter-spacing: -0.02em;
+    text-transform: uppercase;
     color: var(--ink);
     text-decoration: none;
   }
@@ -72,8 +73,12 @@ import HeaderLink from "./HeaderLink.astro";
     text-decoration: none;
     color: var(--ink);
   }
-  .brand .dot {
+  .brand .mid {
     color: var(--red);
+  }
+  .brand .caret {
+    color: var(--cyan);
+    margin-left: 0.04em;
   }
   .links {
     display: flex;
