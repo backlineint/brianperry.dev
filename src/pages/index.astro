@@ -24,7 +24,7 @@ const duos = [1, 3, 2, 4, 6, 5];
     <Header />
     <header class="hero">
       <span class="eyebrow">// a serious &amp; professional website</span>
-      <h1>Brian <span class="pink">Perry</span><span class="grn">.dev</span></h1>
+      <h1>Brian <span class="pink">Perry</span>.dev<span class="caret" aria-hidden="true">_</span></h1>
       <p class="bio">
         I'm a <a href="https://github.com/backlineint">web developer</a> and a
         <a href="https://www.drupal.org/u/brianperry">member of the Drupal community</a>
@@ -138,6 +138,24 @@ const duos = [1, 3, 2, 4, 6, 5];
         letter-spacing: -0.035em;
         margin: 16px 0 0;
         text-transform: uppercase;
+      }
+      .hero h1 .caret {
+        color: var(--cyan);
+        margin-left: 0.04em;
+        animation: caret-blink 1.05s step-end infinite;
+      }
+      @keyframes caret-blink {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .hero h1 .caret {
+          animation: none;
+        }
       }
       .bio {
         max-width: 620px;
