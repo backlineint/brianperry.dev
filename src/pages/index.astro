@@ -76,7 +76,12 @@ const duos = [1, 3, 2, 4, 6, 5];
       <div class="sec-head">
         <h2>Latest</h2>
         <span class="line"></span>
-        <span class="count">press start</span>
+        <span class="btn-cluster" aria-hidden="true">
+          <span class="x"></span>
+          <span class="y"></span>
+          <span class="a"></span>
+          <span class="b"></span>
+        </span>
       </div>
 
       <div class="mosaic">
@@ -92,9 +97,14 @@ const duos = [1, 3, 2, 4, 6, 5];
       </div>
 
       <div class="sec-head">
-        <h2>Off the clock</h2>
+        <h2>Work &amp; Play</h2>
         <span class="line"></span>
-        <span class="count">inventory</span>
+        <span class="btn-cluster" aria-hidden="true">
+          <span class="x"></span>
+          <span class="y"></span>
+          <span class="a"></span>
+          <span class="b"></span>
+        </span>
       </div>
 
       <div class="panels">
@@ -152,6 +162,36 @@ const duos = [1, 3, 2, 4, 6, 5];
       }
       .htext {
         text-align: left;
+      }
+      /* Super Famicom button cluster accent on the section dividers. */
+      .btn-cluster {
+        flex: 0 0 auto;
+        display: grid;
+        grid-template-columns: repeat(3, 8px);
+        grid-template-rows: repeat(3, 8px);
+        gap: 3px;
+      }
+      .btn-cluster span {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        box-shadow: inset 0 -1px 1.5px rgba(0, 0, 0, 0.3);
+      }
+      .btn-cluster .x {
+        grid-area: 1 / 2;
+        background: var(--cyan);
+      }
+      .btn-cluster .y {
+        grid-area: 2 / 1;
+        background: var(--green);
+      }
+      .btn-cluster .a {
+        grid-area: 2 / 3;
+        background: var(--red);
+      }
+      .btn-cluster .b {
+        grid-area: 3 / 2;
+        background: var(--gold);
       }
       .eyebrow {
         font-family: "JetBrains Mono", monospace;
