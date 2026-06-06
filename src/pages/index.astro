@@ -12,7 +12,6 @@ import StickerCard from "../components/StickerCard.astro";
 import portrait from "../assets/perry_weather.jpg";
 
 const allPosts = await getSortedPosts();
-const total = allPosts.length;
 const latest = allPosts.slice(0, 3);
 const duos = [1, 3, 2, 4, 6, 5];
 ---
@@ -85,7 +84,6 @@ const duos = [1, 3, 2, 4, 6, 5];
           latest.map((post, i) => (
             <StickerCard
               post={post}
-              ep={total - i}
               duo={duos[i % duos.length]}
               featured={i === 0}
             />
