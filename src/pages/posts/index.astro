@@ -16,9 +16,10 @@ const duos = [1, 3, 2, 4, 6, 5];
 
 // Hybrid hierarchy: one featured hero, a few cartridge rows, the rest as a
 // dense terminal index grouped by year.
+const RECENT_COUNT = 5;
 const featured = posts[0];
-const recent = posts.slice(1, 4);
-const archive = posts.slice(4);
+const recent = posts.slice(1, 1 + RECENT_COUNT);
+const archive = posts.slice(1 + RECENT_COUNT);
 
 // Group the archive by year and defer rows past the first batch (infinite scroll).
 const INITIAL_ARCHIVE = 8;
