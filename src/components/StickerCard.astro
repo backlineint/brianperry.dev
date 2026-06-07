@@ -10,10 +10,12 @@ type Props = {
     | CollectionEntry<"jams">;
   duo: number;
   featured?: boolean;
+  hero?: boolean;
   deferred?: boolean;
 };
 
-const { post, duo, featured = false, deferred = false } = Astro.props;
+const { post, duo, featured = false, hero = false, deferred = false } =
+  Astro.props;
 const { title, date, description, imagePath, alt, tags } = post.data;
 const { collection, slug } = post;
 
@@ -23,7 +25,7 @@ const tlbl = (tags && tags.length ? tags[0] : collection).toLowerCase();
 const badges = (tags && tags.length ? tags : [collection]).slice(0, 2);
 ---
 
-<article class:list={["scard", { feat: featured, "no-img": !imagePath, "is-deferred": deferred }]}>
+<article class:list={["scard", { feat: featured, "feat-hero": hero, "no-img": !imagePath, "is-deferred": deferred }]}>
   {
     imagePath && (
       <div class:list={["top", `duo-${duo}`]}>
@@ -71,6 +73,33 @@ const badges = (tags && tags.length ? tags : [collection]).slice(0, 2);
   .scard.feat {
     grid-column: 1 / -1;
     flex-direction: row;
+  }
+  /* Bigger "Now playing" hero presentation. */
+  .scard.feat-hero .top {
+    width: 380px;
+    flex: 0 0 380px;
+  }
+  .scard.feat-hero .body {
+    padding: 30px 34px 32px;
+    gap: 14px;
+  }
+  .scard.feat-hero h3 {
+    font-size: 36px;
+  }
+  .scard.feat-hero p {
+    font-size: 17px;
+  }
+  .scard.feat-hero .kk {
+    font-size: 12.5px;
+  }
+  @media (max-width: 720px) {
+    .scard.feat-hero .top {
+      width: auto;
+      flex: none;
+    }
+    .scard.feat-hero h3 {
+      font-size: 28px;
+    }
   }
   .top {
     aspect-ratio: 16 / 8;

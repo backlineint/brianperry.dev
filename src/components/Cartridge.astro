@@ -1,0 +1,137 @@
+---
+import FormattedDate from "./FormattedDate.astro";
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+
+type Props = {
+  post:
+    | CollectionEntry<"posts">
+    | CollectionEntry<"til">
+    | CollectionEntry<"jams">;
+  duo: number;
+};
+
+const { post, duo } = Astro.props;
+const { title, date, description, imagePath, alt, tags } = post.data;
+const { collection, slug } = post;
+const href = `/${collection}/${slug}`;
+const badges = (tags && tags.length ? tags : [collection]).slice(0, 2);
+---
+
+<a class="cart" href={href}>
+  <span class:list={["cart-thumb", `duo-${duo}`]}>
+    {
+      imagePath && (
+        <Image src={imagePath} alt={alt ? alt : ""} width={192} height={192} />
+      )
+    }
+  </span>
+  <span class="cart-body">
+    <span class="cart-ep"><FormattedDate date={new Date(date)} /></span>
+    <span class="cart-title">{title}</span>
+    <p class="cart-desc">{description}</p>
+  </span>
+  <span class="cart-tags">
+    {badges.map((b) => <span class="badge ghost">{b}</span>)}
+  </span>
+</a>
+
+<style>
+  .cart {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    background: var(--surface);
+    border: 2px solid var(--line);
+    border-radius: 14px;
+    padding: 14px;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.26);
+    transition: transform 0.14s, box-shadow 0.14s, border-color 0.14s;
+    text-decoration: none;
+    color: inherit;
+  }
+  :root[data-theme="light"] .cart {
+    box-shadow: 4px 4px 0 rgba(29, 16, 51, 0.12);
+  }
+  .cart:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0 rgba(0, 0, 0, 0.26);
+    border-color: var(--cyan);
+  }
+  .cart-thumb {
+    width: 96px;
+    height: 96px;
+    flex: 0 0 auto;
+    border-radius: 11px;
+    position: relative;
+    border: 2px solid rgba(0, 0, 0, 0.18);
+    overflow: hidden;
+  }
+  .cart-thumb :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 0;
+    border-radius: 0;
+  }
+  .cart-body {
+    flex: 1;
+    min-width: 0;
+    display: block;
+  }
+  .cart-ep {
+    display: block;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+  .cart-title {
+    display: block;
+    font-family: "Archivo Black", sans-serif;
+    font-size: 21px;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin: 7px 0 6px;
+    transition: color 0.14s;
+  }
+  .cart:hover .cart-title {
+    color: var(--cyan);
+  }
+  .cart-desc {
+    color: var(--muted);
+    font-size: 14.5px;
+    line-height: 1.45;
+    margin: 0;
+    max-width: 64ch;
+  }
+  .cart-tags {
+    display: flex;
+    gap: 6px;
+    flex: 0 0 auto;
+    align-self: flex-start;
+    padding-top: 4px;
+  }
+  .cart-tags .badge {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+  @media (max-width: 620px) {
+    .cart {
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    .cart-tags {
+      align-self: auto;
+      padding-top: 0;
+      flex-basis: 100%;
+    }
+    .cart-desc {
+      display: none;
+    }
+  }
+</style>

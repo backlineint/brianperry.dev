@@ -283,10 +283,10 @@ img {
 	}
 }
 
-/* Infinite-scroll: cards past the first batch are hidden until revealed by JS.
-   !important beats StickerCard's scoped `.scard { display: flex }`; the feed's
-   <noscript> override (also !important, later in source) re-shows them with no JS. */
-.scard.is-deferred {
+/* Infinite-scroll: items past the first batch are hidden until revealed by JS.
+   !important beats components' scoped display rules; the feed's <noscript>
+   override (also !important, later in source) re-shows them with no JS. */
+.is-deferred {
 	display: none !important;
 }
 

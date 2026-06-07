@@ -4,6 +4,8 @@ import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import Stars from "../../components/Stars.astro";
 import StickerCard from "../../components/StickerCard.astro";
+import Cartridge from "../../components/Cartridge.astro";
+import ButtonCluster from "../../components/ButtonCluster.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
 
 import { getSortedPosts } from "../../lib/getSortedPosts";
@@ -11,8 +13,44 @@ import { getSortedPosts } from "../../lib/getSortedPosts";
 const posts = await getSortedPosts();
 const total = posts.length;
 const duos = [1, 3, 2, 4, 6, 5];
-// How many cards are visible before infinite-scroll reveals more.
-const INITIAL = 9;
+
+// Hybrid hierarchy: one featured hero, a few cartridge rows, the rest as a
+// dense terminal index grouped by year.
+const featured = posts[0];
+const recent = posts.slice(1, 4);
+const archive = posts.slice(4);
+
+// Group the archive by year and defer rows past the first batch (infinite scroll).
+const INITIAL_ARCHIVE = 8;
+const yearOrder: number[] = [];
+const byYear = new Map<number, typeof archive>();
+for (const p of archive) {
+  const y = new Date(p.data.date).getFullYear();
+  if (!byYear.has(y)) {
+    byYear.set(y, []);
+    yearOrder.push(y);
+  }
+  byYear.get(y)!.push(p);
+}
+let shownCount = 0;
+const sections = yearOrder.map((year) => {
+  const rows = byYear.get(year)!.map((post) => {
+    const deferred = shownCount >= INITIAL_ARCHIVE;
+    shownCount += 1;
+    const d = new Date(post.data.date);
+    return {
+      href: `/${post.collection}/${post.slug}`,
+      title: post.data.title,
+      tag: (post.data.tags && post.data.tags[0]) || post.collection,
+      shortDate: d.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      }),
+      deferred,
+    };
+  });
+  return { year, rows, dividerDeferred: rows.every((r) => r.deferred) };
+});
 ---
 
 <!doctype html>
@@ -24,7 +62,7 @@ const INITIAL = 9;
     <Stars />
     <Header />
     <header class="hero">
-      <span class="eyebrow">// the full backlog</span>
+      <span class="eyebrow">// what's new &amp; the full backlog</span>
       <h1>All <span class="pink">Posts</span></h1>
       <p class="bio">
         Code, AI experiments, Drupal, game reviews, and the occasional record I
@@ -34,45 +72,83 @@ const INITIAL = 9;
     </header>
 
     <main>
-      <div class="mosaic" data-infinite>
+      {/* NOW PLAYING — featured hero */}
+      <div class="sec-head sec-first">
+        <h2>Now playing</h2>
+        <span class="line"></span>
+        <ButtonCluster />
+      </div>
+      <StickerCard post={featured} duo={duos[0]} featured hero />
+
+      {/* RECENT — cartridge shelf */}
+      <div class="sec-head">
+        <h2>Recent</h2>
+        <span class="line"></span>
+        <ButtonCluster />
+      </div>
+      <div class="shelf">
         {
-          posts.map((post, i) => (
-            <StickerCard
-              post={post}
-              duo={duos[i % duos.length]}
-              featured={i === 0}
-              deferred={i >= INITIAL}
-            />
+          recent.map((post, i) => (
+            <Cartridge post={post} duo={duos[(i + 1) % duos.length]} />
+          ))
+        }
+      </div>
+
+      {/* THE ARCHIVE — terminal index by year */}
+      <div class="sec-head">
+        <h2>The archive</h2>
+        <span class="line"></span>
+        <ButtonCluster />
+      </div>
+      <div class="idx-list" data-infinite>
+        {
+          sections.map((s) => (
+            <>
+              <div class:list={["yeardiv", { "is-deferred": s.dividerDeferred }]}>
+                — {s.year}
+                <span class="ln" />
+              </div>
+              {s.rows.map((r) => (
+                <a
+                  class:list={["idx-row", { "is-deferred": r.deferred }]}
+                  href={r.href}
+                >
+                  <span class="idx-title">{r.title}</span>
+                  <span class="idx-leader" />
+                  <span class="idx-tag">{r.tag}</span>
+                  <span class="idx-date">{r.shortDate}</span>
+                </a>
+              ))}
+            </>
           ))
         }
       </div>
       <noscript>
-        <style>.scard.is-deferred { display: flex !important; }</style>
+        <style>.is-deferred { display: flex !important; }</style>
       </noscript>
       <div class="feed-sentinel" data-feed-sentinel aria-hidden="true"></div>
     </main>
 
     <script>
       function initInfiniteFeed() {
-        const mosaic = document.querySelector("[data-infinite]");
+        const list = document.querySelector("[data-infinite]");
         const sentinel = document.querySelector("[data-feed-sentinel]");
-        if (!mosaic || !sentinel || mosaic.hasAttribute("data-feed-ready"))
-          return;
-        mosaic.setAttribute("data-feed-ready", "");
+        if (!list || !sentinel || list.hasAttribute("data-feed-ready")) return;
+        list.setAttribute("data-feed-ready", "");
 
-        const BATCH = 6;
+        const BATCH = 8;
         const revealNext = () => {
-          const hidden = mosaic.querySelectorAll(".scard.is-deferred");
+          const hidden = list.querySelectorAll(".is-deferred");
           const n = Math.min(BATCH, hidden.length);
           for (let i = 0; i < n; i++) hidden[i].classList.remove("is-deferred");
           return hidden.length - n;
         };
 
-        // No IntersectionObserver — just show everything.
+        // No IntersectionObserver — just reveal everything.
         if (!("IntersectionObserver" in window)) {
-          mosaic
-            .querySelectorAll(".scard.is-deferred")
-            .forEach((c) => c.classList.remove("is-deferred"));
+          list
+            .querySelectorAll(".is-deferred")
+            .forEach((el) => el.classList.remove("is-deferred"));
           sentinel.remove();
           return;
         }
@@ -84,7 +160,6 @@ const INITIAL = 9;
           (entries) => {
             if (!entries.some((e) => e.isIntersecting)) return;
             let remaining = revealNext();
-            // Keep filling while the sentinel is still within the preload zone.
             while (remaining > 0 && near()) remaining = revealNext();
             if (remaining <= 0) {
               io.disconnect();
@@ -118,7 +193,7 @@ const INITIAL = 9;
         color: var(--cyan);
       }
       .hero h1 {
-        font-size: 64px;
+        font-size: 58px;
         line-height: 0.92;
         letter-spacing: -0.035em;
         margin: 16px 0 0;
@@ -141,14 +216,113 @@ const INITIAL = 9;
         letter-spacing: 0.04em;
       }
       main {
-        margin-top: 40px;
+        margin-top: 36px;
       }
+      .sec-first {
+        margin-top: 12px;
+      }
+
+      /* ---- recent: cartridge shelf ---- */
+      .shelf {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      /* ---- archive: terminal index ---- */
+      .idx-list {
+        display: flex;
+        flex-direction: column;
+        margin-top: 4px;
+      }
+      .yeardiv {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin: 24px 0 4px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--faint);
+      }
+      .idx-list .yeardiv:first-child {
+        margin-top: 0;
+      }
+      .yeardiv .ln {
+        flex: 1;
+        height: 2px;
+        border-radius: 2px;
+        background: repeating-linear-gradient(
+          90deg,
+          var(--line) 0 8px,
+          transparent 8px 14px
+        );
+      }
+      .idx-row {
+        display: flex;
+        align-items: baseline;
+        gap: 16px;
+        padding: 13px 8px;
+        border-bottom: 1px solid var(--line-2);
+        transition: background 0.12s;
+        text-decoration: none;
+      }
+      .idx-row:hover {
+        background: var(--surface);
+      }
+      .idx-title {
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 600;
+        font-size: 19px;
+        letter-spacing: -0.01em;
+        color: var(--ink);
+        transition: color 0.12s;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex: 0 1 auto;
+        min-width: 0;
+      }
+      .idx-row:hover .idx-title {
+        color: var(--cyan);
+      }
+      .idx-leader {
+        flex: 1 1 auto;
+        border-bottom: 1.5px dotted var(--line);
+        transform: translateY(-5px);
+        min-width: 24px;
+      }
+      .idx-tag {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--green);
+        white-space: nowrap;
+      }
+      .idx-date {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11.5px;
+        letter-spacing: 0.05em;
+        color: var(--faint);
+        white-space: nowrap;
+        min-width: 56px;
+        text-align: right;
+      }
+
       .feed-sentinel {
         height: 1px;
       }
+
       @media (max-width: 720px) {
         .hero h1 {
           font-size: 44px;
+        }
+      }
+      @media (max-width: 520px) {
+        .idx-tag {
+          display: none;
         }
       }
     </style>
