@@ -91,6 +91,9 @@ const duos = [1, 3, 2, 4, 6, 5];
           ))
         }
       </div>
+      <div class="see-all-row">
+        <a class="see-all" href="/posts">All posts <span aria-hidden="true">→</span></a>
+      </div>
 
       <div class="sec-head">
         <h2>Work &amp; Play</h2>
@@ -359,6 +362,38 @@ const duos = [1, 3, 2, 4, 6, 5];
         fill: var(--gold);
         stroke: var(--surface);
         stroke-width: 1.2;
+      }
+
+      /* ---- "all posts" link under Latest ---- */
+      .see-all-row {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 22px;
+      }
+      .see-all {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--cyan);
+        text-decoration: none;
+        padding: 9px 15px;
+        border: 2px solid var(--line);
+        border-radius: 10px;
+        transition: border-color 0.15s, transform 0.12s;
+      }
+      .see-all span {
+        transition: transform 0.12s;
+      }
+      .see-all:hover {
+        border-color: var(--cyan);
+      }
+      .see-all:hover span {
+        transform: translateX(3px);
       }
 
       /* ---- panels ---- */
