@@ -15,13 +15,22 @@ const { title, date, description, imagePath, alt, tags } = post.data;
 const { collection, slug } = post;
 const href = `/${collection}/${slug}`;
 const badges = (tags && tags.length ? tags : [collection]).slice(0, 2);
+// Printed label stripe on the cartridge.
+const stripeLabel = tags && tags.length ? tags[0] : collection;
 ---
 
 <a class:list={["cart", { "no-img": !imagePath }]} href={href}>
   {
     imagePath && (
-      <span class="cart-thumb">
-        <Image src={imagePath} alt={alt ? alt : ""} width={192} height={192} />
+      <span class="nes-cart">
+        <span class="ridges" />
+        <span class="nes-label">
+          <Image src={imagePath} alt={alt ? alt : ""} width={220} height={240} />
+          <span class="stripe">
+            <span class="stripe-tag">{stripeLabel}</span>
+            <span>★</span>
+          </span>
+        </span>
       </span>
     )
   }
@@ -57,17 +66,39 @@ const badges = (tags && tags.length ? tags : [collection]).slice(0, 2);
     box-shadow: 7px 7px 0 rgba(0, 0, 0, 0.26);
     border-color: var(--cyan);
   }
-  .cart-thumb {
-    width: 96px;
-    height: 96px;
+  /* NES cartridge: shell + grip ridges + the image as a printed label. */
+  .nes-cart {
+    width: 104px;
+    height: 120px;
     flex: 0 0 auto;
-    border-radius: 11px;
     position: relative;
-    background: var(--surface-2);
-    border: 2px solid rgba(0, 0, 0, 0.18);
-    overflow: hidden;
+    background: linear-gradient(180deg, var(--cart-shell-2), var(--cart-shell));
+    border: 2px solid rgba(0, 0, 0, 0.28);
+    border-radius: 13px 13px 5px 5px;
+    padding: 7px 8px 9px;
+    box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.07);
   }
-  .cart-thumb :global(img) {
+  .ridges {
+    display: block;
+    height: 13px;
+    margin: 0 2px 5px;
+    border-radius: 2px;
+    background: repeating-linear-gradient(
+      180deg,
+      var(--cart-ridge) 0 2px,
+      transparent 2px 5px
+    );
+  }
+  .nes-label {
+    display: block;
+    height: calc(100% - 18px);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.55);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+  .nes-label :global(img) {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -75,6 +106,29 @@ const badges = (tags && tags.length ? tags : [collection]).slice(0, 2);
     object-fit: cover;
     border: 0;
     border-radius: 0;
+  }
+  .nes-label .stripe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    background: rgba(10, 6, 26, 0.55);
+    color: #fff;
+    font-family: "JetBrains Mono", monospace;
+    font-weight: 800;
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 5px;
+    display: flex;
+    justify-content: space-between;
+    gap: 4px;
+  }
+  .stripe-tag {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .cart-body {
     flex: 1;

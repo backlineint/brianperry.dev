@@ -32,6 +32,11 @@
 	--duo-light: #46d4ea;
 	--duo-frame-shadow: rgba(0, 0, 0, 0.34);
 
+	/* NES cartridge shell (recent shelf thumbnails). */
+	--cart-shell: #1c1240;
+	--cart-shell-2: #271858;
+	--cart-ridge: rgba(255, 255, 255, 0.1);
+
 	/* Map Open Props normalize tokens onto the Arcade palette so any
 	   component or prose that still references them stays on-theme. */
 	--text-1: var(--ink);
@@ -76,6 +81,10 @@
 	--duo-shadow: #3a1f63;
 	--duo-light: #df3258;
 	--duo-frame-shadow: rgba(29, 16, 51, 0.16);
+
+	--cart-shell: #d8ccef;
+	--cart-shell-2: #e7defa;
+	--cart-ridge: rgba(29, 16, 51, 0.14);
 
 	--black: 246, 242, 255;
 
