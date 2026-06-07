@@ -11,6 +11,8 @@ import { getSortedPosts } from "../../lib/getSortedPosts";
 const posts = await getSortedPosts();
 const total = posts.length;
 const duos = [1, 3, 2, 4, 6, 5];
+// How many cards are visible before infinite-scroll reveals more.
+const INITIAL = 9;
 ---
 
 <!doctype html>
@@ -32,18 +34,72 @@ const duos = [1, 3, 2, 4, 6, 5];
     </header>
 
     <main>
-      <div class="mosaic">
+      <div class="mosaic" data-infinite>
         {
           posts.map((post, i) => (
             <StickerCard
               post={post}
               duo={duos[i % duos.length]}
               featured={i === 0}
+              deferred={i >= INITIAL}
             />
           ))
         }
       </div>
+      <noscript>
+        <style>.scard.is-deferred { display: flex !important; }</style>
+      </noscript>
+      <div class="feed-sentinel" data-feed-sentinel aria-hidden="true"></div>
     </main>
+
+    <script>
+      function initInfiniteFeed() {
+        const mosaic = document.querySelector("[data-infinite]");
+        const sentinel = document.querySelector("[data-feed-sentinel]");
+        if (!mosaic || !sentinel || mosaic.hasAttribute("data-feed-ready"))
+          return;
+        mosaic.setAttribute("data-feed-ready", "");
+
+        const BATCH = 6;
+        const revealNext = () => {
+          const hidden = mosaic.querySelectorAll(".scard.is-deferred");
+          const n = Math.min(BATCH, hidden.length);
+          for (let i = 0; i < n; i++) hidden[i].classList.remove("is-deferred");
+          return hidden.length - n;
+        };
+
+        // No IntersectionObserver — just show everything.
+        if (!("IntersectionObserver" in window)) {
+          mosaic
+            .querySelectorAll(".scard.is-deferred")
+            .forEach((c) => c.classList.remove("is-deferred"));
+          sentinel.remove();
+          return;
+        }
+
+        const near = () =>
+          sentinel.getBoundingClientRect().top < window.innerHeight + 800;
+
+        const io = new IntersectionObserver(
+          (entries) => {
+            if (!entries.some((e) => e.isIntersecting)) return;
+            let remaining = revealNext();
+            // Keep filling while the sentinel is still within the preload zone.
+            while (remaining > 0 && near()) remaining = revealNext();
+            if (remaining <= 0) {
+              io.disconnect();
+              sentinel.remove();
+            }
+          },
+          { rootMargin: "800px 0px" },
+        );
+        io.observe(sentinel);
+      }
+
+      if (document.readyState !== "loading") initInfiniteFeed();
+      else document.addEventListener("DOMContentLoaded", initInfiniteFeed);
+      document.addEventListener("astro:page-load", initInfiniteFeed);
+    </script>
     <Footer />
     <style>
       .hero {
@@ -86,6 +142,9 @@ const duos = [1, 3, 2, 4, 6, 5];
       }
       main {
         margin-top: 40px;
+      }
+      .feed-sentinel {
+        height: 1px;
       }
       @media (max-width: 720px) {
         .hero h1 {

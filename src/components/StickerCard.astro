@@ -10,9 +10,10 @@ type Props = {
     | CollectionEntry<"jams">;
   duo: number;
   featured?: boolean;
+  deferred?: boolean;
 };
 
-const { post, duo, featured = false } = Astro.props;
+const { post, duo, featured = false, deferred = false } = Astro.props;
 const { title, date, description, imagePath, alt, tags } = post.data;
 const { collection, slug } = post;
 
@@ -22,7 +23,7 @@ const tlbl = (tags && tags.length ? tags[0] : collection).toLowerCase();
 const badges = (tags && tags.length ? tags : [collection]).slice(0, 2);
 ---
 
-<article class:list={["scard", { feat: featured, "no-img": !imagePath }]}>
+<article class:list={["scard", { feat: featured, "no-img": !imagePath, "is-deferred": deferred }]}>
   {
     imagePath && (
       <div class:list={["top", `duo-${duo}`]}>

@@ -283,6 +283,13 @@ img {
 	}
 }
 
+/* Infinite-scroll: cards past the first batch are hidden until revealed by JS.
+   !important beats StickerCard's scoped `.scard { display: flex }`; the feed's
+   <noscript> override (also !important, later in source) re-shows them with no JS. */
+.scard.is-deferred {
+	display: none !important;
+}
+
 /* ---- duotone sticker fills ---- */
 .duo-1 { background: linear-gradient(135deg, #ff5470, #ffc83d); }
 .duo-2 { background: linear-gradient(135deg, #46d4ea, #46e08a); }
