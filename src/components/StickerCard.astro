@@ -8,17 +8,15 @@ type Props = {
     | CollectionEntry<"posts">
     | CollectionEntry<"til">
     | CollectionEntry<"jams">;
-  ep?: number;
   duo: number;
   featured?: boolean;
 };
 
-const { post, ep, duo, featured = false } = Astro.props;
+const { post, duo, featured = false } = Astro.props;
 const { title, date, description, imagePath, alt, tags } = post.data;
 const { collection, slug } = post;
 
 const href = `/${collection}/${slug}`;
-const epLabel = ep != null ? `EP ${String(ep).padStart(3, "0")}` : null;
 // small lowercase sticker label in the corner of the thumbnail
 const tlbl = (tags && tags.length ? tags[0] : collection).toLowerCase();
 const badges = (tags && tags.length ? tags : [collection]).slice(0, 2);
@@ -42,14 +40,6 @@ const badges = (tags && tags.length ? tags : [collection]).slice(0, 2);
   <div class="body">
     <div class="kk">
       {featured && !imagePath && <span class="badge red">★ Latest</span>}
-      {
-        epLabel && (
-          <Fragment>
-            <span>{epLabel}</span>
-            <span class="sep">·</span>
-          </Fragment>
-        )
-      }
       <span><FormattedDate date={new Date(date)} /></span>
     </div>
     <h3><a href={href}>{title} →</a></h3>

@@ -2,7 +2,6 @@
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import Layout from "../layouts/Post.astro";
-import { getSortedPosts } from "../lib/getSortedPosts";
 
 interface Path {
   params: {
@@ -45,12 +44,6 @@ const { entry } = Astro.props;
 const { title, date, description, imagePath, tags } = entry.data;
 const { Content } = await entry.render();
 
-// Episode number = position from the end of the full, date-sorted archive.
-const sorted = await getSortedPosts();
-const index = sorted.findIndex(
-  (p) => p.collection === entry.collection && p.slug === entry.slug,
-);
-const ep = index === -1 ? sorted.length : sorted.length - index;
 const tag = tags && tags.length ? tags[0] : entry.collection;
 ---
 
@@ -59,7 +52,6 @@ const tag = tags && tags.length ? tags[0] : entry.collection;
   description={description}
   pubDate={date}
   heroImage={imagePath?.src}
-  ep={ep}
   tag={tag}
 >
   <Content />

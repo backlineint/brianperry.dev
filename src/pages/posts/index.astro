@@ -37,7 +37,6 @@ const duos = [1, 3, 2, 4, 6, 5];
           posts.map((post, i) => (
             <StickerCard
               post={post}
-              ep={total - i}
               duo={duos[i % duos.length]}
               featured={i === 0}
             />

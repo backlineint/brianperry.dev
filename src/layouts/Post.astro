@@ -12,13 +12,11 @@ interface Props {
   pubDate: Date;
   updatedDate?: string;
   heroImage?: string;
-  ep?: number;
   tag?: string;
 }
 
-const { title, description, pubDate, updatedDate, heroImage, ep, tag } =
+const { title, description, pubDate, updatedDate, heroImage, tag } =
   Astro.props;
-const epLabel = ep ? `EP ${String(ep).padStart(3, "0")}` : null;
 ---
 
 <html lang="en">
@@ -35,11 +33,8 @@ const epLabel = ep ? `EP ${String(ep).padStart(3, "0")}` : null;
     <Header />
     <main>
       <article class="article">
-        <a href="/posts" class="crumb">
-          ← all posts{epLabel ? ` / ${epLabel.toLowerCase()}` : ""}
-        </a>
+        <a href="/posts" class="crumb">← all posts</a>
         <div class="pmeta">
-          {epLabel && <span class="badge red">★ {epLabel}</span>}
           {!heroImage && tag && <span class="badge ghost">{tag}</span>}
           <span class="mono date">
             <FormattedDate date={new Date(pubDate)} />
