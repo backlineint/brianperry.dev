@@ -87,11 +87,7 @@ const sections = yearOrder.map((year) => {
         <ButtonCluster />
       </div>
       <div class="shelf">
-        {
-          recent.map((post, i) => (
-            <Cartridge post={post} duo={duos[(i + 1) % duos.length]} />
-          ))
-        }
+        {recent.map((post) => <Cartridge post={post} />)}
       </div>
 
       {/* THE ARCHIVE — terminal index by year */}
@@ -226,7 +222,7 @@ const sections = yearOrder.map((year) => {
       .shelf {
         display: flex;
         flex-direction: column;
-        gap: 14px;
+        gap: 22px;
       }
 
       /* ---- archive: terminal index ---- */

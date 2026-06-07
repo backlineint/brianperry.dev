@@ -8,24 +8,23 @@ type Props = {
     | CollectionEntry<"posts">
     | CollectionEntry<"til">
     | CollectionEntry<"jams">;
-  duo: number;
 };
 
-const { post, duo } = Astro.props;
+const { post } = Astro.props;
 const { title, date, description, imagePath, alt, tags } = post.data;
 const { collection, slug } = post;
 const href = `/${collection}/${slug}`;
 const badges = (tags && tags.length ? tags : [collection]).slice(0, 2);
 ---
 
-<a class="cart" href={href}>
-  <span class:list={["cart-thumb", `duo-${duo}`]}>
-    {
-      imagePath && (
+<a class:list={["cart", { "no-img": !imagePath }]} href={href}>
+  {
+    imagePath && (
+      <span class="cart-thumb">
         <Image src={imagePath} alt={alt ? alt : ""} width={192} height={192} />
-      )
-    }
-  </span>
+      </span>
+    )
+  }
   <span class="cart-body">
     <span class="cart-ep"><FormattedDate date={new Date(date)} /></span>
     <span class="cart-title">{title}</span>
@@ -64,6 +63,7 @@ const badges = (tags && tags.length ? tags : [collection]).slice(0, 2);
     flex: 0 0 auto;
     border-radius: 11px;
     position: relative;
+    background: var(--surface-2);
     border: 2px solid rgba(0, 0, 0, 0.18);
     overflow: hidden;
   }
