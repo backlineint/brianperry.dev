@@ -20,8 +20,6 @@ const { title, date, description, imagePath, alt, tags } = post.data;
 const { collection, slug } = post;
 
 const href = `/${collection}/${slug}`;
-// small lowercase sticker label in the corner of the thumbnail
-const tlbl = (tags && tags.length ? tags[0] : collection).toLowerCase();
 const badges = (tags && tags.length ? tags : [collection]).slice(0, 2);
 ---
 
@@ -36,7 +34,6 @@ const badges = (tags && tags.length ? tags : [collection]).slice(0, 2);
           height={featured ? 700 : 320}
         />
         {featured && <span class="badge red tbadge">★ Latest</span>}
-        <span class="tlbl">{tlbl}</span>
       </div>
     )
   }
@@ -126,21 +123,6 @@ const badges = (tags && tags.length ? tags : [collection]).slice(0, 2);
     left: 12px;
     top: 12px;
     z-index: 1;
-  }
-  .tlbl {
-    position: absolute;
-    right: 12px;
-    bottom: 11px;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(20, 12, 40, 0.6);
-    font-weight: 700;
-  }
-  .top:has(img) .tlbl {
-    color: rgba(255, 255, 255, 0.85);
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
   }
   .body {
     padding: 20px 22px 22px;

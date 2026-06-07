@@ -35,7 +35,7 @@ const { title, description, pubDate, updatedDate, heroImage, tag } =
       <article class="article">
         <a href="/posts" class="crumb">← all posts</a>
         <div class="pmeta">
-          {!heroImage && tag && <span class="badge ghost">{tag}</span>}
+          {tag && <span class="badge ghost">{tag}</span>}
           <span class="mono date">
             <FormattedDate date={new Date(pubDate)} />
           </span>
@@ -53,7 +53,6 @@ const { title, description, pubDate, updatedDate, heroImage, tag } =
           heroImage && (
             <figure class="phero">
               <img src={heroImage} alt="" />
-              {tag && <figcaption class="tlbl">{tag}</figcaption>}
             </figure>
           )
         }
@@ -127,18 +126,6 @@ const { title, description, pubDate, updatedDate, heroImage, tag } =
         border: 0;
         border-radius: 0;
         box-shadow: none;
-      }
-      .phero .tlbl {
-        position: absolute;
-        right: 12px;
-        bottom: 11px;
-        font-family: "JetBrains Mono", monospace;
-        font-size: 11px;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        font-weight: 700;
-        color: rgba(255, 255, 255, 0.85);
-        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
       }
       .body {
         margin-top: 34px;
