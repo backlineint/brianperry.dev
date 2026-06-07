@@ -15,8 +15,6 @@ const { title, date, description, imagePath, alt, tags } = post.data;
 const { collection, slug } = post;
 const href = `/${collection}/${slug}`;
 const badges = (tags && tags.length ? tags : [collection]).slice(0, 2);
-// Printed label stripe on the cartridge.
-const stripeLabel = tags && tags.length ? tags[0] : collection;
 ---
 
 <a class:list={["cart", { "no-img": !imagePath }]} href={href}>
@@ -25,11 +23,7 @@ const stripeLabel = tags && tags.length ? tags[0] : collection;
       <span class="nes-cart">
         <span class="ridges" />
         <span class="nes-label">
-          <Image src={imagePath} alt={alt ? alt : ""} width={220} height={240} />
-          <span class="stripe">
-            <span class="stripe-tag">{stripeLabel}</span>
-            <span>★</span>
-          </span>
+          <Image src={imagePath} alt={alt ? alt : ""} width={300} height={280} />
         </span>
       </span>
     )
@@ -68,8 +62,8 @@ const stripeLabel = tags && tags.length ? tags[0] : collection;
   }
   /* NES cartridge: shell + grip ridges + the image as a printed label. */
   .nes-cart {
-    width: 104px;
-    height: 120px;
+    width: 144px;
+    height: 132px;
     flex: 0 0 auto;
     position: relative;
     background: linear-gradient(180deg, var(--cart-shell-2), var(--cart-shell));
@@ -106,29 +100,6 @@ const stripeLabel = tags && tags.length ? tags[0] : collection;
     object-fit: cover;
     border: 0;
     border-radius: 0;
-  }
-  .nes-label .stripe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1;
-    background: rgba(10, 6, 26, 0.55);
-    color: #fff;
-    font-family: "JetBrains Mono", monospace;
-    font-weight: 800;
-    font-size: 8px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 3px 5px;
-    display: flex;
-    justify-content: space-between;
-    gap: 4px;
-  }
-  .stripe-tag {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
   .cart-body {
     flex: 1;
