@@ -53,8 +53,19 @@
 	--font-mono: "JetBrains Mono", ui-monospace, monospace;
 	--box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
 	--default-padding: var(--size-7);
+	/* Horizontal page gutter (nav, hero, main); wider on small screens. */
+	--page-gutter: 18px;
 
 	color-scheme: dark;
+}
+
+/* Wider gutter through the medium range, where the content still fills the
+   viewport. On true desktop the content is capped (~1080) with big auto-margins,
+   so the slimmer gutter there is invisible. */
+@media (max-width: 1040px) {
+	:root {
+		--page-gutter: 26px;
+	}
 }
 
 /* ---- Light mode: same arcade energy, daylit plum ---- */
@@ -136,9 +147,9 @@ body > * {
 
 main {
 	width: 1080px;
-	max-width: calc(100% - 2em);
+	max-width: 100%;
 	margin: auto;
-	padding: 1em 0 1em 0;
+	padding: 1em var(--page-gutter);
 }
 
 /* Article (single post / markdown) pages sit the footer closer to the content. */
@@ -499,10 +510,6 @@ article iframe {
 @media (max-width: 720px) {
 	body {
 		font-size: 17px;
-	}
-
-	main {
-		max-width: calc(100% - 1.5em);
 	}
 
 	.sec-head {
