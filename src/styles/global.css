@@ -141,6 +141,11 @@ main {
 	padding: 1em 0 1em 0;
 }
 
+/* Article (single post / markdown) pages sit the footer closer to the content. */
+.article-page {
+	--footer-gap: 44px;
+}
+
 /* ---- display + mono helpers ---- */
 .disp {
 	font-family: "Archivo Black", system-ui, sans-serif;
@@ -339,6 +344,11 @@ img {
 	text-decoration-color: rgba(70, 212, 234, 0.5);
 	text-decoration-thickness: 2px;
 	text-underline-offset: 3px;
+}
+
+/* Open Props caps heading width with max-inline-size; let prose headings fill. */
+.prose :where(h1, h2, h3, h4, h5, h6) {
+	max-inline-size: none;
 }
 
 .prose h2 {
