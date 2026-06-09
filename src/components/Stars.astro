@@ -1,0 +1,55 @@
+---
+// Decorative star/comet field for the Arcade theme. Purely cosmetic.
+const STAR_PATH =
+  "M12 0C13 7 17 11 24 12 17 13 13 17 12 24 11 17 7 13 0 12 7 11 11 7 12 0Z";
+
+const stars = [
+  { top: 120, left: 120, w: 30, fill: "#ffc83d", opacity: 1 },
+  { top: 230, left: 1060, w: 22, fill: "#46d4ea", opacity: 1 },
+  { top: 90, left: 980, w: 14, fill: "#ff5470", opacity: 1 },
+  { top: 330, left: 180, w: 16, fill: "#46e08a", opacity: 1 },
+  { top: 60, left: 640, w: 12, fill: "#ffffff", opacity: 0.5 },
+  { top: 300, left: 880, w: 11, fill: "#ffffff", opacity: 0.45 },
+];
+---
+
+<div class="stars" aria-hidden="true">
+  {
+    stars.map((s) => (
+      <svg
+        class="star"
+        style={`top:${s.top}px;left:${s.left}px;width:${s.w}px`}
+        viewBox="0 0 24 24"
+        fill={s.fill}
+        opacity={s.opacity}
+      >
+        <path d={STAR_PATH} />
+      </svg>
+    ))
+  }
+</div>
+
+<style>
+  /* Stars are anchored to a ~1080px content band; nudge them inward on
+     narrower viewports so they don't crowd the edges. */
+  @media (max-width: 1100px) {
+    .star {
+      display: none;
+    }
+    .star:nth-child(1),
+    .star:nth-child(3),
+    .star:nth-child(4) {
+      display: block;
+      left: auto !important;
+    }
+    .star:nth-child(1) {
+      left: 6% !important;
+    }
+    .star:nth-child(3) {
+      right: 8%;
+    }
+    .star:nth-child(4) {
+      left: 14% !important;
+    }
+  }
+</style>

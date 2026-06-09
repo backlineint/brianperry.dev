@@ -1,0 +1,42 @@
+---
+// Super Famicom face-button diamond, used as a section-divider accent.
+---
+
+<span class="btn-cluster" aria-hidden="true">
+  <span class="x"></span>
+  <span class="y"></span>
+  <span class="a"></span>
+  <span class="b"></span>
+</span>
+
+<style>
+  .btn-cluster {
+    flex: 0 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 8px);
+    grid-template-rows: repeat(3, 8px);
+    gap: 3px;
+  }
+  .btn-cluster span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    box-shadow: inset 0 -1px 1.5px rgba(0, 0, 0, 0.3);
+  }
+  .btn-cluster .x {
+    grid-area: 1 / 2;
+    background: var(--cyan);
+  }
+  .btn-cluster .y {
+    grid-area: 2 / 1;
+    background: var(--green);
+  }
+  .btn-cluster .a {
+    grid-area: 2 / 3;
+    background: var(--red);
+  }
+  .btn-cluster .b {
+    grid-area: 3 / 2;
+    background: var(--gold);
+  }
+</style>

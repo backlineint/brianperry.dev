@@ -2,6 +2,7 @@
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import Stars from "../components/Stars.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 import { SITE_TITLE } from "../consts";
 
@@ -11,9 +12,11 @@ interface Props {
   pubDate: Date;
   updatedDate?: string;
   heroImage?: string;
+  tag?: string;
 }
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, tag } =
+  Astro.props;
 ---
 
 <html lang="en">
@@ -23,87 +26,120 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
       description={description ? description : "brianperry.dev"}
       image={heroImage}
     />
-    <style>
-      main {
-        width: 100%;
-        max-width: 100%;
-        margin: 0;
-        padding: var(--size-3);
-      }
-      .hero-image {
-        width: 100%;
-        margin-top: var(--size-7);
-      }
-      .hero-image img {
-        display: block;
-        margin: 0 auto;
-        border-radius: 12px;
-        box-shadow: var(--box-shadow);
-        aspect-ratio: 16 / 9;
-        object-fit: cover;
-      }
-      .prose {
-        width: 760px;
-        max-width: 100%;
-        margin: auto;
-        padding: 1em;
-        img {
-          box-shadow: var(--box-shadow);
-        }
-        & :where(li, dd, figcaption) {
-          max-inline-size: none;
-        }
-      }
-      .title {
-        margin-bottom: 1em;
-        padding: 1em 0;
-        text-align: center;
-        line-height: 1;
-      }
-      .title h1 {
-        margin: 0 0 0.5em 0;
-      }
-      .date {
-        margin-bottom: 0.5em;
-        color: var(--text-2);
-      }
-      .last-updated-on {
-        font-style: italic;
-      }
-    </style>
   </head>
 
-  <body>
+  <body class="article-page">
+    <Stars />
     <Header />
     <main>
-      <article>
+      <article class="article">
+        <a href="/posts" class="crumb">← all posts</a>
+        <div class="pmeta">
+          {tag && <span class="badge ghost">{tag}</span>}
+          <span class="mono date">
+            <FormattedDate date={new Date(pubDate)} />
+          </span>
+        </div>
+        <h1>{title}</h1>
         {
-          heroImage && (
-            <div class="hero-image">
-              <img width={1020} height={510} src={heroImage} alt="" />
-            </div>
+          updatedDate && (
+            <p class="last-updated-on">
+              Last updated on <FormattedDate date={new Date(updatedDate)} />
+            </p>
           )
         }
-        <div class="prose">
-          <div class="title">
-            <div class="date">
-              <FormattedDate date={new Date(pubDate)} />
-              {
-                updatedDate && (
-                  <div class="last-updated-on">
-                    Last updated on{" "}
-                    <FormattedDate date={new Date(updatedDate)} />
-                  </div>
-                )
-              }
-            </div>
-            <h1>{title}</h1>
-            <hr />
-          </div>
+
+        {
+          heroImage && (
+            <figure class="phero">
+              <img src={heroImage} alt="" />
+            </figure>
+          )
+        }
+
+        <div class:list={["prose", "body", { "no-hero": !heroImage }]}>
           <slot />
         </div>
       </article>
     </main>
     <Footer />
+    <style>
+      .article {
+        max-width: 720px;
+        margin: 0 auto;
+        padding-top: 8px;
+      }
+      .crumb {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--faint);
+        text-decoration: none;
+        display: inline-block;
+      }
+      .crumb:hover {
+        color: var(--cyan);
+      }
+      .pmeta {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin: 26px 0 0;
+        justify-content: center;
+      }
+      .pmeta .date {
+        color: var(--gold);
+        font-size: 12px;
+        letter-spacing: 0.08em;
+      }
+      .article h1 {
+        font-size: 54px;
+        line-height: 1;
+        letter-spacing: -0.03em;
+        margin: 18px 0 0;
+        max-inline-size: none;
+        text-align: center;
+        text-transform: uppercase;
+      }
+      .last-updated-on {
+        text-align: center;
+        font-style: italic;
+        color: var(--muted);
+        margin: 12px 0 0;
+        font-size: 14px;
+      }
+      .phero {
+        margin: 28px 0 0;
+        border: 2px solid var(--line);
+        border-radius: 18px;
+        overflow: hidden;
+        aspect-ratio: 16 / 8;
+        box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.3);
+        position: relative;
+      }
+      .phero img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      .body {
+        margin-top: 34px;
+      }
+      /* No hero image — tighten the gap under the headline. */
+      .body.no-hero {
+        margin-top: 28px;
+      }
+      @media (max-width: 720px) {
+        .article h1 {
+          font-size: 38px;
+        }
+      }
+    </style>
   </body>
 </html>

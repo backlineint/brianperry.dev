@@ -2,96 +2,363 @@
 import BaseHead from "../../components/BaseHead.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
-import RadPostTeaser from "../../components/rad/RadPostTeaser.astro";
+import Stars from "../../components/Stars.astro";
+import StickerCard from "../../components/StickerCard.astro";
+import Cartridge from "../../components/Cartridge.astro";
+import ButtonCluster from "../../components/ButtonCluster.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
 
 import { getSortedPosts } from "../../lib/getSortedPosts";
 
 const posts = await getSortedPosts();
+const total = posts.length;
+const duos = [1, 3, 2, 4, 6, 5];
+
+// Hybrid hierarchy: one featured hero, a few cartridge rows, the rest as a
+// dense terminal index grouped by year.
+const RECENT_COUNT = 5;
+const featured = posts[0];
+const recent = posts.slice(1, 1 + RECENT_COUNT);
+const archive = posts.slice(1 + RECENT_COUNT);
+
+// Group the archive by year and defer rows past the first batch (infinite scroll).
+const INITIAL_ARCHIVE = 8;
+const yearOrder: number[] = [];
+const byYear = new Map<number, typeof archive>();
+for (const p of archive) {
+  const y = new Date(p.data.date).getFullYear();
+  if (!byYear.has(y)) {
+    byYear.set(y, []);
+    yearOrder.push(y);
+  }
+  byYear.get(y)!.push(p);
+}
+let shownCount = 0;
+const sections = yearOrder.map((year) => {
+  const rows = byYear.get(year)!.map((post) => {
+    const deferred = shownCount >= INITIAL_ARCHIVE;
+    shownCount += 1;
+    const d = new Date(post.data.date);
+    return {
+      href: `/${post.collection}/${post.slug}`,
+      title: post.data.title,
+      tag: (post.data.tags && post.data.tags[0]) || post.collection,
+      shortDate: d.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      }),
+      deferred,
+    };
+  });
+  return { year, rows, dividerDeferred: rows.every((r) => r.deferred) };
+});
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <BaseHead title={`Posts - ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Stars />
+    <Header />
+    <header class="hero">
+      <span class="eyebrow">// what's new &amp; the full backlog</span>
+      <h1>All <span class="pink">Posts</span></h1>
+      <p class="bio">
+        Code, AI experiments, Drupal, game reviews, and the occasional record I
+        won't shut up about.
+        <span class="mono count">{total} entries</span>
+      </p>
+    </header>
+
+    <main>
+      {/* NOW PLAYING — featured hero */}
+      <div class="sec-head sec-first">
+        <h2>Now playing</h2>
+        <span class="line"></span>
+        <ButtonCluster />
+      </div>
+      <StickerCard post={featured} duo={duos[0]} featured hero />
+
+      {/* RECENT — cartridge shelf */}
+      <div class="sec-head">
+        <h2>Recent</h2>
+        <span class="line"></span>
+        <ButtonCluster />
+      </div>
+      <div class="shelf">
+        {recent.map((post) => <Cartridge post={post} />)}
+      </div>
+
+      {/* THE ARCHIVE — terminal index by year */}
+      <div class="sec-head">
+        <h2>The archive</h2>
+        <span class="line"></span>
+        <ButtonCluster />
+      </div>
+      <div class="idx-list" data-infinite>
+        {
+          sections.map((s) => (
+            <>
+              <div class:list={["yeardiv", { "is-deferred": s.dividerDeferred }]}>
+                — {s.year}
+                <span class="ln" />
+              </div>
+              {s.rows.map((r) => (
+                <a
+                  class:list={["idx-row", { "is-deferred": r.deferred }]}
+                  href={r.href}
+                >
+                  <span class="idx-title">{r.title}</span>
+                  <span class="idx-leader" />
+                  <span class="idx-tag">{r.tag}</span>
+                  <span class="idx-date">{r.shortDate}</span>
+                </a>
+              ))}
+            </>
+          ))
+        }
+      </div>
+      <noscript>
+        <style>.is-deferred { display: flex !important; }</style>
+      </noscript>
+      <div class="feed-more" data-feed-sentinel aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+    </main>
+
+    <script>
+      function initInfiniteFeed() {
+        const list = document.querySelector("[data-infinite]");
+        const sentinel = document.querySelector("[data-feed-sentinel]");
+        if (!list || !sentinel || list.hasAttribute("data-feed-ready")) return;
+        list.setAttribute("data-feed-ready", "");
+
+        const BATCH = 8;
+        const revealNext = () => {
+          const hidden = list.querySelectorAll(".is-deferred");
+          const n = Math.min(BATCH, hidden.length);
+          for (let i = 0; i < n; i++) hidden[i].classList.remove("is-deferred");
+          return hidden.length - n;
+        };
+
+        // No IntersectionObserver — just reveal everything.
+        if (!("IntersectionObserver" in window)) {
+          list
+            .querySelectorAll(".is-deferred")
+            .forEach((el) => el.classList.remove("is-deferred"));
+          sentinel.remove();
+          return;
+        }
+
+        const near = () =>
+          sentinel.getBoundingClientRect().top < window.innerHeight + 200;
+
+        const io = new IntersectionObserver(
+          (entries) => {
+            if (!entries.some((e) => e.isIntersecting)) return;
+            let remaining = revealNext();
+            // Top up only enough to cover the viewport, so more loads on scroll.
+            while (remaining > 0 && near()) remaining = revealNext();
+            if (remaining <= 0) {
+              io.disconnect();
+              sentinel.remove();
+            }
+          },
+          { rootMargin: "250px 0px" },
+        );
+        io.observe(sentinel);
+      }
+
+      if (document.readyState !== "loading") initInfiniteFeed();
+      else document.addEventListener("DOMContentLoaded", initInfiniteFeed);
+      document.addEventListener("astro:page-load", initInfiniteFeed);
+    </script>
+    <Footer />
     <style>
-      main {
-        width: 1000px;
+      .hero {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 36px var(--page-gutter) 0;
+        text-align: center;
+        position: relative;
       }
-      h1 {
-        margin: 0 0 var(--size-7) 0;
+      .eyebrow {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--cyan);
       }
-      ul {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 2rem;
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-      }
-      ul li {
-        width: 100%;
-        padding-bottom: var(--size-7);
-        border-bottom: 2px solid var(--surface-2);
-      }
-      ul li:last-of-type {
-        border-bottom: 0;
-      }
-      ul li * {
-        text-decoration: none;
-        transition: 0.2s ease;
-      }
-      ul li a {
-        display: block;
-      }
-      ul li a:hover h4,
-      ul li a:hover .date {
-        color: rgb(var(--accent));
-      }
-      ul a:hover img,
-      ul a:hover .description {
-        box-shadow: var(--shadow-4);
-      }
-      /* Open Props Tweaks */
-      :where(h4, p, li) {
+      .hero h1 {
+        font-size: 58px;
+        line-height: 0.92;
+        letter-spacing: -0.035em;
+        margin: 16px 0 0;
         max-inline-size: none;
+        text-transform: uppercase;
       }
-      :where(li, p) {
-        padding-inline-start: 0;
+      .bio {
+        max-width: 620px;
+        margin: 16px auto 0;
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.6;
+        text-wrap: pretty;
       }
+      .count {
+        display: block;
+        margin-top: 6px;
+        color: var(--gold);
+        font-size: 14px;
+        letter-spacing: 0.04em;
+      }
+      main {
+        margin-top: 16px;
+      }
+      .sec-first {
+        margin-top: 8px;
+      }
+
+      /* ---- recent: cartridge shelf ---- */
+      .shelf {
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+      }
+
+      /* ---- archive: terminal index ---- */
+      .idx-list {
+        display: flex;
+        flex-direction: column;
+        margin-top: 4px;
+      }
+      .yeardiv {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin: 24px 0 4px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--faint);
+      }
+      .idx-list .yeardiv:first-child {
+        margin-top: 0;
+      }
+      .yeardiv .ln {
+        flex: 1;
+        height: 2px;
+        border-radius: 2px;
+        background: repeating-linear-gradient(
+          90deg,
+          var(--line) 0 8px,
+          transparent 8px 14px
+        );
+      }
+      .idx-row {
+        display: flex;
+        align-items: baseline;
+        gap: 16px;
+        padding: 13px 8px;
+        border-bottom: 1px solid var(--line-2);
+        transition: background 0.12s;
+        text-decoration: none;
+      }
+      .idx-row:hover {
+        background: var(--surface);
+      }
+      .idx-title {
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 600;
+        font-size: 19px;
+        letter-spacing: -0.01em;
+        color: var(--ink);
+        transition: color 0.12s;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex: 0 1 auto;
+        min-width: 0;
+      }
+      .idx-row:hover .idx-title {
+        color: var(--cyan);
+      }
+      .idx-leader {
+        flex: 1 1 auto;
+        border-bottom: 1.5px dotted var(--line);
+        transform: translateY(-5px);
+        min-width: 24px;
+      }
+      .idx-tag {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--green);
+        white-space: nowrap;
+      }
+      .idx-date {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11.5px;
+        letter-spacing: 0.05em;
+        color: var(--faint);
+        white-space: nowrap;
+        min-width: 56px;
+        text-align: right;
+      }
+
+      /* "Loading more" indicator — removed once the archive is fully revealed. */
+      .feed-more {
+        display: flex;
+        justify-content: center;
+        gap: 9px;
+        padding: 34px 0 10px;
+      }
+      .feed-more span {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--faint);
+        animation: feed-pulse 1s ease-in-out infinite;
+      }
+      .feed-more span:nth-child(2) {
+        animation-delay: 0.15s;
+      }
+      .feed-more span:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+      @keyframes feed-pulse {
+        0%,
+        100% {
+          opacity: 0.25;
+          transform: translateY(0);
+        }
+        50% {
+          opacity: 1;
+          transform: translateY(-4px);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .feed-more span {
+          animation: none;
+          opacity: 0.5;
+        }
+      }
+
       @media (max-width: 720px) {
-        ul {
-          gap: 0.5em;
+        .hero h1 {
+          font-size: 44px;
         }
-        ul li {
-          width: 100%;
-          margin-top: var(--size-6);
-        }
-        ul li:first-child {
-          margin-bottom: 0;
-        }
-        ul li:first-child .title {
-          font-size: 1.563em;
+      }
+      @media (max-width: 520px) {
+        .idx-tag {
+          display: none;
         }
       }
     </style>
-  </head>
-  <body>
-    <Header />
-    <main>
-      <section>
-        <h1>Posts</h1>
-        <ul>
-          {
-            posts.map((post) => (
-              <li>
-                <RadPostTeaser post={post} />
-              </li>
-            ))
-          }
-        </ul>
-      </section>
-    </main>
-    <Footer />
   </body>
 </html>

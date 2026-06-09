@@ -6,7 +6,8 @@ type Props = HTMLAttributes<'a'>;
 const { href, class: className, ...props } = Astro.props;
 
 const { pathname } = Astro.url;
-const isActive = href === pathname || href === pathname.replace(/\/$/, '');
+const subpath = pathname.match(/[^\/]+/g);
+const isActive = href === pathname || href === '/' + (subpath?.[0] || '');
 ---
 
 <a href={href} class:list={[className, { active: isActive }]} {...props}>
@@ -14,11 +15,24 @@ const isActive = href === pathname || href === pathname.replace(/\/$/, '');
 </a>
 <style>
 	a {
-		display: inline-block;
+		font-family: "JetBrains Mono", monospace;
+		font-size: 12px;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--muted);
+		margin: 0;
+		padding: 6px 12px;
+		border-radius: 8px;
 		text-decoration: none;
+		transition: background 0.15s, color 0.15s;
+	}
+	a:hover {
+		color: var(--ink);
+		background: var(--surface);
 	}
 	a.active {
-		font-weight: bolder;
-		text-decoration: underline;
+		color: var(--badge-ink);
+		background: var(--gold);
 	}
 </style>

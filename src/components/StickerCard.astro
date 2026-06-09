@@ -1,0 +1,204 @@
+---
+import FormattedDate from "./FormattedDate.astro";
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+
+type Props = {
+  post:
+    | CollectionEntry<"posts">
+    | CollectionEntry<"til">
+    | CollectionEntry<"jams">;
+  duo: number;
+  featured?: boolean;
+  hero?: boolean;
+  deferred?: boolean;
+};
+
+const { post, duo, featured = false, hero = false, deferred = false } =
+  Astro.props;
+const { title, date, description, imagePath, alt, tags } = post.data;
+const { collection, slug } = post;
+
+const href = `/${collection}/${slug}`;
+const badges = (tags && tags.length ? tags : [collection]).slice(0, 2);
+---
+
+<article class:list={["scard", { feat: featured, "feat-hero": hero, "no-img": !imagePath, "is-deferred": deferred }]}>
+  {
+    imagePath && (
+      <div class:list={["top", `duo-${duo}`]}>
+        <Image
+          src={imagePath}
+          alt={alt ? alt : ""}
+          width={featured ? 600 : 640}
+          height={featured ? 700 : 320}
+        />
+        {featured && <span class="badge red tbadge">★ Latest</span>}
+      </div>
+    )
+  }
+  <div class="body">
+    <div class="kk">
+      {featured && !imagePath && <span class="badge red">★ Latest</span>}
+      <span><FormattedDate date={new Date(date)} /></span>
+    </div>
+    <h3><a href={href}>{title} →</a></h3>
+    <p>{description}</p>
+    <div class="foot">
+      {badges.map((b) => <span class="badge ghost">{b}</span>)}
+    </div>
+  </div>
+</article>
+
+<style>
+  .scard {
+    position: relative;
+    background: var(--surface);
+    border: 2px solid var(--line);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.32);
+    transition: transform 0.14s, box-shadow 0.14s;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .scard:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.32);
+  }
+  .scard.feat {
+    grid-column: 1 / -1;
+    flex-direction: row;
+  }
+  /* Bigger "Now playing" hero presentation. */
+  .scard.feat-hero .top {
+    width: 380px;
+    flex: 0 0 380px;
+  }
+  .scard.feat-hero .body {
+    padding: 18px 14px 20px;
+    gap: 14px;
+  }
+  .scard.feat-hero h3 {
+    font-size: 36px;
+  }
+  .scard.feat-hero p {
+    font-size: 17px;
+  }
+  .scard.feat-hero .kk {
+    font-size: 12.5px;
+  }
+  @media (max-width: 720px) {
+    .scard.feat-hero .top {
+      width: auto;
+      flex: none;
+    }
+    .scard.feat-hero h3 {
+      font-size: 28px;
+    }
+  }
+  .top {
+    aspect-ratio: 16 / 8;
+    position: relative;
+    overflow: hidden;
+  }
+  .scard.feat .top {
+    width: 300px;
+    aspect-ratio: auto;
+    flex: 0 0 300px;
+  }
+  .top :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+    border: 0;
+    box-shadow: none;
+  }
+  .tbadge {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    z-index: 1;
+  }
+  .body {
+    padding: 20px 22px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+  }
+  /* Text-only cards (no thumbnail) get a touch more breathing room up top. */
+  .scard.no-img:not(.feat-hero) .body {
+    padding-top: 24px;
+  }
+  .scard.no-img .kk .badge {
+    margin-right: 2px;
+  }
+  .kk {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .kk .sep {
+    opacity: 0.6;
+  }
+  h3 {
+    font-size: 23px;
+    line-height: 1.1;
+    margin: 0;
+  }
+  .scard.feat h3 {
+    font-size: 30px;
+  }
+  h3 a {
+    color: var(--ink);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  /* Stretch the title link across the whole card so any click navigates. */
+  h3 a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+  .scard:hover h3 a {
+    color: var(--cyan);
+  }
+  p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 15.5px;
+    line-height: 1.5;
+  }
+  .foot {
+    margin-top: auto;
+    display: flex;
+    gap: 8px;
+    padding-top: 6px;
+    flex-wrap: wrap;
+  }
+  @media (max-width: 720px) {
+    .scard.feat {
+      flex-direction: column;
+    }
+    .scard.feat .top {
+      width: auto;
+      flex: none;
+      aspect-ratio: 16 / 8;
+    }
+    .scard.feat h3 {
+      font-size: 24px;
+    }
+  }
+</style>
