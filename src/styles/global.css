@@ -421,14 +421,23 @@ img {
 	border-left: 4px solid var(--gold);
 	background: var(--surface);
 	border-radius: 0 14px 14px 0;
-	padding: 2px 22px;
+	padding: 16px 22px;
 	margin: 0 0 22px;
 	color: var(--ink);
 	font-size: 1.15em;
+	max-inline-size: none;
 }
 
-.prose :where(blockquote p) {
+.prose blockquote p {
 	font-size: inherit;
+	margin: 0;
+	max-inline-size: none;
+}
+
+/* Drop the trailing prose margin on a callout's last paragraph so its text
+   sits centered within the padded box instead of riding high. */
+.prose rad-callout p:last-child {
+	margin-bottom: 0;
 }
 
 .prose code {
