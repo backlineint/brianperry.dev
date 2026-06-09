@@ -374,6 +374,22 @@ img {
 	margin: 32px 0 12px;
 }
 
+/* Terminal-style ">" accent before post-body headings, cycling accent colors. */
+.prose h2::before,
+.prose h3::before {
+	content: ">";
+	margin-right: 0.38em;
+	color: var(--red);
+}
+.prose h2:nth-of-type(3n + 2)::before,
+.prose h3:nth-of-type(3n + 2)::before {
+	color: var(--green);
+}
+.prose h2:nth-of-type(3n + 3)::before,
+.prose h3:nth-of-type(3n + 3)::before {
+	color: var(--cyan);
+}
+
 .prose h4,
 .prose h5,
 .prose h6 {
