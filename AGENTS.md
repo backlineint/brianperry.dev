@@ -1,3 +1,7 @@
+# Development Notes
+
+- **CSS changes to `src/styles/global.css` may not hot-reload.** The Astro dev server's file watcher sometimes doesn't pick up edits to `src/styles/global.css` mid-session — reloading the page keeps showing the old styles. If a CSS change isn't taking effect, restart the dev/preview server for a clean build rather than assuming the edit is wrong. (`global.css` is imported once in `src/components/BaseHead.astro`.)
+
 # Writing Style Guide for brianperry.dev
 
 When drafting or revising blog posts for this site, follow these guidelines to match Brian's voice.
