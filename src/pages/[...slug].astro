@@ -42,7 +42,7 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { title, date, description, imagePath, tags } = entry.data;
-const { Content } = await entry.render();
+const { Content, headings } = await entry.render();
 
 const tag = tags && tags.length ? tags[0] : entry.collection;
 ---
@@ -53,6 +53,7 @@ const tag = tags && tags.length ? tags[0] : entry.collection;
   pubDate={date}
   heroImage={imagePath?.src}
   tag={tag}
+  headings={headings}
 >
   <Content />
 </Layout>

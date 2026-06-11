@@ -4,7 +4,9 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import Stars from "../components/Stars.astro";
 import FormattedDate from "../components/FormattedDate.astro";
+import TableOfContents from "../components/TableOfContents.astro";
 import { SITE_TITLE } from "../consts";
+import type { MarkdownHeading } from "astro";
 
 interface Props {
   title: string;
@@ -13,10 +15,16 @@ interface Props {
   updatedDate?: string;
   heroImage?: string;
   tag?: string;
+  headings?: MarkdownHeading[];
 }
 
-const { title, description, pubDate, updatedDate, heroImage, tag } =
+const { title, description, pubDate, updatedDate, heroImage, tag, headings } =
   Astro.props;
+
+// Mirror TableOfContents' visibility rule so the layout only reserves the
+// sidebar column when an outline will actually render.
+const hasToc =
+  (headings ?? []).filter((h) => h.depth >= 2 && h.depth <= 3).length >= 2;
 ---
 
 <html lang="en">
@@ -32,30 +40,34 @@ const { title, description, pubDate, updatedDate, heroImage, tag } =
     <Stars />
     <Header />
     <main>
-      <article class="article">
-        <a href="/posts" class="crumb">← all posts</a>
-        <div class="pmeta">
-          {tag && <span class="badge ghost">{tag}</span>}
-          <span class="mono date">
-            <FormattedDate date={new Date(pubDate)} />
-          </span>
-        </div>
-        <h1>{title}</h1>
-        {
-          updatedDate && (
-            <p class="last-updated-on">
-              Last updated on <FormattedDate date={new Date(updatedDate)} />
-            </p>
-          )
-        }
+      <article class:list={["article", { "has-toc": hasToc }]}>
+        <header class="article-head">
+          <a href="/posts" class="crumb">← all posts</a>
+          <div class="pmeta">
+            {tag && <span class="badge ghost">{tag}</span>}
+            <span class="mono date">
+              <FormattedDate date={new Date(pubDate)} />
+            </span>
+          </div>
+          <h1>{title}</h1>
+          {
+            updatedDate && (
+              <p class="last-updated-on">
+                Last updated on <FormattedDate date={new Date(updatedDate)} />
+              </p>
+            )
+          }
 
-        {
-          heroImage && (
-            <figure class="phero">
-              <img src={heroImage} alt="" />
-            </figure>
-          )
-        }
+          {
+            heroImage && (
+              <figure class="phero">
+                <img src={heroImage} alt="" />
+              </figure>
+            )
+          }
+        </header>
+
+        <TableOfContents headings={headings ?? []} />
 
         <div class:list={["prose", "body", { "no-hero": !heroImage }]}>
           <slot />
@@ -138,6 +150,29 @@ const { title, description, pubDate, updatedDate, heroImage, tag } =
       @media (max-width: 720px) {
         .article h1 {
           font-size: 38px;
+        }
+      }
+      /* Wide screens: drop the outline into the left gutter as a sticky rail,
+         keeping the title/hero/body column at its usual 720px. */
+      @media (min-width: 1140px) {
+        .article.has-toc {
+          max-width: 960px;
+          display: grid;
+          grid-template-columns: 720px 200px;
+          column-gap: 40px;
+          grid-template-areas:
+            "head .  "
+            "body toc";
+          align-items: start;
+        }
+        .article.has-toc .article-head {
+          grid-area: head;
+          min-width: 0;
+        }
+        .article.has-toc .body {
+          grid-area: body;
+          min-width: 0;
+          margin-top: 24px;
         }
       }
     </style>

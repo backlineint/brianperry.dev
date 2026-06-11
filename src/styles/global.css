@@ -110,6 +110,12 @@ html {
 	background: var(--bg);
 }
 
+@media (prefers-reduced-motion: no-preference) {
+	html {
+		scroll-behavior: smooth;
+	}
+}
+
 body {
 	margin: 0;
 	padding: 0;
@@ -360,6 +366,11 @@ img {
 /* Open Props caps heading width with max-inline-size; let prose headings fill. */
 .prose :where(h1, h2, h3, h4, h5, h6) {
 	max-inline-size: none;
+}
+
+/* Give in-page anchor jumps (table of contents) breathing room from the top. */
+.prose :where(h2, h3, h4) {
+	scroll-margin-top: 24px;
 }
 
 .prose h2 {
