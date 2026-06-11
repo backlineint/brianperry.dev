@@ -11,7 +11,7 @@ And then, as things go these days, [OpenClaw](https://openclaw.ai/) (Clawdbot at
 
 This post walks through what I built, how I built it, and what the migration looked like in practice.
 
-### What OpenClaw Did
+## What OpenClaw Did
 
 If given the permissions, OpenClaw can do just about anything. But my initial goals were pretty simple. At its core, my OpenClaw was an assistant hosted on a VPS (I'm not currently willing to let it run wild on a machine on my network) and wired up to a few key workflows:
 
@@ -28,15 +28,15 @@ Since this was meant to make my life easier, even small hiccups and debugging we
 
 I have no doubt that the workflow introduced by OpenClaw is here to stay. I'm just going to have to revisit it when it is ready for more than just the earliest of early adopters.
 
-### Why Cowork
+## Why Cowork
 
 Cowork solved the specific pain points I was hitting with OpenClaw. No VPS to maintain, no updates to stay on top of, no rate limits to debug - just a desktop app from Anthropic with built-in scheduled tasks and persistent file access to a folder on my machine.
 
 The tradeoffs are real. Cowork is much more locked down than OpenClaw and runs in a sandbox. Going from the freewheeling nature of OpenClaw to the workflow-oriented nature of Cowork meant giving some things up - no out of the box agent memory, no Discord bot I could ping from my phone, and no ability to wire up arbitrary integrations on a whim. But I felt confident that most of the process I was aiming for would be possible in either system, just with different mechanics. Worst case, I'd learn about the limits of Cowork and keep looking.
 
-### Building the Basic Workflow
+## Building the Basic Workflow
 
-#### The Work Log
+### The Work Log
 
 The first thing I asked Cowork to set up was `worklog.md` — a plain markdown file that serves as the running log of everything I work on. The format is simple:
 
@@ -52,17 +52,17 @@ I tell Claude what I'm working on in plain language, and it handles the timestam
 
 As I started adding work log entries, I realized that I needed light categorization. Essentially to keep noise out of my daily standup updates I needed to determine what was business and what was personal. I can provide a category when I update, but if I don't the agent will assign one for me. If it doesn't have enough information to know for sure, it asks.
 
-#### Scheduled Check-ins
+### Scheduled Check-ins
 
 This system is really only useful if I stay current with updates. It is extremely easy to get heads-down on something and forgot to log it, and then completely forget what I have been working on for the past five hours. As a result, I often need a poke to be reminded to update the work log.
 
 In Cowork, I set this up as a scheduled task that runs at 9am, 11am, 1pm, and 3pm on weekdays. Each time it fires, it reads `worklog.md`, checks the timestamp of the most recent entry, and — if it's been more than two hours — asks me for an update. If there's a recent entry, it stays quiet.
 
-#### Daily Standup Summary
+### Daily Standup Summary
 
 At 10:45am every weekday, a second scheduled task reads the last 24 hours of `worklog.md` and generates a concise standup summary. By the time my standup rolls around, I've got a tight summary of what I worked on the day before, ready to go.
 
-#### Blog Post Brainstorming and Publishing
+### Blog Post Brainstorming and Publishing
 
 This one is on-demand rather than scheduled. When I want to brainstorm blog ideas, I ask Claude to review recent log entries and surface anything worth writing about — interesting technical decisions, workflows, tools. It suggests angles and titles, then helps me draft the post when I've picked one. (Meta note: this post was kicked off exactly that way.)
 
@@ -70,9 +70,9 @@ Drafts get saved to a `blog/` subfolder in the Cowork workspace. When I'm ready 
 
 The one thing Cowork can't easily do is run the dev server for a live preview. For that step I hand off to Claude Code, which can run `pnpm dev` locally without any issues. It's a minor seam in an otherwise smooth workflow.
 
-### Persisting the Workflow
+## Persisting the Workflow
 
-#### CLAUDE.md as the System's Source of Truth
+### CLAUDE.md as the System's Source of Truth
 
 One of the things that makes OpenClaw feel like magic is its memory system. Cowork does not have this out of the box. But since it is Claude at the end of the day, it is easy to add.
 
@@ -101,7 +101,7 @@ When Brian asks for a standup summary, read `worklog.md` and summarize all entri
 - Keep it brief and scannable — this is for a standup, not a report
 ```
 
-#### Sync
+### Sync
 
 In order to use this on more than one device, we need to sync these files. This was harder than I expected using OpenClaw on a VPS - logging into the server to access the files is inconvenient, and committing them using git could work but was not as lightweight as I wanted this process to be.
 
@@ -109,7 +109,7 @@ For this new setup, I just took a lo-fi approach and configured iCloud sync for 
 
 For mobile, I can use the dispatch feature to use Cowork remotely when my machine is on. That only gets me some of the way there as it requires my machine to be powered on and awake, and isn't quite the same interface as Cowork on desktop. For cases where dispatch won't work, I also have this folder configured as an Obsidian vault and can edit the necessary markdown files directly.
 
-### Takeaways
+## Takeaways
 
 I'm happy with this workflow on Cowork so far. I know I'm missing out on the magic of having a fully autonomous OpenClaw agent, but I gain quite a bit in return. Not having to maintain a VPS means I'm not responsible for securing the box it runs on, and Cowork's sandbox means I'm not lying awake wondering what my agent decided to do at 2am. On the reliability front, I've never really had to "fix" anything about this workflow since I established it. No mysterious rate limits, no debugging infrastructure - just a reliable worklog that, for once, doesn't keep breaking. (This post, for what it's worth, was brainstormed, drafted, and published using the very workflow it describes. So at least the system works well enough to write about itself.)
 

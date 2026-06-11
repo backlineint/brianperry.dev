@@ -15,7 +15,7 @@ While competing community maintained API clients exist, Drupal does not offer an
 
 We were [lucky enough to be selected](https://youtu.be/tNa4XKb3zds?si=di_9WNupphYQrnPi&t=4995) by a panel of judges and the Drupal community to recieve funding. Since then, we've made some exciting progress on making our pitch a reality and wanted to share some updates.
 
-### Initial Goals and Vertical Slice POC
+## Initial Goals and Vertical Slice POC
 
 Our initial focus is what we've been calling the [vertical slice POC](https://www.drupal.org/project/api_client/issues/3365506)  for our JSON:API Client. As a checkpoint on the way to our eventual 1.0 release, we saw value in focusing deeply on a narrow portion of the client. Specifically, we decided to focus on the ability to get a collection of resources from the API.
 
@@ -30,7 +30,7 @@ Alongside that functionality, we also wanted to cover some level  of implementat
 
 Going this deep on our method to get a collection should provide groundwork that will help simplify the remaining implementation on the way to 1.0. And possibly more importantly, having a functional POC early should allow us to engage with the community and gather real world feedback.
 
-### 0.1.0 Release
+## 0.1.0 Release
 
 Speaking of the POC, we're excited to announce that [we've published our first release](https://www.npmjs.com/package/@drupal-api-client/json-api-client)! You can install it right now using npm (or your package manager of choice):
 
@@ -62,7 +62,7 @@ This 0.1.0 release represents the initial POC, but we're planning on having cont
 
 Thanks to [all who contributed to this release](https://git.drupalcode.org/project/api_client/-/graphs/canary?ref_type=heads), including: [coby.sher](https://www.drupal.org/u/cobysher), [pratik_kamble](https://www.drupal.org/u/pratik_kamble), [mitchellmarkoff](https://www.drupal.org/u/mitchellmarkoff), [shrutishende](https://www.drupal.org/u/shrutishende), [elber](https://www.drupal.org/u/elber), [abhisekmazumdar](https://www.drupal.org/u/abhisekmazumdar), [alexmoreno](https://www.drupal.org/u/alexmoreno) and the many others who provided feedback in the issue queue or dropped in on one of our Slack meetings.
 
-### Obligatory Call for Help
+## Obligatory Call for Help
 
 The Drupal API Client Project is rolling along, but we're still looking for help from the community to make it a success. With the release of this POC, one of the biggest areas we need help is getting general feedback on our work thus far. The wider the feedback we get from the community, the better chance we have to ship something that meets a wide array of decoupled Drupal use cases.
 

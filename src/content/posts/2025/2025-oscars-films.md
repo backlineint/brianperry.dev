@@ -9,11 +9,11 @@ alt: "Leads of Nickel Boys looking upwards into a mirror."
 
 For the past handful of years I've made a point to watch all of the films nominated for Best Picture at the Oscars. Here are my quick thoughts on what I've seen this year, along with some bonus films I've seen from other nominated categories.
 
-### My Favorite of the Year
+## My Favorite of the Year
 
 - [Nickel Boys](https://www.imdb.com/title/tt23055660/) - this movie felt like the best kind of magic trick to me. I was initially distracted by the first person viewpoint of the film. Eventually that disorientation vanished, leaving me deeply connected to the story. Once I was all in, the changes in perspective, time and other twists felt so well earned. A crime that this wasn't nominated for cinematography. I'll be thinking about this one long after this Oscars season is over.
 
-### Best Picture Nominees
+## Best Picture Nominees
 
 - [Anora](https://www.imdb.com/title/tt28607951/) - felt like two or three distinct movies in one, but they all worked well as a whole. Mikey Madison's performance was grounded and believable despite all the surrounding chaos. Would love to see this win Best Picture as is being predicted, but something tells me the Academy will chicken out. Also need to go back and watch some of Sean Baker's other films.
 
@@ -33,7 +33,7 @@ For the past handful of years I've made a point to watch all of the films nomina
 
 - [I'm Still Here](https://www.imdb.com/title/tt14961016/) - I was probably just a little burnt out on movies once I got to this one. The meat of the movie was good, but felt that the pacing was off early and late in the film. And I dock this a point for being the only film that didn't make it to streaming in time. Did get a laugh seeing how many other completists went solo to the 12:45 Sunday showing I was in.
 
-### Other Nominated Films
+## Other Nominated Films
 
 - [A Real Pain](https://www.imdb.com/title/tt21823606/) - A funny yet touching look at generational trauma. Kieran Culkin is great, even if he's squarely in his wheelhouse. And really appreciate that it is a tightly structured 90 minutes that doesn't outstay its welcome.
 
@@ -49,7 +49,7 @@ For the past handful of years I've made a point to watch all of the films nomina
 
 - [A Lien](https://www.imdb.com/title/tt27990245/) - a dramatization of a green card interview interrupted by an ICE raid. Maybe a little too on the nose, but still a tension filled short.
 
-### Nominated Films I'd Still Like to See
+## Nominated Films I'd Still Like to See
 
 - Sing Sing
 
@@ -57,7 +57,7 @@ For the past handful of years I've made a point to watch all of the films nomina
 
 - A Different Man
 
-### My Picks
+## My Picks
 
 Taking a bit of a flyer here and going with Conclave for Best Picture. With all of the uncertainty this year it feels like one of those years where the academy (and ranked-choice voting) gets it wrong.
 

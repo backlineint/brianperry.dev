@@ -9,7 +9,7 @@ alt: "A horizon at Badlands National Park."
 
 2025 was a strange year. That almost certainly factors in to why I really didn't post here.
 
-#### Navigating a Layoff
+## Navigating a Layoff
 
 On a cold February morning in 2025, I came in from snow-blowing my driveway only to sit down at my laptop and realize I couldn't log into Slack, and then Google. That was enough to realize I was experiencing the classic tech company goodbye. It was my first time ever being laid off, but with the current market, I couldn't be shocked. I took a few minutes to collect my thoughts, called my wife to let her know, and then it was off to LinkedIn (gross) to start the process of figuring out where to go from here.
 
@@ -21,13 +21,13 @@ I eventually took a full time Founding Engineer role with Actual AI. Working at 
 
 All of these changes have kept me out of the loop with the Drupal community aside from attending [Midcamp](https://midcamp.org) and [NEDCamp](https://nedcamp.org/). At times that made me feel a little unmoored since it was such a big part of my professional life. The Drupal API client is a dependency of [Drupal's next generation page builder](https://www.drupal.org/project/canvas), so keeping that maintained will be a fun way to keep my link back to Drupal alive.
 
-#### Family Fun
+## Family Fun
 
 We went on a Midwest road trip during our summer vacation. The header image from this post is one of the amazing views we took in at Badlands National Park. We didn't have any major travel mishaps and stayed at [an amazing bed and breakfast](https://www.circleviewranch.com/).
 
 My son started high school, which is still wild to think about. He's been busy playing percussion in the marching band and jazz band in addition to all of the regular high school things. And as an added bonus the football team made a solid run which made the marching band events even more entertaining.
 
-#### Things That Kept Me Sane-ish in 2025
+## Things That Kept Me Sane-ish in 2025
 
 - Switch 2 - had a great time following the lead up and eventual launch of the sequel to my favorite game console of all time. Played a ton of Donkey Kong Bananza as well.
 
@@ -41,7 +41,7 @@ My son started high school, which is still wild to think about. He's been busy p
 
 - Albums - my favorite album of the year was [Never Enough by Turnstyle](https://open.spotify.com/album/52yD51X7yDinwlg6tbCtpP) but the best album of the year was [Getting Killed by Geese](https://open.spotify.com/album/0eeXb23yMW6EaIgm63xxPC).
 
-#### Hopes for 2026
+## Hopes for 2026
 
 I'm looking forward to seeing Actual AI evolve and grow.
 
