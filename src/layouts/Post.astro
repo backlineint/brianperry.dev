@@ -152,8 +152,9 @@ const hasToc =
           font-size: 38px;
         }
       }
-      /* Wide screens: drop the outline into the left gutter as a sticky rail,
-         keeping the title/hero/body column at its usual 720px. */
+      /* Wide screens: drop the outline into the right gutter as a sticky rail.
+         The header (title + hero) spans both columns so it stays centered above
+         the body/outline pair; the body keeps its usual 720px. */
       @media (min-width: 1140px) {
         .article.has-toc {
           max-width: 960px;
@@ -161,13 +162,19 @@ const hasToc =
           grid-template-columns: 720px 200px;
           column-gap: 40px;
           grid-template-areas:
-            "head .  "
+            "head head"
             "body toc";
           align-items: start;
         }
         .article.has-toc .article-head {
           grid-area: head;
           min-width: 0;
+        }
+        /* Keep the title at the main column width even though the header spans
+           both columns; the hero still fills the full width. */
+        .article.has-toc .article-head h1 {
+          max-width: 720px;
+          margin-inline: auto;
         }
         .article.has-toc .body {
           grid-area: body;
