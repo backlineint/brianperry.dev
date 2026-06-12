@@ -191,6 +191,15 @@ const show = items.length >= 2;
     };
 
     const update = () => {
+      const scroller = document.scrollingElement || document.documentElement;
+      // A short final section can't scroll its heading up to the OFFSET line,
+      // so once we've reached the bottom of the page, the last entry wins.
+      const atBottom =
+        window.innerHeight + window.scrollY >= scroller.scrollHeight - 2;
+      if (atBottom) {
+        setActive(items[items.length - 1].link);
+        return;
+      }
       let current = items[0].link;
       for (const { heading, link } of items) {
         if (heading.getBoundingClientRect().top - OFFSET <= 0) current = link;
@@ -199,25 +208,25 @@ const show = items.length >= 2;
       setActive(current);
     };
 
+    // A rAF-throttled scroll/resize listener tracks every position, including
+    // the bottom of the page (an IntersectionObserver only fires on heading
+    // crossings, so it would miss that final stretch of scrolling).
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        update();
+        ticking = false;
+      });
+    };
     update();
-
-    if (typeof IntersectionObserver !== "undefined") {
-      const io = new IntersectionObserver(() => update(), { threshold: 0 });
-      items.forEach(({ heading }) => io.observe(heading));
-      cleanup = () => io.disconnect();
-    } else {
-      let ticking = false;
-      const onScroll = () => {
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(() => {
-          update();
-          ticking = false;
-        });
-      };
-      window.addEventListener("scroll", onScroll, { passive: true });
-      cleanup = () => window.removeEventListener("scroll", onScroll);
-    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    cleanup = () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }
 
   let cleanup: (() => void) | null = null;
