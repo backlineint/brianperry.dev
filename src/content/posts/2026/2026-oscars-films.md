@@ -9,7 +9,7 @@ alt: "A scene from One Battle After Another."
 
 It's Oscars time, so here's a quick rundown of my thoughts on all ten Best Picture nominees.
 
-### My Favorites
+## My Favorites
 
 - [One Battle After Another](https://www.imdb.com/title/tt30144839/) - My favorite film of the year. Paul Thomas Anderson at his most propulsive and crowd-pleasing, even though it's still plenty strange. Another movie feels really of the time. Benicio del Toro turns in my single favorite performance of the year.
 
@@ -17,7 +17,7 @@ It's Oscars time, so here's a quick rundown of my thoughts on all ten Best Pictu
 
 - [Frankenstein](https://www.imdb.com/title/tt1312221/) - A take on the classic tale that had me all the way through. Jacob Elordi's performance was excellent, and it's my wife's favorite film of the year. Probably my third favorite of the year as well.
 
-### The Rest
+## The Rest
 
 - [F1](https://www.imdb.com/title/tt16311594/) - Entertaining enough, even if Brad Pitt's character would have been banned from F1 racing ten times over in the course of the film.
 
@@ -33,7 +33,7 @@ It's Oscars time, so here's a quick rundown of my thoughts on all ten Best Pictu
 
 - [Train Dreams](https://www.imdb.com/title/tt29768334/) - Didn't love this one. Wonderfully shot, but too traditionally Oscar-y. And frankly, not enough trains. If I had to pick between the vroom vroom movie and the choo-choo movie, I pick the vroom vroom movie.
 
-### My Picks
+## My Picks
 
 20/24 correct.
 
@@ -64,7 +64,7 @@ It's Oscars time, so here's a quick rundown of my thoughts on all ten Best Pictu
 | Documentary Short | All the Empty Rooms | ✓ |
 | Live-Action Short | Two People Exchanging Saliva | ✓ (tie with The Singers) |
 
-### Other Thoughts
+## Other Thoughts
 
 - Pulling for Amy Madigan in Best Supporting Actress. Aunt Gladys forever.
 

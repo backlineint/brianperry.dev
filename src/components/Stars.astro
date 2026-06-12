@@ -8,28 +8,76 @@ const stars = [
   { top: 230, left: 1060, w: 22, fill: "#46d4ea", opacity: 1 },
   { top: 90, left: 980, w: 14, fill: "#ff5470", opacity: 1 },
   { top: 330, left: 180, w: 16, fill: "#46e08a", opacity: 1 },
-  { top: 60, left: 640, w: 12, fill: "#ffffff", opacity: 0.5 },
-  { top: 300, left: 880, w: 11, fill: "#ffffff", opacity: 0.45 },
+  { top: 60, left: 640, w: 12, fill: "#ffffff", opacity: 0.55 },
+  { top: 300, left: 880, w: 11, fill: "#ffffff", opacity: 0.5 },
+  // Additional stars to fill out the field.
+  { top: 50, left: 340, w: 10, fill: "#ffffff", opacity: 0.55 },
+  { top: 150, left: 720, w: 14, fill: "#ffc83d", opacity: 0.9 },
+  { top: 260, left: 500, w: 12, fill: "#46d4ea", opacity: 0.7 },
+  { top: 95, left: 440, w: 9, fill: "#ffffff", opacity: 0.5 },
+  { top: 205, left: 280, w: 13, fill: "#ff5470", opacity: 0.85 },
+  { top: 360, left: 660, w: 10, fill: "#ffffff", opacity: 0.5 },
+  { top: 135, left: 900, w: 12, fill: "#46e08a", opacity: 0.8 },
+  { top: 55, left: 820, w: 9, fill: "#ffffff", opacity: 0.55 },
+  { top: 345, left: 460, w: 11, fill: "#46d4ea", opacity: 0.65 },
+  { top: 185, left: 40, w: 14, fill: "#ffc83d", opacity: 0.85 },
+  { top: 290, left: 1020, w: 10, fill: "#ffffff", opacity: 0.5 },
+  { top: 80, left: 200, w: 10, fill: "#ffffff", opacity: 0.5 },
+  { top: 250, left: 760, w: 9, fill: "#ffffff", opacity: 0.45 },
+  { top: 370, left: 960, w: 12, fill: "#ff5470", opacity: 0.7 },
 ];
 ---
 
 <div class="stars" aria-hidden="true">
   {
-    stars.map((s) => (
-      <svg
-        class="star"
-        style={`top:${s.top}px;left:${s.left}px;width:${s.w}px`}
-        viewBox="0 0 24 24"
-        fill={s.fill}
-        opacity={s.opacity}
-      >
-        <path d={STAR_PATH} />
-      </svg>
-    ))
+    stars.map((s, i) => {
+      // Deterministic, staggered timing so stars twinkle at different moments.
+      const dur = 10 + (i % 5) * 2; // 10–18s
+      const delay = ((i * 3.1) % 12).toFixed(2); // 0–12s
+      return (
+        <svg
+          class="star"
+          style={`top:${s.top}px;left:${((s.left / 1080) * 100).toFixed(3)}%;width:${s.w}px;--star-op:${s.opacity};--tw-dur:${dur}s;--tw-delay:${delay}s`}
+          viewBox="0 0 24 24"
+          fill={s.fill}
+        >
+          <path d={STAR_PATH} />
+        </svg>
+      );
+    })
   }
 </div>
 
 <style>
+  /* Each star holds its base opacity in --star-op; the twinkle dims and
+     restores relative to that, so per-star brightness is preserved. */
+  .star {
+    opacity: var(--star-op, 1);
+    animation: twinkle var(--tw-dur, 6s) ease-in-out var(--tw-delay, 0s)
+      infinite;
+  }
+  @keyframes twinkle {
+    0%,
+    70%,
+    100% {
+      opacity: var(--star-op, 1);
+      transform: scale(1);
+    }
+    80% {
+      opacity: calc(var(--star-op, 1) * 0.3);
+      transform: scale(0.82);
+    }
+    90% {
+      opacity: var(--star-op, 1);
+      transform: scale(1);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .star {
+      animation: none;
+    }
+  }
+
   /* Stars are anchored to a ~1080px content band; nudge them inward on
      narrower viewports so they don't crowd the edges. */
   @media (max-width: 1100px) {
@@ -38,7 +86,9 @@ const stars = [
     }
     .star:nth-child(1),
     .star:nth-child(3),
-    .star:nth-child(4) {
+    .star:nth-child(4),
+    .star:nth-child(8),
+    .star:nth-child(11) {
       display: block;
       left: auto !important;
     }
@@ -50,6 +100,12 @@ const stars = [
     }
     .star:nth-child(4) {
       left: 14% !important;
+    }
+    .star:nth-child(8) {
+      right: 16%;
+    }
+    .star:nth-child(11) {
+      left: 9% !important;
     }
   }
 </style>

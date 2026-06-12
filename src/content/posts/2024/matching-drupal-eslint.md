@@ -13,7 +13,7 @@ The Drupal Association now maintains a [GitLab CI Template](https://git.drupalco
 
 We recently added this template to the [Same Page Preview](https://www.drupal.org/project/same_page_preview) module. After doing so, our JavaScript linting was failing. This wasn't surprising since we hadn't yet committed a standard [ESLint](https://eslint.org) or [Prettier](https://prettier.io/) configuration to the codebase. I took a shot at trying to resolve these linting issues, initially turning to the [ESLint Drupal Contrib plugin](https://www.npmjs.com/package/eslint-plugin-drupal-contrib). This allowed me to get ESLint up and running quickly and run linting with only within the context of this module. I resolved all of the linting issues, pushed my work up to GitLab, and started thinking about how I'd reward myself for a job well done.
 
-### Disaster Strikes
+## Disaster Strikes
 
 And as you might expect, the CI build still failed. 🤦‍♂️
 
@@ -22,7 +22,7 @@ At this point I took a step back. First off, I needed to determine what differed
 1. Determining how to run the exact same ESLint command that the GitLab CI Template was running, using the same configuration as Drupal Core.
 2. Developing an ESLint configuration that could be run within the standalone module codebase (with or without an existing instance of Drupal) but matching Drupal Core and GitLab CI's configuration as closely as possible.
 
-### Using the Drupal Core ESLint Configuration
+## Using the Drupal Core ESLint Configuration
 
 Here we literally want to use the same ESLint binary and config used by Drupal Core. Since this is what Drupal's GitLab CI Template is doing, this is also an opportunity to match the CI linting configuration as closely as possible.
 
@@ -69,7 +69,7 @@ I was surprised to find that even after running this command locally, the CI job
 
 Copying Drupal Core's prettier config wholesale isn't great. The approaches to referencing and extending a prettier config are clunky, but possible. A more ideal solution would be to have Drupal's prettier config as a package that could be referenced by both core and contrib modules.
 
-### Using a Standalone ESLint Configuration
+## Using a Standalone ESLint Configuration
 
 Ideally it would also be possible to run this linting outside of the context of a full Drupal instance. This could help speed up things like pre-commit hooks, some CI tasks, and also make quick linting checks easier to run. With the lessons from using Drupal Core's ESLint configuration fresh in mind, I took another shot at using the `eslint-plugin-drupal-contrib` plugin.
 
@@ -103,11 +103,11 @@ You might be surprised to see the `--no-eslintrc` flag above. That prevents ESLi
 
 Also note that ESLint 8.x uses the `--no-eslintrc` flag, while the ESLint 9.x equivalent is `--no-config-lookup`. Drupal core is currently on ESLint 8.x, which is the previous major release.
 
-### Happy Linting
+## Happy Linting
 
 I ran into a few more hiccups than I expected along the way, but now feel confident that I can have consistent linting results between my local environment and the Drupal.org CI system in all of the JavaScript code I write for contrib modules. Hopefully this can help you do the same.
 
-### Resources
+## Resources
 
 - [Drupal GitLab CI Template](https://git.drupalcode.org/project/gitlab_templates/-/blob/main/gitlab-ci/template.gitlab-ci.yml)
 - [ESLint](https://eslint.org/)

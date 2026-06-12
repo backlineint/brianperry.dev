@@ -1,0 +1,242 @@
+---
+import type { MarkdownHeading } from "astro";
+
+interface Props {
+  headings: MarkdownHeading[];
+}
+
+const { headings } = Astro.props;
+
+// Body headings only (h1 is the post title, which lives in the layout).
+const items = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+const show = items.length >= 2;
+---
+
+{
+  show && (
+    <aside class="toc" data-toc aria-label="Table of contents">
+      <details class="toc-details" open>
+        <summary class="toc-title">Contents</summary>
+        <nav>
+          <ul class="toc-list">
+            {items.map((h) => (
+              <li class:list={["toc-item", `depth-${h.depth}`]}>
+                <a href={`#${h.slug}`} data-toc-link>
+                  {h.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </details>
+    </aside>
+  )
+}
+
+<style>
+  .toc {
+    margin: 36px 0 28px;
+  }
+  .toc-details {
+    border: 2px solid var(--line);
+    border-radius: 14px;
+    background: var(--surface);
+    padding: 8px 14px;
+  }
+  .toc-title {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--faint);
+    cursor: pointer;
+    list-style: none;
+    /* Reset the Open Props :where(summary) defaults (bg + negative margins). */
+    background: none;
+    margin: 0;
+    border-radius: 0;
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+  }
+  .toc-title::-webkit-details-marker {
+    display: none;
+  }
+  /* Custom disclosure caret for the collapsible (mobile) presentation. */
+  .toc-title::before {
+    content: "▸";
+    color: var(--cyan);
+    font-size: 11px;
+    transition: transform 0.15s ease;
+  }
+  .toc-details[open] .toc-title::before {
+    transform: rotate(90deg);
+  }
+  .toc-list {
+    list-style: none;
+    /* Bottom margin only applies when expanded (list is hidden when
+       collapsed), so the collapsed label stays vertically centered. */
+    margin: 0 0 8px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .toc-item {
+    margin: 0;
+  }
+  .toc-item.depth-3 {
+    padding-left: 16px;
+  }
+  .toc-item a {
+    display: block;
+    /* Reset the Open Props :where(a) negative inline margins, which otherwise
+       push every link past the rail's right edge. */
+    margin: 0;
+    padding: 4px 0 4px 12px;
+    border-left: 2px solid transparent;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 1.4;
+    transition:
+      color 0.12s ease,
+      border-color 0.12s ease;
+  }
+  .toc-item.depth-3 a {
+    font-size: 13px;
+  }
+  .toc-item a:hover {
+    color: var(--ink);
+  }
+  .toc-item a.is-active {
+    color: var(--cyan);
+    border-left-color: var(--cyan);
+  }
+
+  /* Wide screens: float the outline into the gutter as a sticky rail. */
+  @media (min-width: 1140px) {
+    .toc {
+      grid-area: toc;
+      align-self: start;
+      position: sticky;
+      top: 24px;
+      margin: 24px 0 0;
+      max-height: calc(100vh - 48px);
+      /* overflow-y:auto alone forces overflow-x to compute to auto, which can
+         show a stray horizontal scrollbar; pin the horizontal axis to hidden. */
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+    .toc-details {
+      border: 0;
+      background: transparent;
+      padding: 0;
+    }
+    /* Always expanded on desktop — no collapsing the rail. Force the content
+       visible even if the user collapsed it at a smaller width. */
+    .toc-title {
+      cursor: default;
+      pointer-events: none;
+      padding-bottom: 12px;
+    }
+    .toc-title::before {
+      display: none;
+    }
+    .toc-details:not([open]) > nav {
+      display: block;
+    }
+    .toc-details::details-content {
+      content-visibility: visible;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .toc-title::before,
+    .toc-item a {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  function initToc() {
+    const toc = document.querySelector<HTMLElement>("[data-toc]");
+    if (!toc) return;
+
+    const links = Array.from(
+      toc.querySelectorAll<HTMLAnchorElement>("[data-toc-link]"),
+    );
+    const items = links
+      .map((link) => {
+        const id = decodeURIComponent(link.hash.slice(1));
+        const heading = id ? document.getElementById(id) : null;
+        return heading ? { link, heading } : null;
+      })
+      .filter((x): x is { link: HTMLAnchorElement; heading: HTMLElement } =>
+        Boolean(x),
+      );
+
+    if (!items.length) return;
+
+    const OFFSET = 110; // px below the top counted as "current"
+    let activeLink: HTMLAnchorElement | null = null;
+
+    const setActive = (link: HTMLAnchorElement) => {
+      if (link === activeLink) return;
+      activeLink?.classList.remove("is-active");
+      activeLink = link;
+      link.classList.add("is-active");
+    };
+
+    const update = () => {
+      const scroller = document.scrollingElement || document.documentElement;
+      // A short final section can't scroll its heading up to the OFFSET line,
+      // so once we've reached the bottom of the page, the last entry wins.
+      const atBottom =
+        window.innerHeight + window.scrollY >= scroller.scrollHeight - 2;
+      if (atBottom) {
+        setActive(items[items.length - 1].link);
+        return;
+      }
+      let current = items[0].link;
+      for (const { heading, link } of items) {
+        if (heading.getBoundingClientRect().top - OFFSET <= 0) current = link;
+        else break;
+      }
+      setActive(current);
+    };
+
+    // A rAF-throttled scroll/resize listener tracks every position, including
+    // the bottom of the page (an IntersectionObserver only fires on heading
+    // crossings, so it would miss that final stretch of scrolling).
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        update();
+        ticking = false;
+      });
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    cleanup = () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }
+
+  let cleanup: (() => void) | null = null;
+  const teardown = () => {
+    cleanup?.();
+    cleanup = null;
+  };
+
+  if (document.readyState !== "loading") initToc();
+  else document.addEventListener("DOMContentLoaded", initToc);
+  document.addEventListener("astro:page-load", initToc);
+  document.addEventListener("astro:before-swap", teardown);
+</script>

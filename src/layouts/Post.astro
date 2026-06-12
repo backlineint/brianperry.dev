@@ -4,7 +4,9 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import Stars from "../components/Stars.astro";
 import FormattedDate from "../components/FormattedDate.astro";
+import TableOfContents from "../components/TableOfContents.astro";
 import { SITE_TITLE } from "../consts";
+import type { MarkdownHeading } from "astro";
 
 interface Props {
   title: string;
@@ -13,10 +15,16 @@ interface Props {
   updatedDate?: string;
   heroImage?: string;
   tag?: string;
+  headings?: MarkdownHeading[];
 }
 
-const { title, description, pubDate, updatedDate, heroImage, tag } =
+const { title, description, pubDate, updatedDate, heroImage, tag, headings } =
   Astro.props;
+
+// Mirror TableOfContents' visibility rule so the layout only reserves the
+// sidebar column when an outline will actually render.
+const hasToc =
+  (headings ?? []).filter((h) => h.depth >= 2 && h.depth <= 3).length >= 2;
 ---
 
 <html lang="en">
@@ -32,22 +40,28 @@ const { title, description, pubDate, updatedDate, heroImage, tag } =
     <Stars />
     <Header />
     <main>
-      <article class="article">
-        <a href="/posts" class="crumb">← all posts</a>
-        <div class="pmeta">
-          {tag && <span class="badge ghost">{tag}</span>}
-          <span class="mono date">
-            <FormattedDate date={new Date(pubDate)} />
-          </span>
-        </div>
-        <h1>{title}</h1>
-        {
-          updatedDate && (
-            <p class="last-updated-on">
-              Last updated on <FormattedDate date={new Date(updatedDate)} />
-            </p>
-          )
-        }
+      <article class:list={["article", { "has-toc": hasToc }]}>
+        <header class="article-head">
+          <div class="metarow">
+            <a href="/posts" class="crumb">← all posts</a>
+            <div class="pmeta">
+              {tag && <span class="badge ghost">{tag}</span>}
+            </div>
+          </div>
+          <h1>{title}</h1>
+          <div class="ptag">
+            <span class="mono date">
+              <FormattedDate date={new Date(pubDate)} />
+            </span>
+          </div>
+          {
+            updatedDate && (
+              <p class="last-updated-on">
+                Last updated on <FormattedDate date={new Date(updatedDate)} />
+              </p>
+            )
+          }
+        </header>
 
         {
           heroImage && (
@@ -56,6 +70,8 @@ const { title, description, pubDate, updatedDate, heroImage, tag } =
             </figure>
           )
         }
+
+        <TableOfContents headings={headings ?? []} />
 
         <div class:list={["prose", "body", { "no-hero": !heroImage }]}>
           <slot />
@@ -69,6 +85,13 @@ const { title, description, pubDate, updatedDate, heroImage, tag } =
         margin: 0 auto;
         padding-top: 8px;
       }
+      /* "← all posts" on the left, post meta centered, on one row. */
+      .metarow {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        gap: 10px;
+      }
       .crumb {
         font-family: "JetBrains Mono", monospace;
         font-size: 12px;
@@ -76,7 +99,8 @@ const { title, description, pubDate, updatedDate, heroImage, tag } =
         text-transform: uppercase;
         color: var(--faint);
         text-decoration: none;
-        display: inline-block;
+        justify-self: start;
+        white-space: nowrap;
       }
       .crumb:hover {
         color: var(--cyan);
@@ -85,10 +109,15 @@ const { title, description, pubDate, updatedDate, heroImage, tag } =
         display: flex;
         gap: 10px;
         align-items: center;
-        margin: 26px 0 0;
+        margin: 0;
         justify-content: center;
       }
-      .pmeta .date {
+      /* Date, centered below the headline. */
+      .ptag {
+        text-align: center;
+        margin-top: 16px;
+      }
+      .ptag .date {
         color: var(--gold);
         font-size: 12px;
         letter-spacing: 0.08em;
@@ -138,6 +167,48 @@ const { title, description, pubDate, updatedDate, heroImage, tag } =
       @media (max-width: 720px) {
         .article h1 {
           font-size: 38px;
+        }
+        /* Too narrow to center the meta between the gutters; split the row
+           left (crumb) / right (meta) so nothing wraps. */
+        .metarow {
+          grid-template-columns: auto auto;
+          justify-content: space-between;
+        }
+      }
+      /* Wide screens: drop the outline into the right gutter as a sticky rail.
+         The title spans (centered) above both columns; the hero sits in the
+         main content column with the outline beside it, tops aligned. */
+      @media (min-width: 1140px) {
+        .article.has-toc {
+          max-width: 960px;
+          display: grid;
+          grid-template-columns: 720px 200px;
+          column-gap: 40px;
+          grid-template-areas:
+            "head head"
+            "hero toc"
+            "body toc";
+          align-items: start;
+        }
+        .article.has-toc .article-head {
+          grid-area: head;
+          min-width: 0;
+        }
+        /* Keep the title at the main column width, centered above both columns. */
+        .article.has-toc .article-head h1 {
+          max-width: 720px;
+          margin-inline: auto;
+        }
+        .article.has-toc .phero {
+          grid-area: hero;
+          min-width: 0;
+          /* Match the outline's top margin so their tops line up. */
+          margin-top: 24px;
+        }
+        .article.has-toc .body {
+          grid-area: body;
+          min-width: 0;
+          margin-top: 24px;
         }
       }
     </style>
