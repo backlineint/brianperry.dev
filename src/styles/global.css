@@ -332,8 +332,13 @@ img {
 /* ---- stars ---- */
 .stars {
 	position: absolute;
-	inset: 0;
 	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	/* A touch wider than the 1080px content band so stars spill slightly into
+	   the gutters on large screens. Star positions are percentages of this. */
+	width: 1200px;
+	max-width: 100%;
 	height: 480px;
 	z-index: 0;
 	pointer-events: none;
