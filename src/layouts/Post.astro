@@ -57,15 +57,15 @@ const hasToc =
               </p>
             )
           }
-
-          {
-            heroImage && (
-              <figure class="phero">
-                <img src={heroImage} alt="" />
-              </figure>
-            )
-          }
         </header>
+
+        {
+          heroImage && (
+            <figure class="phero">
+              <img src={heroImage} alt="" />
+            </figure>
+          )
+        }
 
         <TableOfContents headings={headings ?? []} />
 
@@ -153,8 +153,8 @@ const hasToc =
         }
       }
       /* Wide screens: drop the outline into the right gutter as a sticky rail.
-         The header (title + hero) spans both columns so it stays centered above
-         the body/outline pair; the body keeps its usual 720px. */
+         The title spans (centered) above both columns; the hero sits in the
+         main content column with the outline beside it, tops aligned. */
       @media (min-width: 1140px) {
         .article.has-toc {
           max-width: 960px;
@@ -163,6 +163,7 @@ const hasToc =
           column-gap: 40px;
           grid-template-areas:
             "head head"
+            "hero toc"
             "body toc";
           align-items: start;
         }
@@ -170,11 +171,16 @@ const hasToc =
           grid-area: head;
           min-width: 0;
         }
-        /* Keep the title at the main column width even though the header spans
-           both columns; the hero still fills the full width. */
+        /* Keep the title at the main column width, centered above both columns. */
         .article.has-toc .article-head h1 {
           max-width: 720px;
           margin-inline: auto;
+        }
+        .article.has-toc .phero {
+          grid-area: hero;
+          min-width: 0;
+          /* Match the outline's top margin so their tops line up. */
+          margin-top: 24px;
         }
         .article.has-toc .body {
           grid-area: body;
