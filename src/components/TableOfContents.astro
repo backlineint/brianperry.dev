@@ -128,7 +128,8 @@ const show = items.length >= 2;
       background: transparent;
       padding: 0;
     }
-    /* Always expanded on desktop — no collapsing the rail. */
+    /* Always expanded on desktop — no collapsing the rail. Force the content
+       visible even if the user collapsed it at a smaller width. */
     .toc-title {
       cursor: default;
       pointer-events: none;
@@ -136,6 +137,12 @@ const show = items.length >= 2;
     }
     .toc-title::before {
       display: none;
+    }
+    .toc-details:not([open]) > nav {
+      display: block;
+    }
+    .toc-details::details-content {
+      content-visibility: visible;
     }
   }
 
