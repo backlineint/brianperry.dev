@@ -30,21 +30,54 @@ const stars = [
 
 <div class="stars" aria-hidden="true">
   {
-    stars.map((s) => (
-      <svg
-        class="star"
-        style={`top:${s.top}px;left:${((s.left / 1080) * 100).toFixed(3)}%;width:${s.w}px`}
-        viewBox="0 0 24 24"
-        fill={s.fill}
-        opacity={s.opacity}
-      >
-        <path d={STAR_PATH} />
-      </svg>
-    ))
+    stars.map((s, i) => {
+      // Deterministic, staggered timing so stars twinkle at different moments.
+      const dur = 10 + (i % 5) * 2; // 10–18s
+      const delay = ((i * 3.1) % 12).toFixed(2); // 0–12s
+      return (
+        <svg
+          class="star"
+          style={`top:${s.top}px;left:${((s.left / 1080) * 100).toFixed(3)}%;width:${s.w}px;--star-op:${s.opacity};--tw-dur:${dur}s;--tw-delay:${delay}s`}
+          viewBox="0 0 24 24"
+          fill={s.fill}
+        >
+          <path d={STAR_PATH} />
+        </svg>
+      );
+    })
   }
 </div>
 
 <style>
+  /* Each star holds its base opacity in --star-op; the twinkle dims and
+     restores relative to that, so per-star brightness is preserved. */
+  .star {
+    opacity: var(--star-op, 1);
+    animation: twinkle var(--tw-dur, 6s) ease-in-out var(--tw-delay, 0s)
+      infinite;
+  }
+  @keyframes twinkle {
+    0%,
+    70%,
+    100% {
+      opacity: var(--star-op, 1);
+      transform: scale(1);
+    }
+    80% {
+      opacity: calc(var(--star-op, 1) * 0.3);
+      transform: scale(0.82);
+    }
+    90% {
+      opacity: var(--star-op, 1);
+      transform: scale(1);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .star {
+      animation: none;
+    }
+  }
+
   /* Stars are anchored to a ~1080px content band; nudge them inward on
      narrower viewports so they don't crowd the edges. */
   @media (max-width: 1100px) {
