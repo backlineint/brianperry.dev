@@ -91,6 +91,9 @@ const show = items.length >= 2;
   }
   .toc-item a {
     display: block;
+    /* Reset the Open Props :where(a) negative inline margins, which otherwise
+       push every link past the rail's right edge. */
+    margin: 0;
     padding: 4px 0 4px 12px;
     border-left: 2px solid transparent;
     color: var(--muted);
@@ -121,6 +124,9 @@ const show = items.length >= 2;
       top: 24px;
       margin: 24px 0 0;
       max-height: calc(100vh - 48px);
+      /* overflow-y:auto alone forces overflow-x to compute to auto, which can
+         show a stray horizontal scrollbar; pin the horizontal axis to hidden. */
+      overflow-x: hidden;
       overflow-y: auto;
     }
     .toc-details {
