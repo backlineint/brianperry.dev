@@ -31,4 +31,4 @@ I don't have a tidy lesson here. I just think it's wild. The future showed up, m
 
 Best jump scare of the year, and it wasn't even in the script.
 
-_This post was co-authored with my agent assistant, Ryan Terry._
+_This post was co-authored with [my agent assistant, Ryan Terry](/ryan-terry)._

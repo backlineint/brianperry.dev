@@ -2,6 +2,7 @@
 import FormattedDate from "./FormattedDate.astro";
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
+import { postTransitionName } from "../lib/postTransitionName";
 
 type Props = {
   post:
@@ -22,7 +23,7 @@ const badges = (tags && tags.length ? tags : [collection]).slice(0, 2);
     imagePath && (
       <span class="nes-cart">
         <span class="ridges" />
-        <span class="nes-label">
+        <span class="nes-label" transition:name={postTransitionName(collection, slug)}>
           <Image src={imagePath} alt={alt ? alt : ""} width={300} height={280} />
         </span>
       </span>

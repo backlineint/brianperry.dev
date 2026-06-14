@@ -14,12 +14,21 @@ interface Props {
   pubDate: Date;
   updatedDate?: string;
   heroImage?: string;
+  heroTransitionName?: string;
   tag?: string;
   headings?: MarkdownHeading[];
 }
 
-const { title, description, pubDate, updatedDate, heroImage, tag, headings } =
-  Astro.props;
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  heroImage,
+  heroTransitionName,
+  tag,
+  headings,
+} = Astro.props;
 
 // Mirror TableOfContents' visibility rule so the layout only reserves the
 // sidebar column when an outline will actually render.
@@ -65,7 +74,7 @@ const hasToc =
 
         {
           heroImage && (
-            <figure class="phero">
+            <figure class="phero" transition:name={heroTransitionName}>
               <img src={heroImage} alt="" />
             </figure>
           )

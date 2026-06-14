@@ -116,6 +116,16 @@ html {
 	}
 }
 
+/* Reduced motion: skip view transitions (post image morph + page fade) and
+   swap instantly instead. */
+@media (prefers-reduced-motion: reduce) {
+	::view-transition-group(*),
+	::view-transition-old(*),
+	::view-transition-new(*) {
+		animation: none !important;
+	}
+}
+
 body {
 	margin: 0;
 	padding: 0;
