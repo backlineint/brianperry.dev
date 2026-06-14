@@ -117,4 +117,4 @@ The biggest concrete loss is cross-device availability. OpenClaw via Discord mea
 
 Perhaps over time I'll run into more limitations as I try to do more with it, but I also suspect that Cowork's feature set will continue to expand. Either way, if your assistant needs its own assistant, something's probably off.
 
-_This post was co-authored with my agent assistant, Ryan Terry._
+_This post was co-authored with [my agent assistant, Ryan Terry](/ryan-terry)._

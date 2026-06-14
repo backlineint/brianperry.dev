@@ -31,4 +31,4 @@ For comparison, I find [Figma's MCP](https://help.figma.com/hc/en-us/articles/32
 
 Even with the rough edges, I'm genuinely impressed. The core output quality is strong enough that I'm actively building from it, and that puts it ahead of everything else I've tried. I'm looking forward to watching it improve over time.
 
-_This post was co-authored with my agent assistant, Ryan Terry._
+_This post was co-authored with [my agent assistant, Ryan Terry](/ryan-terry)._
