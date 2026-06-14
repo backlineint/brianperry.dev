@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import Layout from "../layouts/Post.astro";
+import { postTransitionName, postTitleTransitionName } from "../lib/postTransitionName";
 
 interface Path {
   params: {
@@ -52,6 +53,8 @@ const tag = tags && tags.length ? tags[0] : entry.collection;
   description={description}
   pubDate={date}
   heroImage={imagePath?.src}
+  heroTransitionName={postTransitionName(entry.collection, entry.slug)}
+  titleTransitionName={postTitleTransitionName(entry.collection, entry.slug)}
   tag={tag}
   headings={headings}
 >

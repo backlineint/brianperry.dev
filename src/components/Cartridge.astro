@@ -2,6 +2,7 @@
 import FormattedDate from "./FormattedDate.astro";
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
+import { postTransitionName, postTitleTransitionName } from "../lib/postTransitionName";
 
 type Props = {
   post:
@@ -17,12 +18,12 @@ const href = `/${collection}/${slug}`;
 const badges = (tags && tags.length ? tags : [collection]).slice(0, 2);
 ---
 
-<a class:list={["cart", { "no-img": !imagePath }]} href={href}>
+<a class:list={["cart", { "no-img": !imagePath }]} href={href} data-hero-src={imagePath?.src}>
   {
     imagePath && (
       <span class="nes-cart">
         <span class="ridges" />
-        <span class="nes-label">
+        <span class="nes-label" transition:name={postTransitionName(collection, slug)}>
           <Image src={imagePath} alt={alt ? alt : ""} width={300} height={280} />
         </span>
       </span>
@@ -30,7 +31,7 @@ const badges = (tags && tags.length ? tags : [collection]).slice(0, 2);
   }
   <span class="cart-body">
     <span class="cart-ep"><FormattedDate date={new Date(date)} /></span>
-    <span class="cart-title">{title}</span>
+    <span class="cart-title" transition:name={postTitleTransitionName(collection, slug)}>{title}</span>
     <p class="cart-desc">{description}</p>
   </span>
   <span class="cart-tags">
