@@ -6,3 +6,11 @@ export const postTransitionName = (collection: string, slug: string): string =>
   // Prefix keeps it from starting with a digit and slashes/odd chars become
   // dashes so the result is a valid CSS <custom-ident>.
   `post-img-${collection}-${slug}`.replace(/[^a-zA-Z0-9_-]/g, "-");
+
+// Same idea for the post title: the card heading and the post page <h1> share
+// this so the title morphs into place alongside the image on navigation.
+export const postTitleTransitionName = (
+  collection: string,
+  slug: string,
+): string =>
+  `post-title-${collection}-${slug}`.replace(/[^a-zA-Z0-9_-]/g, "-");

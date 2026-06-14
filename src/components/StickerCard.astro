@@ -2,7 +2,7 @@
 import FormattedDate from "./FormattedDate.astro";
 import type { CollectionEntry } from "astro:content";
 import { Image } from "astro:assets";
-import { postTransitionName } from "../lib/postTransitionName";
+import { postTransitionName, postTitleTransitionName } from "../lib/postTransitionName";
 
 type Props = {
   post:
@@ -43,7 +43,7 @@ const badges = (tags && tags.length ? tags : [collection]).slice(0, 2);
       {featured && !imagePath && <span class="badge red">★ Latest</span>}
       <span><FormattedDate date={new Date(date)} /></span>
     </div>
-    <h3><a href={href}>{title} →</a></h3>
+    <h3 transition:name={postTitleTransitionName(collection, slug)}><a href={href}>{title} →</a></h3>
     <p>{description}</p>
     <div class="foot">
       {badges.map((b) => <span class="badge ghost">{b}</span>)}

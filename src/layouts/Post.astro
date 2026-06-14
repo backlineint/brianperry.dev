@@ -15,6 +15,7 @@ interface Props {
   updatedDate?: string;
   heroImage?: string;
   heroTransitionName?: string;
+  titleTransitionName?: string;
   tag?: string;
   headings?: MarkdownHeading[];
 }
@@ -26,6 +27,7 @@ const {
   updatedDate,
   heroImage,
   heroTransitionName,
+  titleTransitionName,
   tag,
   headings,
 } = Astro.props;
@@ -57,7 +59,7 @@ const hasToc =
               {tag && <span class="badge ghost">{tag}</span>}
             </div>
           </div>
-          <h1>{title}</h1>
+          <h1 transition:name={titleTransitionName}>{title}</h1>
           <div class="ptag">
             <span class="mono date">
               <FormattedDate date={new Date(pubDate)} />
