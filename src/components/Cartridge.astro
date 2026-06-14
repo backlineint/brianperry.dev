@@ -18,7 +18,7 @@ const href = `/${collection}/${slug}`;
 const badges = (tags && tags.length ? tags : [collection]).slice(0, 2);
 ---
 
-<a class:list={["cart", { "no-img": !imagePath }]} href={href}>
+<a class:list={["cart", { "no-img": !imagePath }]} href={href} data-hero-src={imagePath?.src}>
   {
     imagePath && (
       <span class="nes-cart">

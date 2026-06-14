@@ -73,6 +73,35 @@ const { title, description, image = "/og_image.jpg" } = Astro.props;
   })();
 </script>
 
+<!-- Prefetch a post's full-size hero image on hover/focus so the view-transition
+     morph has it decoded and ready instead of loading mid-animation. One
+     delegated listener on document, so it survives header/page swaps. -->
+<script is:inline>
+  (() => {
+    if (window.__heroPrefetch) return;
+    window.__heroPrefetch = true;
+    const done = new Set();
+    const prefetch = (e) => {
+      const t = e.target;
+      if (!(t instanceof Element)) return;
+      const el = t.closest("[data-hero-src]");
+      if (!el) return;
+      const href = el.getAttribute("data-hero-src");
+      if (!href || done.has(href)) return;
+      done.add(href);
+      const link = document.createElement("link");
+      link.rel = "prefetch";
+      link.as = "image";
+      link.href = href;
+      document.head.appendChild(link);
+    };
+    // pointerover bubbles (covers mouse + a touch's first tap); focusin covers
+    // keyboard navigation. The Set keeps repeated events to a single fetch.
+    document.addEventListener("pointerover", prefetch);
+    document.addEventListener("focusin", prefetch);
+  })();
+</script>
+
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />

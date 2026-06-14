@@ -24,7 +24,10 @@ const href = `/${collection}/${slug}`;
 const badges = (tags && tags.length ? tags : [collection]).slice(0, 2);
 ---
 
-<article class:list={["scard", { feat: featured, "feat-hero": hero, "no-img": !imagePath, "is-deferred": deferred }]}>
+<article
+  class:list={["scard", { feat: featured, "feat-hero": hero, "no-img": !imagePath, "is-deferred": deferred }]}
+  data-hero-src={imagePath?.src}
+>
   {
     imagePath && (
       <div class:list={["top", `duo-${duo}`]} transition:name={postTransitionName(collection, slug)}>
