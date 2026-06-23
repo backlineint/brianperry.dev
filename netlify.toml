@@ -1,0 +1,5 @@
+# Pin pnpm to match the `packageManager` field in package.json so CI doesn't
+# fall back to Netlify's default pnpm (which was 10.x). Build command and
+# publish directory stay configured in the Netlify UI.
+[build.environment]
+  PNPM_VERSION = "11.8.0"
