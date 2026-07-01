@@ -1,4 +1,85 @@
-<footer class="foot">
+---
+import { Image } from "astro:assets";
+import { getSortedPosts } from "../lib/getSortedPosts";
+import ButtonCluster from "./ButtonCluster.astro";
+import StickerCard from "./StickerCard.astro";
+import portrait from "../assets/perry_weather.jpg";
+
+const allPosts = await getSortedPosts();
+const latest = allPosts.slice(0, 3);
+const duos = [4, 6, 5];
+const isHome = Astro.url.pathname === "/";
+---
+
+<footer class:list={["foot", { "home-foot": !isHome }]}>
+  {
+    !isHome && (
+      <section class="home-footer" aria-labelledby="home-footer-title">
+        <div class="home-footer-kicker">
+          <span>// you made it to the bottom</span>
+          <ButtonCluster />
+        </div>
+
+        <div class="home-footer-hero">
+          <div class="home-footer-copy">
+            <p class="eyebrow">The footer is the homepage now</p>
+            <h2 id="home-footer-title">
+              Brian <span>Perry</span>.dev
+            </h2>
+            <p>
+              I'm a <a href="https://github.com/backlineint">web developer</a> figuring out
+              what AI agents are actually good for at <a href="https://actual.ai">Actual AI</a>,
+              a longtime <a href="https://www.drupal.org/u/brianperry">Drupal person</a>,
+              occasional <a href="https://noti.st/brianperry">conference speaker</a>,
+              Chicago suburbs dad, and Nintendo enjoyer. Basically the whole homepage, but hiding
+              in the footer like a raccoon with a LinkedIn profile.
+            </p>
+            <div class="footer-actions">
+              <a href="/">Home base</a>
+              <a href="/about">About</a>
+              <a href="/posts">All posts</a>
+              <a href="/feed.xml">RSS</a>
+            </div>
+          </div>
+
+          <a class="portrait-card" href="/about" aria-label="About Brian Perry">
+            <Image
+              src={portrait}
+              alt="Brian with a weather station"
+              width={360}
+              height={402}
+            />
+            <span>// brian</span>
+          </a>
+        </div>
+
+        <div class="home-footer-grid">
+          <section class="latest-block" aria-labelledby="home-footer-latest">
+            <div class="section-head">
+              <h3 id="home-footer-latest">Latest</h3>
+              <span></span>
+            </div>
+            <div class="mini-mosaic">
+              {latest.map((post, i) => <StickerCard post={post} duo={duos[i % duos.length]} />)}
+            </div>
+          </section>
+
+          <section class="play-block" aria-labelledby="home-footer-play">
+            <div class="section-head">
+              <h3 id="home-footer-play">Work &amp; Play</h3>
+              <span></span>
+            </div>
+            <div class="panel-list">
+              <a href="https://actual.ai"><b>Actual AI</b><small>Guardrails for AI-powered software development.</small></a>
+              <a href="https://github.com/backlineint/brianperry.dev"><b>brianperry.dev</b><small>Rebuilt more times than is reasonable.</small></a>
+              <a href="https://www.yachtclubgames.com/games/mina-the-hollower/"><b>Mina the Hollower</b><small>Game Boy Color Zelda energy from the Shovel Knight team.</small></a>
+            </div>
+          </section>
+        </div>
+      </section>
+    )
+  }
+
   <div class="foot-inner">
     <div class="made">Made with 🥯 by <b>Brian Perry</b>.</div>
     <div class="social">
@@ -11,75 +92,44 @@
         <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
       </a>
     </div>
-    <div class="botlinks">
-      <a href="/feed.xml">Feed</a><span>·</span><a href="/style-guide">Style Guide</a>
-    </div>
+    <div class="botlinks"><a href="/feed.xml">Feed</a><span>·</span><a href="/style-guide">Style Guide</a></div>
   </div>
 </footer>
 <style>
-  .foot {
-    margin-top: var(--footer-gap, 76px);
-    border-top: 2px solid var(--line);
-    background: var(--bg-2);
-  }
-  .foot-inner {
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 42px 24px 50px;
-    text-align: center;
-  }
-  .made {
-    font-size: 16px;
-    color: var(--muted);
-  }
-  .made b {
-    color: var(--ink);
-    font-weight: 700;
-  }
-  .social {
-    display: flex;
-    gap: 14px;
-    justify-content: center;
-    margin: 20px 0 16px;
-  }
-  .social a {
-    width: 38px;
-    height: 38px;
-    border-radius: 10px;
-    background: var(--surface);
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.15s;
-  }
-  .social a:hover {
-    background: var(--surface-2);
-  }
-  .social svg {
-    width: 19px;
-    height: 19px;
-    fill: var(--muted);
-    color: var(--muted);
-    transition: fill 0.15s, color 0.15s;
-  }
-  .social a:hover svg {
-    fill: var(--gold);
-    color: var(--gold);
-  }
-  .botlinks {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--faint);
-  }
-  .botlinks a {
-    color: var(--cyan);
-    text-decoration: none;
-  }
-  .botlinks span {
-    margin: 0 9px;
-    opacity: 0.5;
-  }
+  .foot { margin-top: var(--footer-gap, 76px); border-top: 2px solid var(--line); background: var(--bg-2); }
+  .home-foot { border-top: 0; background: linear-gradient(180deg, transparent, var(--bg-2) 14%); }
+  .home-footer { width: min(1080px, 100%); margin: 0 auto; padding: 64px var(--page-gutter) 30px; }
+  .home-footer-kicker, .section-head { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; font-family: var(--font-mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--cyan); }
+  .home-footer-hero { display: grid; grid-template-columns: minmax(0, 1fr) 210px; gap: 36px; align-items: center; padding: 30px; border: 2px solid var(--line); border-radius: 24px; background: color-mix(in srgb, var(--surface) 78%, transparent); box-shadow: var(--box-shadow); }
+  .eyebrow { margin: 0 0 10px; font-family: var(--font-mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+  h2 { font-size: clamp(40px, 6vw, 72px); line-height: .9; text-transform: uppercase; margin: 0; }
+  h2 span { color: var(--red); }
+  .home-footer-copy > p:not(.eyebrow) { max-width: 670px; color: var(--muted); font-size: 18px; }
+  .footer-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+  .footer-actions a, .panel-list a { border: 2px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--ink); text-decoration: none; transition: transform .12s, border-color .12s; }
+  .footer-actions a { padding: 9px 14px; font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  .footer-actions a:hover, .panel-list a:hover { transform: translate(-1px, -1px); border-color: var(--cyan); }
+  .portrait-card { position: relative; display: block; transform: rotate(3deg); color: var(--badge-ink); text-decoration: none; }
+  .portrait-card :global(img) { display: block; border: 6px solid var(--surface); border-radius: 18px; box-shadow: 7px 7px 0 var(--duo-frame-shadow); }
+  .portrait-card span { position: absolute; left: 50%; bottom: 13px; transform: translateX(-50%); padding: 4px 10px; border-radius: 7px; background: var(--gold); font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: .1em; }
+  .home-footer-grid { display: grid; grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr); gap: 28px; margin-top: 38px; }
+  .section-head h3 { margin: 0; font-size: 22px; color: var(--ink); }
+  .section-head span { flex: 1; height: 2px; background: var(--line); }
+  .mini-mosaic { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+  .panel-list { display: grid; gap: 14px; }
+  .panel-list a { display: grid; gap: 4px; padding: 18px; }
+  .panel-list b { color: var(--gold); }
+  .panel-list small { color: var(--muted); line-height: 1.4; }
+  .foot-inner { max-width: 1080px; margin: 0 auto; padding: 42px 24px 50px; text-align: center; }
+  .made { font-size: 16px; color: var(--muted); }
+  .made b { color: var(--ink); font-weight: 700; }
+  .social { display: flex; gap: 14px; justify-content: center; margin: 20px 0 16px; }
+  .social a { width: 38px; height: 38px; border-radius: 10px; background: var(--surface); margin: 0; display: flex; align-items: center; justify-content: center; transition: background 0.15s; }
+  .social a:hover { background: var(--surface-2); }
+  .social svg { width: 19px; height: 19px; fill: var(--muted); color: var(--muted); transition: fill 0.15s, color 0.15s; }
+  .social a:hover svg { fill: var(--gold); color: var(--gold); }
+  .botlinks { font-family: "JetBrains Mono", monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); }
+  .botlinks a { color: var(--cyan); text-decoration: none; }
+  .botlinks span { margin: 0 9px; opacity: 0.5; }
+  @media (max-width: 900px) { .home-footer-hero, .home-footer-grid { grid-template-columns: 1fr; } .portrait-card { max-width: 220px; justify-self: center; } .mini-mosaic { grid-template-columns: 1fr; } }
 </style>
