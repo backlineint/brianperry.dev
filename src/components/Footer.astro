@@ -22,22 +22,22 @@ const isHome = Astro.url.pathname === "/";
 
         <div class="home-footer-hero">
           <div class="home-footer-copy">
-            <p class="eyebrow">The footer is the homepage now</p>
+            <p class="eyebrow">// a serious &amp; professional website</p>
             <h2 id="home-footer-title">
               Brian <span>Perry</span>.dev
             </h2>
             <p>
               I'm a <a href="https://github.com/backlineint">web developer</a> figuring out
-              what AI agents are actually good for at <a href="https://actual.ai">Actual AI</a>,
-              a longtime <a href="https://www.drupal.org/u/brianperry">Drupal person</a>,
-              occasional <a href="https://noti.st/brianperry">conference speaker</a>,
-              Chicago suburbs dad, and Nintendo enjoyer. Basically the whole homepage, but hiding
-              in the footer like a raccoon with a LinkedIn profile.
+              what AI agents are actually good for - at <a href="https://actual.ai">Actual AI</a>
+              by day, and in a pile of side projects the rest of the time. I'm a longtime
+              <a href="https://www.drupal.org/u/brianperry">member of the Drupal community</a>
+              and I often <a href="https://noti.st/brianperry">present</a> at tech events. I
+              live with a super awesome family in the Chicago suburbs and I'm really into
+              Nintendo.
             </p>
             <div class="footer-actions">
-              <a href="/">Home base</a>
-              <a href="/about">About</a>
-              <a href="/posts">All posts</a>
+              <a href="https://bsky.app/profile/brianperry.dev" target="_blank">Bluesky</a>
+              <a href="https://github.com/backlineint" target="_blank">GitHub</a>
               <a href="/feed.xml">RSS</a>
             </div>
           </div>
@@ -69,10 +69,41 @@ const isHome = Astro.url.pathname === "/";
               <h3 id="home-footer-play">Work &amp; Play</h3>
               <span></span>
             </div>
-            <div class="panel-list">
-              <a href="https://actual.ai"><b>Actual AI</b><small>Guardrails for AI-powered software development.</small></a>
-              <a href="https://github.com/backlineint/brianperry.dev"><b>brianperry.dev</b><small>Rebuilt more times than is reasonable.</small></a>
-              <a href="https://www.yachtclubgames.com/games/mina-the-hollower/"><b>Mina the Hollower</b><small>Game Boy Color Zelda energy from the Shovel Knight team.</small></a>
+            <div class="footer-panels">
+              <div class="panel">
+                <h4><span class="badge gold tag">BUILD</span>Recent Projects</h4>
+                <ul>
+                  <li>
+                    <span class="ic" style="background:var(--gold)"></span>
+                    <span><a href="https://actual.ai">Actual AI</a> <span class="m">— guardrails for AI-powered software development.</span></span>
+                  </li>
+                  <li>
+                    <span class="ic" style="background:var(--cyan)"></span>
+                    <span><b>Stealth Read Later App</b> <span class="m">— side project city. More to come soon.</span></span>
+                  </li>
+                  <li>
+                    <span class="ic" style="background:var(--red)"></span>
+                    <span><a href="https://github.com/backlineint/brianperry.dev">brianperry.dev</a> <span class="m">— rebuilt more times than is reasonable.</span></span>
+                  </li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h4><span class="badge green tag">1-UP</span>Currently Enjoying</h4>
+                <ul>
+                  <li>
+                    <span class="ic" style="background:var(--gold)"></span>
+                    <span><a href="https://www.imdb.com/title/tt33332385/">Widows Bay</a> <span class="m">— quirky horror-comedy series and proof that all of New England is haunted.</span></span>
+                  </li>
+                  <li>
+                    <span class="ic" style="background:var(--cyan)"></span>
+                    <span><a href="https://www.yachtclubgames.com/games/mina-the-hollower/">Mina the Hollower</a> <span class="m">— a take on Game Boy Color era Zelda from the Shovel Knight team.</span></span>
+                  </li>
+                  <li>
+                    <span class="ic" style="background:var(--red)"></span>
+                    <span><a href="https://open.spotify.com/album/4I3Ea3ZOeHI9lmKd2Pyact">The Obsessives</a> <span class="m">— keep coming back to this indie rock album that randomly came up in my autoplay.</span></span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </section>
         </div>
@@ -106,20 +137,28 @@ const isHome = Astro.url.pathname === "/";
   h2 span { color: var(--red); }
   .home-footer-copy > p:not(.eyebrow) { max-width: 670px; color: var(--muted); font-size: 18px; }
   .footer-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
-  .footer-actions a, .panel-list a { border: 2px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--ink); text-decoration: none; transition: transform .12s, border-color .12s; }
+  .footer-actions a { border: 2px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--ink); text-decoration: none; transition: transform .12s, border-color .12s; }
   .footer-actions a { padding: 9px 14px; font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-  .footer-actions a:hover, .panel-list a:hover { transform: translate(-1px, -1px); border-color: var(--cyan); }
+  .footer-actions a:hover { transform: translate(-1px, -1px); border-color: var(--cyan); }
   .portrait-card { position: relative; display: block; transform: rotate(3deg); color: var(--badge-ink); text-decoration: none; }
   .portrait-card :global(img) { display: block; border: 6px solid var(--surface); border-radius: 18px; box-shadow: 7px 7px 0 var(--duo-frame-shadow); }
   .portrait-card span { position: absolute; left: 50%; bottom: 13px; transform: translateX(-50%); padding: 4px 10px; border-radius: 7px; background: var(--gold); font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: .1em; }
-  .home-footer-grid { display: grid; grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr); gap: 28px; margin-top: 38px; }
+  .home-footer-grid { display: grid; gap: 38px; margin-top: 38px; }
   .section-head h3 { margin: 0; font-size: 22px; color: var(--ink); }
   .section-head span { flex: 1; height: 2px; background: var(--line); }
   .mini-mosaic { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
-  .panel-list { display: grid; gap: 14px; }
-  .panel-list a { display: grid; gap: 4px; padding: 18px; }
-  .panel-list b { color: var(--gold); }
-  .panel-list small { color: var(--muted); line-height: 1.4; }
+  .footer-panels { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .panel { background: var(--surface); border: 2px solid var(--line); border-radius: 18px; padding: 24px 26px; box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.28); }
+  .panel h4 { font-size: 17px; text-transform: uppercase; letter-spacing: -0.01em; margin: 0 0 16px; display: flex; align-items: center; gap: 10px; }
+  .panel h4 .tag { font-size: 10px; }
+  .panel ul { list-style: none; margin: 0; padding: 0; }
+  .panel li { padding: 12px 0; border-top: 1.5px solid var(--line-2); font-size: 15.5px; line-height: 1.45; display: flex; gap: 12px; align-items: baseline; }
+  .panel li:first-child { border-top: none; padding-top: 0; }
+  .panel .ic { flex: 0 0 auto; width: 8px; height: 8px; border-radius: 2px; align-self: flex-start; margin-top: 7px; }
+  .panel li b { color: var(--ink); }
+  .panel li a { color: var(--cyan); font-weight: 700; text-decoration: none; }
+  .panel li a:hover { text-decoration: underline; }
+  .panel li .m { color: var(--muted); font-weight: 400; }
   .foot-inner { max-width: 1080px; margin: 0 auto; padding: 42px 24px 50px; text-align: center; }
   .made { font-size: 16px; color: var(--muted); }
   .made b { color: var(--ink); font-weight: 700; }
@@ -131,5 +170,5 @@ const isHome = Astro.url.pathname === "/";
   .botlinks { font-family: "JetBrains Mono", monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); }
   .botlinks a { color: var(--cyan); text-decoration: none; }
   .botlinks span { margin: 0 9px; opacity: 0.5; }
-  @media (max-width: 900px) { .home-footer-hero, .home-footer-grid { grid-template-columns: 1fr; } .portrait-card { max-width: 220px; justify-self: center; } .mini-mosaic { grid-template-columns: 1fr; } }
+  @media (max-width: 900px) { .home-footer-hero { grid-template-columns: 1fr; } .portrait-card { max-width: 220px; justify-self: center; } .mini-mosaic, .footer-panels { grid-template-columns: 1fr; } }
 </style>
