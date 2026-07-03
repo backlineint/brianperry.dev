@@ -6,7 +6,10 @@ import StickerCard from "./StickerCard.astro";
 import portrait from "../assets/perry_weather.jpg";
 
 const allPosts = await getSortedPosts();
-const latest = allPosts.slice(0, 3);
+const currentPath = Astro.url.pathname.replace(/\/$/, "");
+const latest = allPosts
+  .filter((post) => `/${post.collection}/${post.slug}` !== currentPath)
+  .slice(0, 3);
 const duos = [4, 6, 5];
 const isHome = Astro.url.pathname === "/";
 ---
@@ -72,6 +75,9 @@ const isHome = Astro.url.pathname === "/";
             </div>
             <div class="mini-mosaic">
               {latest.map((post, i) => <StickerCard post={post} duo={duos[i % duos.length]} />)}
+            </div>
+            <div class="see-all-row">
+              <a class="see-all" href="/posts">All posts <span aria-hidden="true">→</span></a>
             </div>
           </section>
 
@@ -169,8 +175,14 @@ const isHome = Astro.url.pathname === "/";
   .frame.duo .tape { position: absolute; z-index: 4; bottom: 12px; left: 50%; transform: translateX(-50%); font-family: "JetBrains Mono", monospace; font-weight: 700; font-size: 12px; letter-spacing: 0.1em; color: var(--badge-ink); background: var(--gold); padding: 5px 11px; border-radius: 7px; white-space: nowrap; }
   .frame.duo .starbadge { position: absolute; z-index: 5; top: -16px; right: -12px; }
   .frame.duo .starbadge path { fill: var(--gold); stroke: var(--surface); stroke-width: 1.2; }
-  .home-footer-grid { display: grid; gap: 38px; margin-top: 0; }
+  .home-footer-grid { display: grid; gap: 18px; margin-top: 0; }
+  .home-footer-grid .sec-head { margin-top: 34px; }
   .mini-mosaic { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+  .see-all-row { display: flex; justify-content: flex-end; margin-top: 22px; }
+  .see-all { display: inline-flex; align-items: center; gap: 8px; margin: 0; font-family: "JetBrains Mono", monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cyan); text-decoration: none; padding: 9px 15px; border: 2px solid var(--line); border-radius: 10px; transition: border-color 0.15s, transform 0.12s; }
+  .see-all span { transition: transform 0.12s; }
+  .see-all:hover { border-color: var(--cyan); }
+  .see-all:hover span { transform: translateX(3px); }
   .footer-panels { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
   .panel { background: var(--surface); border: 2px solid var(--line); border-radius: 18px; padding: 24px 26px; box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.28); }
   .panel h4 { font-size: 17px; text-transform: uppercase; letter-spacing: -0.01em; margin: 0 0 16px; display: flex; align-items: center; gap: 10px; }
@@ -184,6 +196,7 @@ const isHome = Astro.url.pathname === "/";
   .panel li a:hover { text-decoration: underline; }
   .panel li .m { color: var(--muted); font-weight: 400; }
   .foot-inner { max-width: 1080px; margin: 0 auto; padding: 42px 24px 50px; text-align: center; }
+  .home-foot .foot-inner { max-width: none; margin-top: 16px; padding: 32px var(--page-gutter) 40px; border-top: 2px solid var(--line); background: var(--bg); }
   .made { font-size: 16px; color: var(--muted); }
   .made b { color: var(--ink); font-weight: 700; }
   .social { display: flex; gap: 14px; justify-content: center; margin: 20px 0 16px; }
