@@ -34,6 +34,14 @@ When drafting or revising blog posts for this site, follow these guidelines to m
 - Don't be afraid to name what you don't know or haven't done yet. Brian is open about learning in public.
 - Pop culture references and analogies are welcome when they fit.
 
+## Attribution
+
+- When a concept, term, framing, or quote comes from someone else, credit them clearly and link the primary source inline — the post where it was actually coined, not a secondary mention that happens to use it.
+- Credit the originator over the popularizer. If you're not sure who coined something, look it up before attributing rather than guessing.
+- Don't dress up borrowed framing as your own. "What Addy Osmani calls the ratchet," not "what I think of as the ratchet."
+- A parenthetical is the right tool for secondary lineage — noting the older or more formal name a term traces back to — without stacking a second link.
+- Quotes should be exact and traceable to the thing you linked.
+
 ## What to Avoid
 
 - Overly formal or corporate language.
