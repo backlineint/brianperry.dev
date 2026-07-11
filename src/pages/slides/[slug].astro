@@ -1,0 +1,26 @@
+---
+import { getCollection } from "astro:content";
+import Slides from "../../layouts/Slides.astro";
+
+export async function getStaticPaths() {
+  const decks = await getCollection("slides");
+  return decks.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { title, description } = entry.data;
+const body = entry.body;
+---
+
+<Slides title={title} description={description}>
+  <section
+    data-markdown
+    data-separator="^\r?\n---\r?\n$"
+    data-separator-notes="^Note:"
+  >
+    <textarea data-template>{body}</textarea>
+  </section>
+</Slides>
