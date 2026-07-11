@@ -14,8 +14,20 @@ const postCollection = defineCollection({
 	}),
 });
 
+const slidesCollection = defineCollection({
+	type: 'content',
+	schema: z.object({
+		title: z.string(),
+		description: z.string(),
+		date: z.coerce.date(),
+		event: z.string().optional(),
+		tags: z.array(z.string()).optional(),
+	}),
+});
+
 export const collections = {
 	'jams': postCollection,
 	'posts': postCollection,
 	'til': postCollection,
+	'slides': slidesCollection,
 };

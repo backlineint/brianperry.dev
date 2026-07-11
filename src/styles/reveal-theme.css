@@ -1,0 +1,179 @@
+/*
+  Arcade-themed reveal.js deck styles for brianperry.dev.
+  Imported AFTER reveal.js/dist/reveal.css so these rules win over reveal's
+  defaults. Palette mirrors src/styles/global.css.
+*/
+
+:root {
+  --bg: #160c2b;
+  --bg-2: #100823;
+  --surface: #241543;
+  --surface-2: #2d1a52;
+  --ink: #f6f0ff;
+  --muted: #b6a6da;
+  --faint: #7f6fae;
+  --red: #ff5470;
+  --gold: #ffc83d;
+  --green: #46e08a;
+  --cyan: #46d4ea;
+  --line: rgba(255, 255, 255, 0.12);
+  --badge-ink: #160c2b;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background-color: var(--bg);
+}
+.reveal-viewport {
+  background-color: var(--bg);
+}
+
+.reveal {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 34px;
+  color: var(--ink);
+}
+.reveal .slides {
+  text-align: left;
+}
+.reveal .slides section {
+  color: var(--ink);
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4 {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  color: var(--ink);
+  text-transform: none;
+  line-height: 1.1;
+}
+.reveal h1 {
+  font-family: "Archivo Black", system-ui, sans-serif;
+  font-size: 2.1em;
+  letter-spacing: -0.01em;
+  text-shadow: none;
+}
+.reveal h2 {
+  font-weight: 700;
+  font-size: 1.5em;
+  margin-bottom: 0.4em;
+}
+.reveal p,
+.reveal li {
+  color: var(--ink);
+}
+.reveal strong {
+  color: var(--gold);
+}
+.reveal em {
+  color: var(--cyan);
+  font-style: normal;
+}
+.reveal a {
+  color: var(--cyan);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(70, 212, 234, 0.4);
+}
+.reveal a:hover {
+  color: var(--gold);
+}
+.reveal code {
+  color: var(--cyan);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.05em 0.3em;
+  border-radius: 5px;
+}
+.reveal blockquote {
+  background: var(--surface);
+  border-left: 4px solid var(--gold);
+  box-shadow: none;
+  width: auto;
+  padding: 0.6em 0.9em;
+  font-style: normal;
+  color: var(--ink);
+}
+.reveal .controls {
+  color: var(--cyan);
+}
+.reveal .progress {
+  color: var(--gold);
+}
+.reveal .progress span {
+  background: var(--gold);
+}
+
+/* Helpers used by the deck markdown */
+.reveal .kicker {
+  display: inline-block;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.5em;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+.reveal .muted {
+  color: var(--muted);
+}
+.reveal .small {
+  font-size: 0.6em;
+}
+.reveal .accent {
+  color: var(--gold);
+}
+
+/* Section-divider slides */
+.reveal section.section h1,
+.reveal section.section h2 {
+  color: var(--gold);
+  font-family: "Archivo Black", system-ui, sans-serif;
+}
+.reveal section.center {
+  text-align: center;
+}
+
+/* 2x2 grid (guides/sensors x computational/inferential) */
+.reveal .grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.reveal .card {
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 18px;
+  background: var(--surface);
+}
+.reveal .card h3 {
+  margin: 0.1em 0 0.25em;
+  font-size: 0.8em;
+  color: var(--ink);
+}
+.reveal .card .lead {
+  color: var(--cyan);
+  font-weight: 600;
+}
+
+/* Demo badge + placeholders */
+.reveal .demo-badge {
+  display: inline-block;
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 0.5em;
+  color: var(--badge-ink);
+  background: var(--gold);
+  padding: 5px 11px;
+  border-radius: 8px;
+}
+.reveal .placeholder {
+  color: var(--faint);
+  font-size: 0.6em;
+  font-family: "JetBrains Mono", monospace;
+}

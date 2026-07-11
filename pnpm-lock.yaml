@@ -29,6 +29,9 @@ importers:
       open-props:
         specifier: ^1.6.13
         version: 1.6.13
+      reveal.js:
+        specifier: ^5.1.0
+        version: 5.2.1
       sanitize-html:
         specifier: ^2.11.0
         version: 2.13.0
@@ -1972,6 +1975,10 @@ packages:
   reusify@1.0.4:
     resolution: {integrity: sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==}
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
+
+  reveal.js@5.2.1:
+    resolution: {integrity: sha512-r7//6mIM5p34hFiDMvYfXgyjXqGRta+/psd9YtytsgRlrpRzFv4RbH76TXd2qD+7ZPZEbpBDhdRhJaFgfQ7zNQ==}
+    engines: {node: '>=18.0.0'}
 
   rollup@4.16.4:
     resolution: {integrity: sha512-kuaTJSUbz+Wsb2ATGvEknkI12XV40vIiHmLuFlejoo7HtDok/O5eDDD0UpCVY5bBX5U5RYo8wWP83H7ZsqVEnA==}
@@ -4800,6 +4807,8 @@ snapshots:
       unified: 10.1.2
 
   reusify@1.0.4: {}
+
+  reveal.js@5.2.1: {}
 
   rollup@4.16.4:
     dependencies:

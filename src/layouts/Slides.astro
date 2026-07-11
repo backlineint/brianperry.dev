@@ -1,0 +1,53 @@
+---
+// Full-bleed reveal.js deck layout, themed to the site's Arcade palette.
+// Decks are authored as markdown in src/content/slides/ and rendered at /slides/<slug>.
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = "" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <slot />
+      </div>
+    </div>
+
+    <script>
+      import Reveal from "reveal.js";
+      import Markdown from "reveal.js/plugin/markdown/markdown.esm.js";
+      import Notes from "reveal.js/plugin/notes/notes.esm.js";
+      // Import core reveal styles first, then the Arcade theme so it wins.
+      import "reveal.js/dist/reveal.css";
+      import "../styles/reveal-theme.css";
+
+      const deck = new Reveal({
+        plugins: [Markdown, Notes],
+        hash: true,
+        center: true,
+        controls: true,
+        progress: true,
+        slideNumber: false,
+        transition: "slide",
+      });
+      deck.initialize();
+    </script>
+  </body>
+</html>
