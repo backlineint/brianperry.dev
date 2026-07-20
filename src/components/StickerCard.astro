@@ -164,6 +164,13 @@ const badges = (tags && tags.length ? tags : [collection]).slice(0, 2);
   .scard.feat h3 {
     font-size: 30px;
   }
+  /* The featured card spans the full grid width. Chrome's default heading
+     balancing narrows the title and description to well under the card,
+     leaving the right half empty — pin them back to the card's width. */
+  .scard.feat h3,
+  .scard.feat p {
+    max-width: 100%;
+  }
   h3 a {
     color: var(--ink);
     text-decoration: none;
