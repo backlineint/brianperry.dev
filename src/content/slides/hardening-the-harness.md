@@ -159,24 +159,57 @@ Note:
 ## 1 · Architecture that enforces itself
 
 Note:
-- Fill demo asset from Post 2.
+- The rule lived in my head, so an agent crossed it. A doc is a description of intent; it doesn't stop anything.
 
 ---
 
-## From documented intentions to executable checks
+## A document doesn't stop anything
 
-- **dependency-cruiser** decides which workspace may import which
-- **structural rules** enforce ownership: one file touches the service-role key, UI can't reach the API layer
-- Gated in CI. A violation **fails the PR**. No reviewer judgment, no remembering the rule.
+You write "the app doesn't import from the extension" in a doc.
 
-Deterministic first: ship the always-wrong, cheap-to-check rules before anything heuristic.
+Three weeks later, something imports from the extension anyway.
+
+The fix: turn the rule into a check that **fails the build**.
 <!-- .element: class="fragment" -->
+
+<span class="small muted">Architectural fitness functions — Ford, Parsons & Kua, *Building Evolutionary Architectures*</span>
+
+Note:
+- A human absorbs the architecture by osmosis. An agent has your files and whatever you told it.
+- If a boundary isn't checkable, it isn't real.
+
+---
+
+## Two tools, twenty minutes
+
+- **dependency-cruiser** — boundaries between workspaces. Five rules, one per workspace: nobody imports from anyone.
+- **`check-structure.mjs`** — ownership *inside* a workspace. ~11 rules: only 3 files touch the service-role key, UI can't reach the API layer, Mastra layering.
+- Both run in `ci:verify`. A violation **fails the PR** on its own.
 
 <span class="small muted">Grid: computational guide + computational sensor · architecture-fitness</span>
 
 Note:
-- OpenAI's layered architecture enforced by custom linters is the same move at scale.
-- Lint error messages can inject remediation text into the agent's context.
+- Deterministic first: the always-wrong, cheap-to-check rules before anything heuristic. My doc literally says "Phase 1."
+- Every rule is a scar — each one exists because something already went wrong. That's the ratchet.
+
+---
+
+## The error message is talking to the agent
+
+```
+- service-role-key-ownership: app/lib/feed.ts
+  Only dedicated service-role Supabase owner modules
+  may read service-role Supabase keys.
+```
+
+That sentence isn't for me. It's for whoever fixes it — increasingly, an agent reading it straight out of CI.
+<!-- .element: class="fragment" -->
+
+<span class="small muted">Böckeler: "a positive kind of prompt injection" — a sensor doing the work of a guide</span>
+
+Note:
+- The remediation text lands in the agent's context. It knows what broke and what the right shape is.
+- Costs one extra string per check.
 
 ---
 
@@ -184,12 +217,13 @@ Note:
 
 <span class="demo-badge">Demo · Layer 1</span>
 
-Open a PR that crosses a boundary. Watch CI fail with a remediation message.
+![GitHub Actions log: dependency-cruiser fails architecture:check on app/__tests__/extensionPopupAuth.test.ts importing from the extension. 1 violation, 203 dependencies cruised, build exits 1.](/slides/architecture-check-ci-failure.png)
 
-<span class="placeholder">[ screenshot / live: capture from Post 2 ]</span>
+One violation out of 203. A **test** in the app reached into the extension — the kind of thing review waves through.
 
 Note:
-- Have the failing CI output ready as a fallback screenshot in case live fails.
+- This is the real run from Post 2. Same rule that opened the talk.
+- Fallback if live demo fails. Lead with the red X, then the caption.
 
 ---
 
