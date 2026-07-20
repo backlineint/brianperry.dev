@@ -134,7 +134,9 @@ const badges = (tags && tags.length ? tags : [collection]).slice(0, 2);
     font-size: 14.5px;
     line-height: 1.45;
     margin: 0;
-    max-width: 64ch;
+    /* Chrome's default paragraph prettifying narrows this to well under the
+       row, leaving a gap on the right — pin it back to the row's width. */
+    max-width: 100%;
   }
   .cart-tags {
     display: flex;
