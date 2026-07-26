@@ -232,7 +232,8 @@ Note:
 ## 2 · Documentation as a hierarchy
 
 Note:
-- Fill from Post 3.
+- The other half of the harness: not the sensors that catch the agent after, the guides that steer it before.
+- My root `AGENTS.md` had quietly become a junk drawer. A pile is a bad interface for an agent — it can't skim the way you do.
 
 ---
 
@@ -254,12 +255,21 @@ Note:
 
 <span class="demo-badge">Demo · Layer 2</span>
 
-The short TOC + the `docs/` tree. Before/after the monolith.
+One junk-drawer file → a ~70-line index over a scoped tree:
 
-<span class="placeholder">[ show the tree: capture from Post 3 ]</span>
+```text
+AGENTS.md                 # ~70-line table of contents
+docs/                     # 9 project-wide guides
+ai/  AGENTS.md → docs/    # workspace index → scoped docs (6 files)
+app/ · extension/ · supabase/   # each: AGENTS.md → docs/
+```
+
+An agent in `ai/` loads the root index, opens `ai/AGENTS.md`, pulls `ai/docs/conventions.md` — and never reads a word about the extension.
+<!-- .element: class="fragment" -->
 
 Note:
-- Optional: show an agent loading only the workspace-scoped doc for a scoped task.
+- Progressive disclosure in action: the context fills with what the task touches, nothing else.
+- The ratchet again — I didn't design this. An agent followed a buried instruction into a wall, so I changed the shape of what it reads.
 
 ---
 
