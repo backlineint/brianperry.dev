@@ -278,22 +278,79 @@ Note:
 ## 3 · Cross-workspace contract ownership
 
 Note:
-- Fill from Post 4.
+- The seam between workspaces: the parser produces a shape, the app renders it, a workflow persists it. Real, load-bearing, and for a while written down nowhere but my head.
+- A change in `ai/` rippled two workspaces over and broke a consumer. Locally correct, green in its own workspace, broken in composition.
 
 ---
 
-## Make the ripple effects visible at PR time
+## The coupling lived nowhere
 
-- A shared contract changes and it's unclear who owns it or who breaks
-- Write each durable contract down: **owner + consumers**
-- Rule: changing a contract updates every consumer's docs in the **same PR**
-- A check turns that rule into a guardrail
+A change to the parser result in `ai/`. Locally correct, tests green.
 
-<span class="small muted">Grid: inferential guide → computational sensor · architecture-fitness</span>
+It yanked one end of a rope tied to a file two workspaces away — and nothing connected them that anyone could see.
+
+<span class="small muted">Grid: computational guide · agent legibility</span>
 
 Note:
-- Coupling that lived in people's heads, written where an agent can act on it.
-- Surfaces at PR time instead of as a production bug three weeks later.
+- A veteran carries the map in their head: touch the parser result, go fix the add-article route. It's written nowhere, so "everyone" is exactly one person. The agent has none of it.
+- Cross-workspace coupling is the most invisible knowledge in the repo, and its absence does the most damage.
+
+---
+
+## A map that sorts, not a doc that fixes
+
+Write each durable contract down: **owner + consumers**. That's the floor.
+
+Its real job is to sort each seam by the **physics of the boundary** — which decides how hard you can enforce it.
+
+<div class="grid2">
+  <div class="card">
+    <h3>Delete it</h3>
+    <span class="lead">Collapse the seam.</span><br/>
+    Both ends become one shared symbol. Drift is impossible.
+  </div>
+  <div class="card">
+    <h3>Block it</h3>
+    <span class="lead">Build-time.</span><br/>
+    A shared symbol both derive from; a bad change fails to compile.
+  </div>
+  <div class="card">
+    <h3>Detect it</h3>
+    <span class="lead">Runtime.</span><br/>
+    No shared symbol (SQL, HTTP): validate the actual bytes.
+  </div>
+  <div class="card">
+    <h3>Discipline</h3>
+    <span class="lead">Out of reach.</span><br/>
+    A consumer you can't change: back to a rule you must remember.
+  </div>
+</div>
+<!-- .element: class="fragment" -->
+
+Note:
+- The doc doesn't enforce. It tells you which tier a seam is, so you reach for prevention where you can and settle for detection only where you can't.
+- Writing it down is the least you can do. The interesting question is what you do once you can see the seam.
+
+---
+
+## The strongest fix deletes the seam
+
+The extension hand-copied the parser type — kept in sync by vigilance and an assertion that yelled on drift.
+
+```ts
+import type { ParserResult } from "../../../shared/articleContracts";
+export type { ParserResult };
+```
+
+One symbol, not two. Drift isn't caught — there's nothing left to drift. I retired the sensor that policed the copy.
+<!-- .element: class="fragment" -->
+
+<span class="small muted">Grid: computational guide → build-time coupling · the ratchet</span>
+
+Note:
+- Editing the shared shape now fails every consumer's typecheck, immediately. I didn't add a check — I made both ends the same object.
+- The cost, on purpose: the extension can't compile without the shared package. Three copies that can silently disagree → one source that loudly can't.
+- The ceiling: the shipped extension already in someone's browser I can't reach. There, deletion fails and you're back to backward-compat as discipline.
 
 ---
 
@@ -301,9 +358,20 @@ Note:
 
 <span class="demo-badge">Demo · Layer 3</span>
 
-The owner/consumer table + the executable contract test.
+`cross-workspace-contracts.test.ts` — the backstop for seams you can't delete. Three sensors, one file:
 
-<span class="placeholder">[ show contracts doc + test: capture from Post 4 ]</span>
+```text
+safeParse  · fixtures against the shared schema (runtime)
+SQL-text   · a TS constant must appear in a migration's CHECK
+frozen     · every shipped extension payload still validates
+```
+
+A contract that drifts out of sync with its consumers fails the build.
+<!-- .element: class="fragment" -->
+
+Note:
+- The three sensors map to the tiers: runtime validation for a seam you can't collapse, a grep-the-migration check where a Zod value and a Postgres column share no symbol, and append-only frozen payloads for the extension I can't reach.
+- Real captures live in Post 4. Show the file, then the green run.
 
 ---
 
