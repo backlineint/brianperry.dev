@@ -527,7 +527,7 @@ Note:
 
 ## Appendix · Q&A backup
 
-- Inferential controls: review agents & LLM-as-judge
+- Inferential controls: code review, LLM-as-judge & visual judgment
 - Observability the agent can read
 - Entropy & garbage collection
 - References
@@ -539,15 +539,36 @@ Note:
 
 ## Appendix — Inferential controls
 
-- Computational checks catch **structure**. Only a model knows the **abstraction** is wrong or a test is redundant
-- A callable `code-review` skill: systematic review as a tool, not a thing someone remembers
-- A cloud-agent review flow: a review subagent runs against the finished branch before finalizing
-- **Don't let an agent grade its own homework** — separate generator from evaluator
+- Computational checks catch **structure**. Only a model knows the **abstraction** is wrong or the test is quietly **redundant**
+- One rule governs every model-as-reviewer: **the judge is not the author.** Don't let an agent grade its own homework
+- The `code-review` skill — review as a callable *tool*, run in an **isolated subagent** on a fresh context, the default for every task (local *and* cloud)
 
-<span class="small muted">Anthropic & Cursor: the planner/generator/evaluator split</span>
+```text
+Is the intent clear?  ·  Any concerns with the implementation?
+Patterns worth documenting?  ·  Is there sufficient test coverage?
+```
+
+<span class="small muted">Anthropic: isolated LLM-as-judge + the generator/evaluator split · Addy Osmani</span>
 
 Note:
-- This is Post 6. Inferential half of the grid.
+- This is Post 6, the inferential half of the grid. It absorbs the code-review beat and broadens it.
+- Isolated = a reviewer with no memory of the authoring and no attachment to the approach. Same model, clean slate — most of what "a second opinion" ever meant.
+- Those four questions *are* the whole skill. The two that aren't about correctness ("concerns?", "coverage?") are what catch the wrong abstraction and the do-nothing test.
+
+---
+
+## Appendix — The same split, pointed at pixels
+
+- `visual-verify` is **report-only** — it captures the screenshots and refuses to grade them. Capture ≠ judge
+- The judge is a separate **vision-model** pass: *does this match the spec?* — a real second opinion, because it never ran the browser
+- **Capture → judge → publish**: three skills, three jobs; none silently does another's
+- The ceiling: inferential is slow, costly, probabilistic → run it **late, not on every commit**; and calibrate the judge against humans — you don't get to fully outsource the grading
+
+<span class="small muted">Böckeler: "keep quality left, spread the checks out by cost" · report-only is the down payment on judging separately</span>
+
+Note:
+- Pays off the Layer 4 bridge: report-only capture now, a vision model grading against the spec next.
+- The same author/judge separation, three times over. Collapsing it back into one "handle the screenshots" step is exactly the mistake the design avoids.
 
 ---
 
@@ -585,7 +606,7 @@ Note:
 - Martin Fowler / Birgitta Böckeler — *Harness engineering for coding agent users*
 - Phil Morton — *The anatomy of an AI agent*
 - Addy Osmani — *Agent harness engineering* · *Long-running agents*
-- Anthropic — *Effective harnesses for long-running agents*
+- Anthropic — *Effective harnesses for long-running agents* · *Demystifying evals for AI agents*
 - Vivek Trivedy — *The Anatomy of an Agent Harness*
 
 Note:
