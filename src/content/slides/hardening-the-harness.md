@@ -380,22 +380,78 @@ Note:
 ## 4 · Visual verification
 
 Note:
-- Fill from Post 5. This is the build-before-show layer.
+- Structure → outcomes. The first three make the agent write correct code; none of them tell it what the code looks like.
+- The behaviour half of the harness — the category Böckeler and Fowler are honest about being hard. I've built it, but built it in exactly one place.
+
+---
+
+## Another green PR — this one looked wrong
+
+Tests green. Lint clean. Architecture checks passed, docs filed, no contract drifted. Every signal I'd automated said ship it.
+
+Then I ran the app: the new control sat half off the screen on mobile.
+<!-- .element: class="fragment" -->
+
+Every sensor I'd built was watching the **code**. Not one was watching the **app**.
+<!-- .element: class="fragment" -->
+
+<span class="small muted">Obvious in a second of looking, invisible to every assertion I owned</span>
+
+Note:
+- Deliberate rhyme with the opening story: a PR that passes everything and is still wrong. Layer 1 was a rule in my head; this is an outcome no rule can see.
+- "The imports are legal" is a property of the source. "The button is visible" is a property of a pixel that doesn't exist until the app runs in a browser. That's why behaviour is the hard category.
 
 ---
 
 ## Give the agent eyes
 
-- Everything so far makes the agent write **correct** code
-- None of it tells the agent what the thing **looks like**
-- Attach Playwright **screenshots** and **screen recordings** to agent PRs
-- "Tests pass" → "I can see the button is there and the layout isn't broken"
+- The cheapest move works: after the change, launch a browser, hit the routes that **changed**, capture what renders
+- Diff-driven, not a fixed screen set — navigate to the *feature it just built*, at desktop **and** mobile viewports
+- Auth routes: spin up the stack, sign in a seeded user, shoot the protected screens, tear the session back down
+- **Report-only** — PNGs rendered inline in the agent's own reply. A mirror, not a judge.
 
 <span class="small muted">Grid: computational + inferential sensor · the behaviour harness</span>
 
 Note:
-- Structure vs outcomes: the first three formalize structure, this formalizes outcomes.
-- Eventual goal: feed the visual output to a vision model so the agent self-reviews.
+- The skill is `visual-verify`. It reads the branch diff, works out which surfaces are UI — app, marketing site, extension popup — starts only the dev servers it needs, and drives a real browser. No UI in the diff → it skips.
+- You don't need the agent to *understand* the screenshot for it to earn its place. You need it to exist, attached to the work, where I see it without pulling the branch.
+- Report-only is deliberate: capture and judgment stay separate. That choice pays off at the close.
+
+---
+
+## The hard part isn't the clever part
+
+Getting a browser to behave — auth, dev servers, headless Chrome — inside a cloud sandbox cost more than the verification it enabled.
+
+Two moves out of the hole:
+<!-- .element: class="fragment" -->
+
+- Stop hand-driving Playwright — move capture onto **agent-browser**. The artifact is the point; the plumbing is just tax.
+- Stop pretending it runs everywhere. In a cloud task or CI, the skill returns **SKIP** — a real limit, stated plainly and enforced in code.
+
+<span class="small muted">The good version runs in exactly one place: a local dev session</span>
+
+Note:
+- I spent more time debugging the verification than writing it. For a tool whose whole job is confidence about agent output, that setup cost was backwards.
+- Honesty beat: the loop is built, but it's local-only. Closing that last gap — a full authenticated stack in CI — is the genuinely hard work still ahead.
+
+---
+
+## Seeing the page vs. operating the app
+
+Seeing is a huge step up from blind. But my capture *cheats* to get there — it looks up an article ID in the database to reach a screen fast.
+
+Efficient for evidence. Not the same as driving the flow a user drives.
+<!-- .element: class="fragment" -->
+
+The next unlock is the boring one: real smoke tests with auth in CI. Storybook's already wired for the cheap shots I'm not taking yet.
+<!-- .element: class="fragment" -->
+
+<span class="small muted">Watching: Passmark — natural-language tests over real Playwright</span>
+
+Note:
+- Operating — logging in, filling the form, driving the actual feature — is where the agent confirms the thing *works*, not just that it painted something.
+- The wall is the same one from the last slide: a full authenticated stack in a cloud runner. That's where the effort goes next. Storybook is the most leveraged move I'm not yet making.
 
 ---
 
@@ -403,12 +459,17 @@ Note:
 
 <span class="demo-badge">Demo · Layer 4</span>
 
-Before/after recording on a UI-change PR.
+`visual-verify` captures. `gh-post-visual-evidence` publishes.
 
-<span class="placeholder">[ recording: capture from Post 5 — the one layer I build before I can show ]</span>
+<span class="placeholder">[ visual-verify output: desktop + mobile capture of a changed route, rendered inline ]</span>
+
+One skill's job is to *capture* evidence; a different skill's job is to *publish* it. Neither may silently do the other's.
+<!-- .element: class="fragment" -->
 
 Note:
-- Strongest visual in the deck. Lead with the "after," then reveal the "before."
+- Show a real visual-verify run — the PNGs render inline in the agent's reply. This is the payoff slide; lead with the picture.
+- The publisher posts to a provenance-checked PR comment on a side branch — which commit it captured at, whether the tree was clean — and rejects stale evidence rather than quietly misleading a reviewer. Local-only, and only when I ask.
+- Bridge to the close: report-only capture now, a vision model grading against the spec later. That split is the appendix on inferential controls.
 
 ---
 
