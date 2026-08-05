@@ -144,18 +144,51 @@ body {
   border-radius: 0;
 }
 .reveal pre .hljs-keyword,
-.reveal pre .hljs-built_in {
+.reveal pre .hljs-built_in,
+.reveal pre .hljs-selector-tag {
   color: var(--gold);
 }
-.reveal pre .hljs-string {
+.reveal pre .hljs-string,
+.reveal pre .hljs-regexp,
+.reveal pre .hljs-meta .hljs-string {
   color: var(--green);
 }
 .reveal pre .hljs-number,
 .reveal pre .hljs-literal {
   color: var(--cyan);
 }
-.reveal pre .hljs-comment {
+.reveal pre .hljs-title,
+.reveal pre .hljs-title.function_,
+.reveal pre .hljs-function .hljs-title {
+  color: var(--ink);
+  font-weight: 700;
+}
+.reveal pre .hljs-type,
+.reveal pre .hljs-class .hljs-title {
+  color: var(--cyan);
+}
+.reveal pre .hljs-variable,
+.reveal pre .hljs-params,
+.reveal pre .hljs-property,
+.reveal pre .hljs-attr {
+  color: var(--ink);
+}
+.reveal pre .hljs-comment,
+.reveal pre .hljs-doctag {
   color: var(--muted);
+  font-style: italic;
+}
+.reveal pre .hljs-meta,
+.reveal pre .hljs-subst {
+  color: var(--muted);
+}
+.reveal pre .hljs-ln-numbers {
+  color: var(--faint);
+  border-right: 1px solid var(--line);
+  padding-right: 0.75em;
+}
+.reveal pre .hljs-ln-code {
+  padding-left: 0.75em;
 }
 .reveal blockquote {
   background: var(--surface);

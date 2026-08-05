@@ -33,13 +33,14 @@ const { title, description = "" } = Astro.props;
     <script>
       import Reveal from "reveal.js";
       import Markdown from "reveal.js/plugin/markdown/markdown.esm.js";
+      import Highlight from "reveal.js/plugin/highlight/highlight.esm.js";
       import Notes from "reveal.js/plugin/notes/notes.esm.js";
       // Import core reveal styles first, then the Arcade theme so it wins.
       import "reveal.js/dist/reveal.css";
       import "../styles/reveal-theme.css";
 
       const deck = new Reveal({
-        plugins: [Markdown, Notes],
+        plugins: [Markdown, Highlight, Notes],
         hash: true,
         center: true,
         controls: true,
