@@ -721,8 +721,35 @@ Note:
 - Agents can write the linters that constrain agents
 
 Note:
-- Entropy / garbage collection. The advisory→blocking promotion policy is the ratchet made literal.
-- More detail in the appendix if it comes up.
+- Recurring failure → tighten a control, not the prompt. Böckeler's steering loop.
+- Entropy sets in the moment you stop. The next slide is how you pay for it.
+
+---
+
+## Entropy is the tax; GC is how you pay it
+
+Narrow audits in `tools/garbage-collection/` catch drift on a cadence. But a brand-new check hasn't earned the right to fail your build.
+
+So it starts as an **adviser** and graduates:
+
+```js
+if (!failOnFindings) {
+  console.log('Advisory mode: findings do not fail this run.');
+  process.exit(0);
+}
+process.exit(1);
+```
+
+Advisory → warn in CI → **blocking**, only once the false-positive rate earns it. A control that earns its own teeth.
+<!-- .element: class="fragment" -->
+
+<span class="small muted">Grid: computational sensor · the ratchet made literal · OpenAI's "garbage collection"</span>
+
+Note:
+- The screen-persistence audit already made the trip — it runs blocking inside `architecture:check` now. The doc-shape-sync one is still advisory, still earning trust.
+- The promotion conditions are written down: a clear owner, the findings understood, the false-positive rate low enough to trust in CI.
+- This is the cleanest ratchet demonstration in the repo — a control that describes *how controls should be added*: cautiously, with evidence, earning enforcement instead of assuming it.
+- On a legacy codebase you'd lean on advisory mode hardest — surface the scale of the drift before it ever blocks a build.
 
 ---
 
@@ -756,27 +783,11 @@ Note:
 
 <!-- .slide: class="section" -->
 
-## Appendix · Q&A backup
-
-- Entropy & garbage collection
-- References
+## Appendix · References
 
 Note:
-- Don't present these by default. Jump here on the matching question.
-
----
-
-## Appendix — Entropy & garbage collection
-
-- Agents replicate existing patterns, including the bad ones. Drift compounds
-- Narrow audits run on a cadence and open fix-up PRs
-- **Advisory → blocking promotion policy**: a control earns its way from suggestion to enforcement
-- That promotion policy is the ratchet made literal
-
-<span class="small muted">OpenAI's "garbage collection" · Fowler's continuous drift sensors</span>
-
-Note:
-- The entropy beat from Post 8 / B3.
+- Not presented by default. Jump here on a "where do I read more" question.
+- The entropy / garbage-collection beat now lives in the main close (advisory→blocking promotion policy), so it no longer needs a backup slide.
 
 ---
 
