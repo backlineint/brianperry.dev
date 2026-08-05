@@ -66,6 +66,21 @@ body {
 .reveal li {
   color: var(--ink);
 }
+.reveal ul,
+.reveal ol {
+  margin: 0.5em 0;
+}
+.reveal li {
+  margin-bottom: 0.65em;
+  line-height: 1.35;
+}
+.reveal li:last-child {
+  margin-bottom: 0;
+}
+.reveal li > ul,
+.reveal li > ol {
+  margin-top: 0.45em;
+}
 .reveal strong {
   color: var(--gold);
 }
