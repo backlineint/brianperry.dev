@@ -410,7 +410,7 @@ Note:
 - Auth routes: spin up the stack, sign in a seeded user, shoot the protected screens, tear the session back down
 - **Report-only** — PNGs rendered inline in the agent's own reply. A mirror, not a judge.
 
-<span class="small muted">Grid: computational + inferential sensor · the behaviour harness</span>
+<span class="small muted">Grid: computational sensor — capture, not judgment · the behaviour harness</span>
 
 Note:
 - The skill is `visual-verify`. It reads the branch diff, works out which surfaces are UI — app, marketing site, extension popup — starts only the dev servers it needs, and drives a real browser. No UI in the diff → it skips.
@@ -437,9 +437,39 @@ Note:
 
 ---
 
-## Seeing the page vs. operating the app
+## One skill, two very different browsers
 
-Seeing is a huge step up from blind. But my capture *cheats* to get there — it looks up an article ID in the database to reach a screen fast.
+The `visual-verify` skill is **agent-agnostic** — it detects scope from the diff and hands back the same manifest whether Codex, Claude, or Cursor is driving.
+
+Getting each agent to *hold a browser at all*, though, is per-agent plumbing that doesn't transfer:
+<!-- .element: class="fragment" -->
+
+<div class="grid2">
+  <div class="card">
+    <h3>Codex</h3>
+    <span class="lead">A native in-app Browser.</span><br/>
+    Opens the app, clicks through, watches. Interactive — and desktop-only (no CLI, no CI).
+  </div>
+  <div class="card">
+    <h3>Claude</h3>
+    <span class="lead">A <code>launch.json</code>.</span><br/>
+    Names the dev servers; its own browser launches them and attaches.
+  </div>
+</div>
+<!-- .element: class="fragment" -->
+
+<span class="small muted">Same destination — a GUI plugin vs. a config file · the agnostic skill rides on agent-specific plumbing</span>
+
+Note:
+- The headline "each agent can use a browser" hides a real asymmetry: same skill on top, completely different roads to the app underneath.
+- "Can it use a browser" is a statement about the surface it runs on as much as the model — Codex's Browser is desktop-only; Claude reaches the same app through a file that says how to start it.
+- The plumbing didn't port between them even though the skill did — which is exactly why an agent-agnostic capture layer is worth having.
+
+---
+
+## How far operating actually gets me
+
+Even once an agent can operate the app, my capture *cheats* to get there — it looks up an article ID in the database to reach a screen fast.
 
 Efficient for evidence. Not the same as driving the flow a user drives.
 <!-- .element: class="fragment" -->
