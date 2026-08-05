@@ -14,7 +14,7 @@ Infrastructure That Makes AI Agents Reliable Contributors
 <span class="kicker">Brian Perry · Decoupled Days 2026</span>
 
 Note:
-- 60 min, intermediate. Five layers + framing + close. Appendix is Q&A backup.
+- 60 min, intermediate. Six layers + framing + close. Appendix is Q&A backup.
 - Open cold with the story on the next slide. Don't read the agenda yet.
 
 ---
@@ -139,18 +139,19 @@ Note:
 
 ---
 
-## The five layers
+## The six layers
 
 1. Architecture that enforces itself
 2. Documentation as a hierarchy
 3. Cross-workspace contract ownership
 4. Visual verification
 5. Inferential controls
+6. Observability the agent can read
 
-<span class="muted small">Structure you can check → outcomes you can see → judgment only a model can make.</span>
+<span class="muted small">Structure you can check → outcomes you can see → judgment only a model can make → behaviour you can query.</span>
 
 Note:
-- 1-3 formalize structure. 4 formalizes outcomes you can see. 5 is the inferential half of the grid — judgment a regex can't reach.
+- 1-3 formalize structure. 4 formalizes outcomes you can see. 5 is the inferential half of the grid — judgment a regex can't reach. 6 is the runtime sensor — behaviour you can only see while it runs.
 - Each one: the failure that prompted it, the fix, a demo.
 
 ---
@@ -607,6 +608,104 @@ Note:
 
 <!-- .slide: class="section" -->
 
+## 6 · Observability the agent can read
+
+Note:
+- Structure → outcomes → judgment → runtime. Layers 1–5 read the code, the screen, and the diff. None of them can see how the app *behaves* once it's actually running.
+- The runtime sensor. Used to be the least-built, most-aspirational layer — now it's the one where I finally have something real to show.
+
+---
+
+## None of it can see the app running
+
+The first five layers prove the code is correct, *looks* right, and reads as *good*.
+
+None of them can see what it **does** when a real request hits it — what the logs say, where the time goes, what it cost.
+<!-- .element: class="fragment" -->
+
+> From the agent's point of view, anything it can't access while running **doesn't exist**.
+<!-- .element: class="fragment" -->
+
+<span class="small muted">OpenAI, "Harness engineering" · agent legibility, pointed at runtime</span>
+
+Note:
+- Runtime behaviour only exists while the app executes, then vanishes. Unless you capture it somewhere the agent can reach, it never enters the agent's world at all.
+- Grid: this is a *sensor*, and a mostly *computational* one — a row is a row, a token count is a token count. The hard part isn't judgment, it's plumbing: capture it, store it durably, make it legible.
+
+---
+
+## I tuned a ranking system blind for weeks
+
+More Later sorts saved articles into relevance lanes. For a while it was quietly bad at it — and every fix was a vibe.
+
+Tweak a weight, re-run, squint at the output. Better? Genuinely couldn't tell.
+<!-- .element: class="fragment" -->
+
+The agent and I were two confident parties agreeing to fly blind together.
+<!-- .element: class="fragment" -->
+
+<span class="small muted">The failure that prompted the layer — same origin story as every other, aimed at runtime</span>
+
+Note:
+- I was asking an agent to fix a system while starving it of any data about how the system behaved. Of course we were guessing — guessing was the only thing on the menu.
+- The rhyme with the other layers: a specific failure I couldn't see, so I built the sensor that makes it visible.
+
+---
+
+## Instrument the run — then let the agent read it
+
+Every recommendations run writes a **structured row**: score distribution, lane counts before and after selection, thresholds, eligible vs. selected.
+
+Then connect the **Supabase MCP** — and the agent queries the table directly.
+<!-- .element: class="fragment" -->
+
+Not me pasting numbers into a prompt. The agent runs the slices I'd never think to run.
+<!-- .element: class="fragment" -->
+
+<span class="small muted">Grid: computational sensor · agent legibility · legible because a connector already reaches it</span>
+
+Note:
+- The metrics existing wasn't the unlock. The metrics being *reachable by the agent through a connector it already speaks* was — that's the whole layer in one instance.
+- When I summarize the data I pre-filter it through the same assumptions that got the ranking lost. When the agent reads the rows, it sees what I'd have skipped. Vibe in, diagnosis out.
+
+---
+
+## The other runtime question: cost
+
+An agent can refactor a workflow, pass every check, and quietly **double the model calls per article**. You find out on the bill, weeks later.
+
+- `article_api_usage` — a row per model call: tokens, `estimated_cost_usd`, duration. App-facing, RLS-scoped, queryable
+- Mastra → **PostHog** for the aggregate trace view — payload fields stripped before ingest
+<!-- .element: class="fragment" -->
+
+"Did my last change make tagging more expensive?" becomes a **query**, not a surprise.
+<!-- .element: class="fragment" -->
+
+<span class="small muted">Grid: computational sensor · structured logging is the floor — a human greps, an agent queries</span>
+
+Note:
+- Two altitudes: a durable per-article Supabase signal the agent reaches the same way it reaches the ranking metrics, and aggregate cost/latency traces in PostHog for me.
+- The honest ceiling: I can make *designed* signals legible — a table I chose to write. I can't yet hand the agent the raw log/trace firehose in its sandbox to fish for a failure I didn't anticipate. That's the LogQL/PromQL-over-an-ephemeral-stack part OpenAI has and I don't.
+
+---
+
+<!-- .slide: class="center" -->
+
+<span class="demo-badge">Demo · Layer 6</span>
+
+<span class="placeholder">[ agent querying recommendation_run_metrics via the Supabase MCP → a diagnosis + sequenced tuning plan ]</span>
+
+"Anecdotally I'm seeing scores in the 40s and an empty bottom tier." The agent checks the vibe against thousands of real rows.
+<!-- .element: class="fragment" -->
+
+Note:
+- Show the real transcript from Post 7: a squishy human impression handed to something that can verify it against the data, coming back with a plan grounded in the numbers rather than my gut.
+- Honesty beat, same as every layer: this is a sensor the agent *can* read, not yet one it reads *by default*. The cloud agents don't consult it on their own — the query path still runs through me.
+
+---
+
+<!-- .slide: class="section" -->
+
 ## A system you steer
 
 Note:
@@ -659,26 +758,11 @@ Note:
 
 ## Appendix · Q&A backup
 
-- Observability the agent can read
 - Entropy & garbage collection
 - References
 
 Note:
 - Don't present these by default. Jump here on the matching question.
-
----
-
-## Appendix — Observability the agent can read
-
-- The five layers prove the code is correct, *looks* right, and reads as *good*. None show how it **behaves at runtime**
-- "What the agent can't see doesn't exist" — applied to logs, metrics, traces
-- Structured logging is the floor: logs a human greps vs. logs an agent can parse
-- Direction: make recent logs/metrics queryable by the agent in its sandbox
-
-<span class="small muted">OpenAI: LogQL/PromQL over an ephemeral per-worktree stack</span>
-
-Note:
-- This is Post 7. The least-built, most aspirational layer. Be honest about that.
 
 ---
 
