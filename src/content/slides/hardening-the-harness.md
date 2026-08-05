@@ -14,7 +14,7 @@ Infrastructure That Makes AI Agents Reliable Contributors
 <span class="kicker">Brian Perry · Decoupled Days 2026</span>
 
 Note:
-- 60 min, intermediate. Four layers + framing + close. Appendix is Q&A backup.
+- 60 min, intermediate. Five layers + framing + close. Appendix is Q&A backup.
 - Open cold with the story on the next slide. Don't read the agenda yet.
 
 ---
@@ -139,17 +139,18 @@ Note:
 
 ---
 
-## The four layers
+## The five layers
 
 1. Architecture that enforces itself
 2. Documentation as a hierarchy
 3. Cross-workspace contract ownership
 4. Visual verification
+5. Inferential controls
 
-<span class="muted small">Structure you can check → outcomes you can see.</span>
+<span class="muted small">Structure you can check → outcomes you can see → judgment only a model can make.</span>
 
 Note:
-- 1-3 formalize structure. 4 formalizes outcomes.
+- 1-3 formalize structure. 4 formalizes outcomes you can see. 5 is the inferential half of the grid — judgment a regex can't reach.
 - Each one: the failure that prompted it, the fix, a demo.
 
 ---
@@ -499,7 +500,108 @@ One skill's job is to *capture* evidence; a different skill's job is to *publish
 Note:
 - Show a real visual-verify run — the PNGs render inline in the agent's reply. This is the payoff slide; lead with the picture.
 - The publisher posts to a provenance-checked PR comment on a side branch — which commit it captured at, whether the tree was clean — and rejects stale evidence rather than quietly misleading a reviewer. Local-only, and only when I ask.
-- Bridge to the close: report-only capture now, a vision model grading against the spec later. That split is the appendix on inferential controls.
+- Bridge to Layer 5: report-only capture now, a vision model grading against the spec next. That split is the whole next layer.
+
+---
+
+<!-- .slide: class="section" -->
+
+## 5 · Inferential controls
+
+Note:
+- The grid's other half. Layers 1–4 were almost all computational — deterministic checks the CPU runs in milliseconds. This is the sensor category that needs a model to weigh in.
+- Sibling to visual verification: both are feedback sensors on outcomes. One reads the code, one reads the rendered app; neither is a regex.
+
+---
+
+## A third green PR — this one was pointless
+
+Tests green. Lint clean. Architecture and contracts intact. Buried inside: a new test that asserted nothing the suite didn't already cover.
+
+Counted toward coverage. Completely redundant.
+<!-- .element: class="fragment" -->
+
+"This test is noise" isn't a property you can grep for — it's a judgment about what the *other* tests already mean.
+<!-- .element: class="fragment" -->
+
+<span class="small muted">Grid: the inferential column · a linter knows the import is illegal; only a model knows the abstraction is wrong</span>
+
+Note:
+- The third rhyme: Layer 1 was a PR that imported wrong, Layer 4 one that looked wrong, this one is pointless. Same setup, a failure one more notch from anything deterministic.
+- Computational catches structure. Inferential catches meaning — the wrong abstraction, the redundant test, the refactor that quietly missed the point. Böckeler: expensive and probabilistic, "not on every commit."
+
+---
+
+## The one rule: the judge is not the author
+
+The moment your reviewer is a model, you pick *which* model, in what context, sees the work. The labs keep landing on the same answer: not the one that wrote it.
+
+An agent that just spent twenty minutes building a feature is its worst reviewer — attached to the approach, already convinced it's done.
+<!-- .element: class="fragment" -->
+
+So the review runs **isolated**: a fresh context, pointed only at the diff, no memory of the authoring. Same model, maybe — clean slate.
+<!-- .element: class="fragment" -->
+
+<span class="small muted">Grid: inferential sensor · Anthropic: isolated LLM-as-judge + the generator/evaluator split · Addy Osmani</span>
+
+Note:
+- Don't let an agent grade its own homework. It remembers why every awkward line is there and will rationalize each one.
+- Isolation is the whole game — a reviewer with no attachment to the approach is most of what "a second opinion" ever meant.
+
+---
+
+## Code review as a skill you can call
+
+Four questions and a careful definition of "all the work" — committed, staged, unstaged, and the untracked files git won't show unless you ask.
+
+```text
+Is the intent clear?  ·  Any concerns with the implementation?
+Patterns worth documenting?  ·  Is there sufficient test coverage?
+```
+
+The two that *aren't* about correctness — concerns? and coverage? — are what catch the wrong abstraction and the do-nothing test.
+<!-- .element: class="fragment" -->
+
+Wired into the root `AGENTS.md`, so it's the default for every task — mine, Codex's, Claude's — **local *and* cloud**.
+<!-- .element: class="fragment" -->
+
+<span class="small muted">Grid: inferential sensor · review as a callable tool, not a mood</span>
+
+Note:
+- The value isn't a clever prompt; it's that review is now a thing that always happens instead of a thing I remember to ask for when I'm feeling diligent.
+- Same scope definition visual-verify reuses, on purpose — the two reviews always read the same change set.
+- The reversal from Layer 4 worth calling out: this one runs local *and* cloud. Judgment doesn't need a browser, so it never hits the sandbox wall.
+
+---
+
+## The same rule, pointed at pixels
+
+`visual-verify` is **report-only** — it captures and refuses to grade. The same author/judge split in different clothes: whoever made the artifact is the wrong party to rule on it.
+
+- The judge is a separate **vision-model** pass — *does this match the spec?* — a real second opinion, because it never ran the browser
+- **Capture → judge → publish**: three skills, three jobs; none silently does another's
+<!-- .element: class="fragment" -->
+
+<span class="small muted">The ceiling: run it late, not on every commit · calibrate against humans — you don't get to fully outsource the grading</span>
+
+Note:
+- Report-only wasn't a limitation I apologized for in Layer 4 — it was the down payment on judging separately.
+- Honesty beat, same shape as every layer's ceiling: the judge is a model too. It waves real problems through and invents fake ones. These skills raise the floor; they don't clear me out of the room.
+
+---
+
+<!-- .slide: class="center" -->
+
+<span class="demo-badge">Demo · Layer 5</span>
+
+<span class="placeholder">[ $code-review in an isolated subagent flagging the redundant test — "coverage?" catching what green couldn't ]</span>
+
+Spawned fresh, reads the diff cold, reports back. The author has to address every finding before it's allowed to finish.
+<!-- .element: class="fragment" -->
+
+Note:
+- Show a real code-review run finding a genuine issue — ideally the coverage / redundant-test catch, since it pays off the setup slide.
+- The agent doesn't get to finish by declaring itself finished. Author and judge, kept apart by construction.
 
 ---
 
@@ -557,7 +659,6 @@ Note:
 
 ## Appendix · Q&A backup
 
-- Inferential controls: code review, LLM-as-judge & visual judgment
 - Observability the agent can read
 - Entropy & garbage collection
 - References
@@ -567,44 +668,9 @@ Note:
 
 ---
 
-## Appendix — Inferential controls
-
-- Computational checks catch **structure**. Only a model knows the **abstraction** is wrong or the test is quietly **redundant**
-- One rule governs every model-as-reviewer: **the judge is not the author.** Don't let an agent grade its own homework
-- The `code-review` skill — review as a callable *tool*, run in an **isolated subagent** on a fresh context, the default for every task (local *and* cloud)
-
-```text
-Is the intent clear?  ·  Any concerns with the implementation?
-Patterns worth documenting?  ·  Is there sufficient test coverage?
-```
-
-<span class="small muted">Anthropic: isolated LLM-as-judge + the generator/evaluator split · Addy Osmani</span>
-
-Note:
-- This is Post 6, the inferential half of the grid. It absorbs the code-review beat and broadens it.
-- Isolated = a reviewer with no memory of the authoring and no attachment to the approach. Same model, clean slate — most of what "a second opinion" ever meant.
-- Those four questions *are* the whole skill. The two that aren't about correctness ("concerns?", "coverage?") are what catch the wrong abstraction and the do-nothing test.
-
----
-
-## Appendix — The same split, pointed at pixels
-
-- `visual-verify` is **report-only** — it captures the screenshots and refuses to grade them. Capture ≠ judge
-- The judge is a separate **vision-model** pass: *does this match the spec?* — a real second opinion, because it never ran the browser
-- **Capture → judge → publish**: three skills, three jobs; none silently does another's
-- The ceiling: inferential is slow, costly, probabilistic → run it **late, not on every commit**; and calibrate the judge against humans — you don't get to fully outsource the grading
-
-<span class="small muted">Böckeler: "keep quality left, spread the checks out by cost" · report-only is the down payment on judging separately</span>
-
-Note:
-- Pays off the Layer 4 bridge: report-only capture now, a vision model grading against the spec next.
-- The same author/judge separation, three times over. Collapsing it back into one "handle the screenshots" step is exactly the mistake the design avoids.
-
----
-
 ## Appendix — Observability the agent can read
 
-- The first four layers prove the code is correct and *looks* right. None show how it **behaves at runtime**
+- The five layers prove the code is correct, *looks* right, and reads as *good*. None show how it **behaves at runtime**
 - "What the agent can't see doesn't exist" — applied to logs, metrics, traces
 - Structured logging is the floor: logs a human greps vs. logs an agent can parse
 - Direction: make recent logs/metrics queryable by the agent in its sandbox
