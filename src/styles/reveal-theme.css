@@ -96,12 +96,66 @@ body {
 .reveal a:hover {
   color: var(--gold);
 }
-.reveal code {
+.reveal :not(pre) > code {
   color: var(--cyan);
   font-family: "JetBrains Mono", ui-monospace, monospace;
   background: rgba(255, 255, 255, 0.06);
   padding: 0.05em 0.3em;
   border-radius: 5px;
+}
+
+/* Code blocks — one flat surface, smaller type, no token pills */
+.reveal pre {
+  display: block;
+  width: 100%;
+  margin: 0.55em 0;
+  padding: 0.85em 1em;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: none;
+  font-size: 0.48em;
+  line-height: 1.5;
+  text-align: left;
+  word-wrap: break-word;
+}
+.reveal pre code {
+  display: block;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+  color: var(--ink);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: inherit;
+  line-height: inherit;
+  max-height: none;
+  overflow: visible;
+  word-wrap: normal;
+  white-space: pre;
+  text-shadow: none;
+}
+.reveal pre .hljs {
+  background: transparent !important;
+  min-height: 0;
+}
+.reveal pre code span {
+  background: transparent !important;
+  padding: 0;
+  border-radius: 0;
+}
+.reveal pre .hljs-keyword,
+.reveal pre .hljs-built_in {
+  color: var(--gold);
+}
+.reveal pre .hljs-string {
+  color: var(--green);
+}
+.reveal pre .hljs-number,
+.reveal pre .hljs-literal {
+  color: var(--cyan);
+}
+.reveal pre .hljs-comment {
+  color: var(--muted);
 }
 .reveal blockquote {
   background: var(--surface);

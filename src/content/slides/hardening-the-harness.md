@@ -636,7 +636,7 @@ Note:
 
 - The judge is a separate **vision-model** pass — _does this match the spec?_ — a real second opinion, because it never ran the browser
 - **Capture → judge → publish**: three skills, three jobs; none silently does another's
-    <!-- .element: class="fragment" -->
+      <!-- .element: class="fragment" -->
 
 <span class="small muted">The ceiling: run it late, not on every commit · calibrate against humans — you don't get to fully outsource the grading</span>
 
@@ -744,7 +744,7 @@ An agent can refactor a workflow, pass every check, and quietly **double the mod
 
 - `article_api_usage` — a row per model call: tokens, `estimated_cost_usd`, duration. App-facing, RLS-scoped, queryable
 - Mastra → **PostHog** for the aggregate trace view — payload fields stripped before ingest
-    <!-- .element: class="fragment" -->
+      <!-- .element: class="fragment" -->
 
 "Did my last change make tagging more expensive?" becomes a **query**, not a surprise.
 
@@ -789,13 +789,13 @@ Note:
 ## Not a checklist. A practice.
 
 - Recurring failure → tighten a control, don't re-prompt
-  <!-- .element: class="fragment" -->
+    <!-- .element: class="fragment" -->
 - Drift is inevitable: agents replicate whatever patterns exist, good or bad
+    <!-- .element: class="fragment" -->
+- Cleanup needs to run on a regular cadence, not just when someone remembers
   <!-- .element: class="fragment" -->
-- Cleanup needs to run on a regular cadence, whether or not anyone remembers
-      <!-- .element: class="fragment" -->
 - Tip: agents are great at writing the linters that constrain agents
-      <!-- .element: class="fragment" -->
+  <!-- .element: class="fragment" -->
 
 Note:
 
