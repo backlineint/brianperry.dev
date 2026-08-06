@@ -5,175 +5,461 @@
 */
 
 :root {
-  --bg: #160c2b;
-  --bg-2: #100823;
-  --surface: #241543;
-  --surface-2: #2d1a52;
-  --ink: #f6f0ff;
-  --muted: #b6a6da;
-  --faint: #7f6fae;
-  --red: #ff5470;
-  --gold: #ffc83d;
-  --green: #46e08a;
-  --cyan: #46d4ea;
-  --line: rgba(255, 255, 255, 0.12);
-  --badge-ink: #160c2b;
+    --bg: #160c2b;
+    --bg-2: #100823;
+    --surface: #241543;
+    --surface-2: #2d1a52;
+    --ink: #f6f0ff;
+    --muted: #b6a6da;
+    --faint: #7f6fae;
+    --red: #ff5470;
+    --gold: #ffc83d;
+    --green: #46e08a;
+    --cyan: #46d4ea;
+    --line: rgba(255, 255, 255, 0.12);
+    --badge-ink: #160c2b;
 }
 
 html,
 body {
-  margin: 0;
-  height: 100%;
-  background-color: var(--bg);
+    margin: 0;
+    height: 100%;
+    background-color: var(--bg);
 }
 .reveal-viewport {
-  background-color: var(--bg);
+    background-color: var(--bg);
 }
 
 .reveal {
-  font-family: "Space Grotesk", system-ui, sans-serif;
-  font-size: 34px;
-  color: var(--ink);
+    font-family: "Space Grotesk", system-ui, sans-serif;
+    font-size: 34px;
+    color: var(--ink);
 }
 .reveal .slides {
-  text-align: left;
+    text-align: left;
 }
 .reveal .slides section {
-  color: var(--ink);
+    color: var(--ink);
 }
 
 .reveal h1,
 .reveal h2,
 .reveal h3,
 .reveal h4 {
-  font-family: "Space Grotesk", system-ui, sans-serif;
-  color: var(--ink);
-  text-transform: none;
-  line-height: 1.1;
+    font-family: "Space Grotesk", system-ui, sans-serif;
+    color: var(--ink);
+    text-transform: none;
+    line-height: 1.1;
 }
 .reveal h1 {
-  font-family: "Archivo Black", system-ui, sans-serif;
-  font-size: 2.1em;
-  letter-spacing: -0.01em;
-  text-shadow: none;
+    font-family: "Archivo Black", system-ui, sans-serif;
+    font-size: 2.1em;
+    letter-spacing: -0.01em;
+    text-shadow: none;
 }
 .reveal h2 {
-  font-weight: 700;
-  font-size: 1.5em;
-  margin-bottom: 0.4em;
+    font-weight: 700;
+    font-size: 1.5em;
+    margin-bottom: 0.4em;
 }
 .reveal p,
 .reveal li {
-  color: var(--ink);
+    color: var(--ink);
+}
+.reveal ul,
+.reveal ol {
+    margin: 0.5em 0;
+}
+.reveal li {
+    margin-bottom: 0.65em;
+    line-height: 1.35;
+}
+.reveal li:last-child {
+    margin-bottom: 0;
+}
+.reveal li > ul,
+.reveal li > ol {
+    margin-top: 0.45em;
 }
 .reveal strong {
-  color: var(--gold);
+    color: var(--gold);
 }
 .reveal em {
-  color: var(--cyan);
-  font-style: normal;
+    color: var(--cyan);
+    font-style: normal;
 }
 .reveal a {
-  color: var(--cyan);
-  text-decoration: none;
-  border-bottom: 1px solid rgba(70, 212, 234, 0.4);
+    color: var(--cyan);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(70, 212, 234, 0.4);
 }
 .reveal a:hover {
-  color: var(--gold);
+    color: var(--gold);
 }
-.reveal code {
-  color: var(--cyan);
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  background: rgba(255, 255, 255, 0.06);
-  padding: 0.05em 0.3em;
-  border-radius: 5px;
+.reveal :not(pre) > code {
+    color: var(--cyan);
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    background: rgba(255, 255, 255, 0.06);
+    padding: 0.05em 0.3em;
+    border-radius: 5px;
+}
+
+/* Code blocks — one flat surface, smaller type, no token pills */
+.reveal pre {
+    display: block;
+    width: 100%;
+    margin: 0.55em 0;
+    padding: 0.85em 1em;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    box-shadow: none;
+    font-size: 0.48em;
+    line-height: 1.5;
+    text-align: left;
+    word-wrap: break-word;
+}
+.reveal pre code {
+    display: block;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    color: var(--ink);
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: inherit;
+    line-height: inherit;
+    max-height: none;
+    overflow: visible;
+    word-wrap: normal;
+    white-space: pre;
+    text-shadow: none;
+}
+.reveal pre .hljs {
+    background: transparent !important;
+    min-height: 0;
+}
+.reveal pre code span {
+    background: transparent !important;
+    padding: 0;
+    border-radius: 0;
+}
+.reveal pre .hljs-keyword,
+.reveal pre .hljs-built_in,
+.reveal pre .hljs-selector-tag {
+    color: var(--gold);
+}
+.reveal pre .hljs-string,
+.reveal pre .hljs-regexp,
+.reveal pre .hljs-meta .hljs-string {
+    color: var(--green);
+}
+.reveal pre .hljs-number,
+.reveal pre .hljs-literal {
+    color: var(--cyan);
+}
+.reveal pre .hljs-title,
+.reveal pre .hljs-title.function_,
+.reveal pre .hljs-function .hljs-title {
+    color: var(--ink);
+    font-weight: 700;
+}
+.reveal pre .hljs-type,
+.reveal pre .hljs-class .hljs-title {
+    color: var(--cyan);
+}
+.reveal pre .hljs-variable,
+.reveal pre .hljs-params,
+.reveal pre .hljs-property,
+.reveal pre .hljs-attr {
+    color: var(--ink);
+}
+.reveal pre .hljs-comment,
+.reveal pre .hljs-doctag {
+    color: var(--muted);
+    font-style: italic;
+}
+.reveal pre .hljs-meta,
+.reveal pre .hljs-subst {
+    color: var(--muted);
+}
+.reveal pre .hljs-ln-numbers {
+    color: var(--faint);
+    border-right: 1px solid var(--line);
+    padding-right: 0.75em;
+}
+.reveal pre .hljs-ln-code {
+    padding-left: 0.75em;
 }
 .reveal blockquote {
-  background: var(--surface);
-  border-left: 4px solid var(--gold);
-  box-shadow: none;
-  width: auto;
-  padding: 0.6em 0.9em;
-  font-style: normal;
-  color: var(--ink);
+    background: var(--surface);
+    border-left: 4px solid var(--gold);
+    box-shadow: none;
+    width: auto;
+    padding: 0.6em 0.9em;
+    font-style: normal;
+    color: var(--ink);
 }
 .reveal .controls {
-  color: var(--cyan);
+    color: var(--cyan);
 }
 .reveal .progress {
-  color: var(--gold);
+    color: var(--gold);
 }
 .reveal .progress span {
-  background: var(--gold);
+    background: var(--gold);
 }
 
 /* Helpers used by the deck markdown */
 .reveal .kicker {
-  display: inline-block;
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.5em;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--cyan);
+    display: inline-block;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.5em;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cyan);
 }
 .reveal .muted {
-  color: var(--muted);
+    color: var(--muted);
 }
 .reveal .small {
-  font-size: 0.6em;
+    font-size: 0.6em;
 }
 .reveal .accent {
-  color: var(--gold);
+    color: var(--gold);
 }
 
 /* Section-divider slides */
 .reveal section.section h1,
 .reveal section.section h2 {
-  color: var(--gold);
-  font-family: "Archivo Black", system-ui, sans-serif;
+    color: var(--gold);
+    font-family: "Archivo Black", system-ui, sans-serif;
 }
 .reveal section.center {
-  text-align: center;
+    text-align: center;
+}
+
+/* About slide — headshot + bio, not full-bleed screenshot */
+.reveal .slides section.about:has(img) {
+    display: grid !important;
+    grid-template-columns: minmax(0, 10.5em) 1fr;
+    gap: 1.1em;
+    align-items: center;
+    text-align: left;
+    padding: 0.75em 1.25em;
+    overflow: hidden;
+}
+
+.reveal .slides section.about .about-photo {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.reveal .slides section.about img {
+    max-width: 100%;
+    max-height: 11em;
+    width: auto;
+    height: auto;
+    margin: 0 !important;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.reveal .slides section.about .about-copy h2 {
+    margin: 0 0 0.35em;
+    font-size: 1.25em;
+}
+
+.reveal .slides section.about .about-copy ul {
+    margin: 0;
+    font-size: 0.68em;
+}
+
+.reveal .slides section.about .about-copy li {
+    margin-bottom: 0.5em;
+}
+
+/* Slide screenshots — flex-bound so large captures can't exceed the slide box */
+.reveal .slides section:has(img):not(.about) {
+    top: 0 !important;
+    transform: none !important;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100% !important;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 0.5em 1em;
+}
+
+.reveal .slides section:has(img) > p:has(img) {
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+    margin: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.reveal .slides section:has(img) > p:not(:has(img)) {
+    flex: 0 0 auto;
+    width: 100%;
+    margin: 0.4em 0 0 !important;
+    font-size: 0.72em;
+    line-height: 1.35;
+}
+
+.reveal .slides section img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    margin: 0 !important;
+    object-fit: contain;
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    box-shadow: none;
 }
 
 /* 2x2 grid (guides/sensors x computational/inferential) */
 .reveal .grid2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    width: 100%;
+    margin: 0.4em auto 0;
+    text-align: left;
+}
+.reveal .grid2-cards .card {
+    padding: 0.55em 0.75em;
+    font-size: 0.56em;
+    line-height: 1.35;
+}
+.reveal .grid2-cards .card h3 {
+    margin: 0 0 0.15em;
+    font-size: 0.95em;
+}
+.reveal .grid2-row-divider {
+    grid-column: 1 / -1;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--gold) 15%,
+        var(--gold) 85%,
+        transparent
+    );
+    margin: 0.25em 0;
+    opacity: 0.85;
+}
+
+/* Documentation hierarchy diagram */
+.reveal .doc-tree {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 0.44em;
+    line-height: 1.3;
+    text-align: center;
+    margin: 0.45em auto 0;
+    max-width: 100%;
+}
+.reveal .doc-tree-box {
+    border: 2px solid var(--line);
+    border-radius: 10px;
+    padding: 0.55em 0.7em;
+    background: var(--surface);
+    min-width: 5.5em;
+}
+.reveal .doc-tree-box strong {
+    color: var(--cyan);
+    font-weight: 700;
+}
+.reveal .doc-tree-box.doc-tree-root {
+    border-color: var(--gold);
+    display: inline-block;
+}
+.reveal .doc-tree-meta {
+    display: block;
+    color: var(--muted);
+    font-size: 0.82em;
+    margin-top: 0.25em;
+    font-weight: 400;
+}
+.reveal .doc-tree-arrow {
+    color: var(--gold);
+    margin: 0 0.15em;
+}
+.reveal .doc-tree-spine {
+    width: 2px;
+    height: 0.75em;
+    background: var(--gold);
+    margin: 0 auto;
+    opacity: 0.85;
+}
+.reveal .doc-tree-rail {
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--gold) 8%,
+        var(--gold) 92%,
+        transparent
+    );
+    margin: 0 0.5em 0.35em;
+    opacity: 0.85;
+}
+.reveal .doc-tree-row {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 0.55em;
+    flex-wrap: wrap;
+}
+.reveal .doc-tree-box.doc-tree-ws {
+    font-size: 0.92em;
+    padding: 0.45em 0.55em;
+    min-width: 4.5em;
+}
+.reveal .doc-tree-box.doc-tree-ws-featured {
+    border-color: var(--cyan);
 }
 .reveal .card {
-  border: 2px solid var(--line);
-  border-radius: 12px;
-  padding: 14px 18px;
-  background: var(--surface);
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 18px;
+    background: var(--surface);
 }
 .reveal .card h3 {
-  margin: 0.1em 0 0.25em;
-  font-size: 0.8em;
-  color: var(--ink);
+    margin: 0.1em 0 0.25em;
+    font-size: 0.8em;
+    color: var(--ink);
 }
 .reveal .card .lead {
-  color: var(--cyan);
-  font-weight: 600;
+    color: var(--cyan);
+    font-weight: 600;
 }
 
 /* Demo badge + placeholders */
 .reveal .demo-badge {
-  display: inline-block;
-  font-family: "JetBrains Mono", monospace;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  font-size: 0.5em;
-  color: var(--badge-ink);
-  background: var(--gold);
-  padding: 5px 11px;
-  border-radius: 8px;
+    display: inline-block;
+    font-family: "JetBrains Mono", monospace;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.5em;
+    color: var(--badge-ink);
+    background: var(--gold);
+    padding: 5px 11px;
+    border-radius: 8px;
 }
 .reveal .placeholder {
-  color: var(--faint);
-  font-size: 0.6em;
-  font-family: "JetBrains Mono", monospace;
+    color: var(--faint);
+    font-size: 0.6em;
+    font-family: "JetBrains Mono", monospace;
 }
