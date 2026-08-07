@@ -13,6 +13,8 @@ Infrastructure That Makes AI Agents Reliable Contributors
 
 <span class="kicker">Brian Perry · Decoupled Days 2026</span>
 
+<span class="kicker">Slides @ brianperry.dev</span>
+
 Note:
 
 - 60 min, intermediate. Six layers + framing + close. Appendix is Q&A backup.
@@ -33,6 +35,7 @@ Note:
 - **[Actual AI](https://actual.ai)** - building architectural guardrails for AI-powered software development.
 - Longtime **[Drupal](https://www.drupal.org/u/brianperry)** community · Chicago suburbs
 - Side project **[More Later](https://www.morelater.app)** - where this harness got built
+- I ❤️ Nintendo Stuff
 
 </div>
 
@@ -162,8 +165,6 @@ A ratchet enforces movement in a specific direction.
 
 Every mistake the agent makes becomes a new guide or sensor.
 
-Every line in `AGENTS.md` traces back to a real failure.
-
 **You don't download a harness. You accumulate one.**
 
 <!-- .element: class="fragment" -->
@@ -183,11 +184,9 @@ Note:
 
 ![Anakin and Padme meme: "An agent writes my code" / "With tests, right?"](/slides/anakin.jpg)
 
-Lint, typecheck, tests, CI — assume you have them. Agents make them _more_ necessary, not less.
+Lint, typecheck, tests, CI — I'm assuming you have them. Agents make them _more_ necessary, not less.
 
 This talk starts where green PRs stop being enough.
-
-<!-- .element: class="fragment" -->
 
 Note:
 
@@ -209,16 +208,6 @@ Note:
 
 - 1-3 formalize structure. 4 formalizes outcomes you can see. 5 is the inferential half of the grid — judgment a regex can't reach. 6 is the runtime sensor — behaviour you can only see while it runs.
 - Each one: the failure that prompted it, the fix, a demo.
-
----
-
-## Structure you can check →
-
-## outcomes you can see →
-
-## judgment only a model can make →
-
-## behaviour you can query.
 
 ---
 
@@ -250,7 +239,7 @@ Note:
 
 <!-- .slide: class="center" -->
 
-One junk-drawer file → a ~70-line index over a scoped tree:
+From one junk-drawer file → a ~70-line index over a scoped tree:
 
 <div class="doc-tree">
   <div class="doc-tree-box doc-tree-root">
@@ -286,8 +275,6 @@ One junk-drawer file → a ~70-line index over a scoped tree:
 
 An agent in `ai/` loads the root index, opens `ai/AGENTS.md`, pulls `ai/docs/conventions.md` — and never reads a word about the extension.
 
-<!-- .element: class="fragment" -->
-
 Note:
 
 - Progressive disclosure in action: the context fills with what the task touches, nothing else.
@@ -300,8 +287,6 @@ Note:
 ![Actual AI: analyze codebase, extract architecture as ADRs, align AGENTS.md and coding agents.](/slides/actual-ai-site.png)
 
 **[Actual AI](https://actual.ai)** — architectural context for coding agents. Analyze the codebase, extract ADRs, keep `AGENTS.md` and your harness aligned.
-
-<!-- .element: class="fragment" -->
 
 Note:
 
@@ -345,7 +330,7 @@ Note:
 - **`check-structure.mjs`** — ownership _inside_ a workspace. ~11 rules: only 3 files touch the service-role key, AI workflow compisition convenntions, etc.
 - Both run in `ci:verify`. A violation **fails the PR** on its own.
 
-<span class="small muted">References - Grid: computational guide + computational sensor</span>
+<span class="small muted">References - Grid: computational sensor</span>
 
 Note:
 
@@ -363,8 +348,6 @@ Note:
 ```
 
 That sentence isn't for me. It's for whoever fixes it — increasingly, an agent reading it straight out of CI.
-
-<!-- .element: class="fragment" -->
 
 <span class="small muted">References - Böckeler: "a positive kind of prompt injection" - a sensor doing the work of a guide</span>
 
@@ -416,9 +399,9 @@ Note:
 
 ## Sort the seams
 
-Document each durable contract: **owner + consumers**. That's the floor.
+Document each durable contract: **owner + consumers**.
 
-Its real job is to group each seam by the **physics of the boundary** - which decides how hard you can enforce it.
+The doc's real job is to group each seam by the **physics of the boundary** - which decides how you can enforce it.
 
 Note:
 
@@ -463,16 +446,14 @@ Note:
 
 ## The strongest fix deletes the seam
 
-The extension hand-copied the parser type — kept in sync by vigilance and an assertion that yelled on drift.
+The extension hand-copied the parser type (_slop-y rhymes with copy_) — kept in sync by an assertion that yelled on drift.
+
+Extract to a shared type and there's nothing left to drift. Retire the sensor that policed the copy.
 
 ```ts
 import type { ParserResult } from "../../../shared/articleContracts";
 export type { ParserResult };
 ```
-
-Extract to a shared type and there's nothing left to drift. Retire the sensor that policed the copy.
-
-<!-- .element: class="fragment" -->
 
 <span class="small muted">References - Grid: computational guide · the ratchet</span>
 
@@ -486,24 +467,28 @@ Note:
 
 <!-- .slide: class="center" -->
 
-<span class="demo-badge">Demo · Layer 3</span>
+`cross-workspace-contracts.test.ts` — the backstop for seams I can't delete.
 
-`cross-workspace-contracts.test.ts` — the backstop for seams you can't delete. Three sensors, one file:
-
-```text
-safeParse  · fixtures against the shared schema (runtime)
-SQL-text   · a TS constant must appear in a migration's CHECK
-frozen     · every shipped extension payload still validates
+```ts
+// The extension ships through a web store — I can't force-update it.
+// legacyExtensionPayloads.ts is append-only; CI replays every shipped body.
+for (const { version, description, body } of shippedAddArticlePayloads) {
+    const result = addArticleRequestSchema.safeParse(body);
+    assert.equal(
+        result.success,
+        true,
+        `schema rejected a payload shipped by extension ${version} — ` +
+            `make the change additive/optional instead.`,
+    );
+}
 ```
 
-A contract that drifts out of sync with its consumers fails the build.
-
-<!-- .element: class="fragment" -->
+A breaking, non-additive schema change fails early and loudly.
 
 Note:
 
-- The three sensors map to the tiers: runtime validation for a seam you can't collapse, a grep-the-migration check where a Zod value and a Postgres column share no symbol, and append-only frozen payloads for the extension I can't reach.
-- Real captures live in Post 4. Show the file, then the green run.
+- Show the real file. This is the sensor with a soft spot: it depends on someone appending the new payload each release — discipline, the exact hole the layer warns about.
+- The other two sensors, walked verbally: runtime `safeParse` of real fixtures against the shared schema, and a grep asserting the lane constants appear in the migration's CHECK. Then flip to the green run.
 
 ---
 
@@ -586,7 +571,7 @@ Getting a browser to behave inside a cloud sandbox cost more than the verificati
 To dig out:
 
 - Stopped hand-driving Playwright - moved capture onto **agent-browser**.
-- Stop pretending it runs everywhere. In a cloud task or CI, the skill returns **SKIP** — a real limit, stated plainly and enforced in code.
+- Prioritized local verification. In a cloud task or CI, the skill returns **SKIP** — a real limit enforced in code.
 - `post-visual-evidence` skill posts local screenshots back to PR for collaboration.
 
 Note:
@@ -596,55 +581,42 @@ Note:
 
 ---
 
-## Agent Broswer Use
-
-The `visual-verify` skill is **agent-agnostic**
-
-Different harnesses have different built in browsers.
-
-<!-- .element: class="fragment" -->
-
-<div class="grid2">
-  <div class="card">
-    <h3>Codex</h3>
-    <span class="lead">A native in-app Browser.</span><br/>
-    Opens the app, clicks through, watches. Interactive — and desktop-only (no CLI, no CI).
-  </div>
-  <div class="card">
-    <h3>Claude</h3>
-    <span class="lead">A <code>launch.json</code>.</span><br/>
-    Names the dev servers; its own browser launches them and attaches.
-  </div>
-</div>
-<!-- .element: class="fragment" -->
-
-<span class="small muted">Same destination — a GUI plugin vs. a config file · the agnostic skill rides on agent-specific plumbing</span>
-
-Note:
-
-- The headline "each agent can use a browser" hides a real asymmetry: same skill on top, completely different roads to the app underneath.
-- "Can it use a browser" is a statement about the surface it runs on as much as the model — Codex's Browser is desktop-only; Claude reaches the same app through a file that says how to start it.
-- The plumbing didn't port between them even though the skill did — which is exactly why an agent-agnostic capture layer is worth having.
-
----
-
 <!-- .slide: class="center" -->
 
-<span class="demo-badge">Demo · Layer 4</span>
-
-`visual-verify` captures. `gh-post-visual-evidence` publishes.
-
-<span class="placeholder">[ visual-verify output: desktop + mobile capture of a changed route, rendered inline ]</span>
-
-One skill's job is to _capture_ evidence; a different skill's job is to _publish_ it. Neither may silently do the other's.
-
-<!-- .element: class="fragment" -->
+![visual-verify output: feed and triage at desktop 1280×900 and mobile 390×844 for PR #648.](/slides/screenshot-capture.png)
 
 Note:
 
 - Show a real visual-verify run — the PNGs render inline in the agent's reply. This is the payoff slide; lead with the picture.
 - The publisher posts to a provenance-checked PR comment on a side branch — which commit it captured at, whether the tree was clean — and rejects stale evidence rather than quietly misleading a reviewer. Local-only, and only when I ask.
 - Bridge to Layer 5: report-only capture now, a vision model grading against the spec next. That split is the whole next layer.
+
+---
+
+## Integrated Broswers
+
+The `visual-verify` skill is **agent-agnostic** - but your harness should still be able to drive the app in its integrated browser.
+
+Each harness handles this a little differently.
+
+<div class="grid2 grid2-cards grid2-pair">
+<div class="card">
+<h3>Codex</h3>
+<span class="lead">A native in-app Browser.</span><br/>
+Opens the app, clicks through, watches. Interactive — and desktop-only (no CLI, no CI).
+</div>
+<div class="card">
+<h3>Claude</h3>
+<span class="lead">A <code>launch.json</code>.</span><br/>
+Names the dev servers; its own browser launches them and attaches.
+</div>
+</div>
+
+Note:
+
+- The headline "each agent can use a browser" hides a real asymmetry: same skill on top, completely different roads to the app underneath.
+- "Can it use a browser" is a statement about the surface it runs on as much as the model — Codex's Browser is desktop-only; Claude reaches the same app through a file that says how to start it.
+- The plumbing didn't port between them even though the skill did — which is exactly why an agent-agnostic capture layer is worth having.
 
 ---
 
@@ -659,7 +631,7 @@ Note:
 
 ---
 
-## A third green PR - this one was pointless
+## Yet another green PR - this one was pointless
 
 Tests green. Lint clean. Architecture and contracts intact. Buried inside: a new test that asserted nothing the suite didn't already cover.
 
@@ -682,11 +654,11 @@ An agent that just spent twenty minutes building a feature is its worst reviewer
 
 <!-- .element: class="fragment" -->
 
-So the review runs **isolated**: a fresh context, pointed only at the diff, no memory of the authoring. Subagent — clean slate.
+So the review runs **isolated**: a subagent with a clean slate.
 
 <!-- .element: class="fragment" -->
 
-<span class="small muted">References - Grid: inferential sensor · Anthropic: isolated LLM-as-judge + the generator/evaluator split · Addy Osmani</span>
+<span class="small muted">References - Grid: inferential sensor</span>
 
 Note:
 
@@ -697,7 +669,7 @@ Note:
 
 ## Code review as a skill you can call
 
-It isn't rocket surgery
+It isn't rocket surgery 🚀 🥼 🔪
 
 ```text
 Perform a detailed code review of the complete implementation.
@@ -743,12 +715,22 @@ Note:
 
 ---
 
-## The same rule, pointed at pixels
+## A similar skill, pointed at pixels
 
 `visual-verify` is **report-only** — it captures and refuses to grade.
 
-- The judge is a separate **vision-model** pass — _does this match the spec?_ — a real second opinion, because it never ran the browser
-- **Capture → judge → publish**: three skills, three isolated jobs.
+The `visual-review` skill judges - a separate **vision-model** pass — _does this match the spec?_
+
+```
+# Visual Review
+
+Act as an isolated, read-only visual reviewer. Judge static screenshots after `visual-verify`
+has captured the complete local UI change. Do not modify application source, recapture evidence,
+or fix findings. The coordinating implementation agent owns remediation.
+
+## Required handoff
+...
+```
 
 Note:
 
@@ -780,7 +762,7 @@ Agents may not be able to see what **actually happens** when a real request land
 
 <!-- .element: class="fragment" -->
 
-<span class="small muted">References - OpenAI, "Harness engineering" · agent legibility, pointed at runtime</span>
+<span class="small muted">References - OpenAI, "Harness engineering"</span>
 
 Note:
 
@@ -791,13 +773,9 @@ Note:
 
 ## I tuned a ranking system in the dark
 
-More Later sorts saved articles into relevance lanes. For a while it was quietly bad at it - and _every fix was a vibe_.
+More Later sorts saved articles into relevance lanes.
 
-<!-- .element: class="fragment" -->
-
-The agent and I took our unearned confidence and agreed to fly blind together.
-
-<!-- .element: class="fragment" -->
+For a while it was quietly bad at it - and _every fix was a vibe_.
 
 Note:
 
@@ -810,40 +788,20 @@ Note:
 
 Now every recommendations run writes a **structured row**: score distribution, thresholds, and so on.
 
-Connected the **Supabase MCP** — and the agent queries the table directly.
+Connected the **Supabase MCP** - an agent can query the table directly.
 
 <!-- .element: class="fragment" -->
 
-The agent can ask questions I wouldn't think to.
+It asks questions I wouldn't think to.
 
 <!-- .element: class="fragment" -->
 
-<span class="small muted">References - Grid: computational sensor · agent legibility</span>
+<span class="small muted">References - Grid: computational sensor</span>
 
 Note:
 
 - The metrics existing wasn't the unlock. The metrics being _reachable by the agent through a connector it already speaks_ was — that's the whole layer in one instance.
 - When I summarize the data I pre-filter it through the same assumptions that got the ranking lost. When the agent reads the rows, it sees what I'd have skipped. Vibe in, diagnosis out.
-
----
-
-## Another runtime question: cost
-
-An agent can refactor a workflow, pass every check, and quietly **double the model calls per article**.
-
-- `article_api_usage` — a row per model call: tokens, `estimated_cost_usd`, duration. App-facing, RLS-scoped, queryable
-- Mastra → **PostHog** for the aggregate trace view — payload fields stripped before ingest
-
-"Did my last change make tagging more expensive?" becomes a **query**, not a surprise.
-
-<!-- .element: class="fragment" -->
-
-<span class="small muted">References - Grid: computational sensor · structured logging as a baseline</span>
-
-Note:
-
-- Two altitudes: a durable per-article Supabase signal the agent reaches the same way it reaches the ranking metrics, and aggregate cost/latency traces in PostHog for me.
-- The honest ceiling: I can make _designed_ signals legible — a table I chose to write. I can't yet hand the agent the raw log/trace firehose in its sandbox to fish for a failure I didn't anticipate. That's the LogQL/PromQL-over-an-ephemeral-stack part OpenAI has and I don't.
 
 ---
 
@@ -869,6 +827,26 @@ Note:
 
 ---
 
+## Another runtime question: cost
+
+An agent can refactor a workflow, pass every check, and quietly **double the model calls per article**.
+
+- `article_api_usage` — a row per model call: tokens, estimate cost, duration.
+- Mastra → **PostHog** for the aggregate trace view — payload fields stripped before ingest
+
+"Did my last change make tagging more expensive?" becomes a **query**, not a surprise.
+
+<!-- .element: class="fragment" -->
+
+<span class="small muted">References - Grid: computational sensor · structured logging as a baseline</span>
+
+Note:
+
+- Two altitudes: a durable per-article Supabase signal the agent reaches the same way it reaches the ranking metrics, and aggregate cost/latency traces in PostHog for me.
+- The honest ceiling: I can make _designed_ signals legible — a table I chose to write. I can't yet hand the agent the raw log/trace firehose in its sandbox to fish for a failure I didn't anticipate. That's the LogQL/PromQL-over-an-ephemeral-stack part OpenAI has and I don't.
+
+---
+
 <!-- .slide: class="section" -->
 
 ## A system you steer
@@ -876,24 +854,6 @@ Note:
 Note:
 
 - The close. Pay off the ratchet.
-
----
-
-## Not a checklist. A practice.
-
-- Recurring failure → tighten a control, don't re-prompt
-    <!-- .element: class="fragment" -->
-- Drift is inevitable: agents replicate whatever patterns exist, good or bad
-    <!-- .element: class="fragment" -->
-- Cleanup needs to run on a regular cadence, not just when someone remembers
-  <!-- .element: class="fragment" -->
-- Tip: agents are great at writing the linters that constrain agents
-  <!-- .element: class="fragment" -->
-
-Note:
-
-- Recurring failure → tighten a control, not the prompt. Böckeler's steering loop.
-- Entropy sets in the moment you stop. The next slide is how you pay for it.
 
 ---
 
@@ -947,6 +907,24 @@ Note:
 
 ---
 
+## Not a checklist. A practice.
+
+- Recurring failure → tighten a control, don't re-prompt
+    <!-- .element: class="fragment" -->
+- Drift is inevitable: agents replicate whatever patterns exist, good or bad
+    <!-- .element: class="fragment" -->
+- Cleanup needs to run on a regular cadence, not just when someone remembers
+  <!-- .element: class="fragment" -->
+- Tip: agents are great at writing the linters that constrain agents
+  <!-- .element: class="fragment" -->
+
+Note:
+
+- Recurring failure → tighten a control, not the prompt. Böckeler's steering loop.
+- Entropy sets in the moment you stop. Garbage collection is how you pay for it.
+
+---
+
 <!-- .slide: class="center" -->
 
 ## **We're all in this together**
@@ -954,8 +932,6 @@ Note:
 ## Infrastructure for humans _is_ infrastructure for agents
 
 Same investment. Pays in both directions.
-
-<!-- .element: class="fragment" -->
 
 Note:
 
