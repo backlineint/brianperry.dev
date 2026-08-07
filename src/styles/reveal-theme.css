@@ -346,6 +346,13 @@ body {
     margin: 0 0 0.15em;
     font-size: 0.95em;
 }
+.reveal .grid2-pair {
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+}
+.reveal .grid2-pair .card {
+    height: 100%;
+}
 .reveal .grid2-row-divider {
     grid-column: 1 / -1;
     height: 2px;
