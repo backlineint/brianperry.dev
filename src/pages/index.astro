@@ -25,17 +25,6 @@ const duos = [1, 3, 2, 4, 6, 5];
   <body>
     <Stars />
     <Header />
-    <aside class="dd-callout">
-      <div class="dd-callout-inner">
-        <span class="badge gold tag">Decoupled Days 2026</span>
-        <p>
-          Check out slides from
-          <a href="/slides/hardening-the-harness"><strong>Hardening the Harness</strong></a>
-          — infrastructure that makes AI agents reliable contributors.
-        </p>
-        <a class="dd-callout-cta" href="/slides/hardening-the-harness">View the deck <span aria-hidden="true">→</span></a>
-      </div>
-    </aside>
     <header class="hero">
       <div class="htext">
       <span class="eyebrow">// a serious &amp; professional website</span>
@@ -135,15 +124,15 @@ const duos = [1, 3, 2, 4, 6, 5];
           <ul>
             <li>
               <span class="ic" style="background:var(--gold)"></span>
-              <span><a href="https://www.imdb.com/title/tt33332385/">Widows Bay</a> <span class="m">— quirky horror-comedy series and proof that all of New England is haunted.</span></span>
+              <span><a href="https://www.nintendo.com/us/store/products/splatoon-raiders-switch-2/">Splatoon Raiders</a> <span class="m">— the best single player Splatoon has ever been. Impossible to not sneak in one more run.</span></span>
             </li>
             <li>
               <span class="ic" style="background:var(--cyan)"></span>
-              <span><a href="https://www.yachtclubgames.com/games/mina-the-hollower/">Mina the Hollower</a> <span class="m">— a take on Game Boy Color era Zelda from the Shovel Knight team.</span></span>
+              <span><a href="https://www.imdb.com/title/tt5978570/">Nirvanna the Band the Show (and Movie)</a> <span class="m">— fun and fascinating watch full of remixed media and seemingly impossible on the street scenarios.</span></span>
             </li>
             <li>
               <span class="ic" style="background:var(--red)"></span>
-              <span><a href="https://open.spotify.com/album/4I3Ea3ZOeHI9lmKd2Pyact">The Obsessives</a> <span class="m">— keep coming back to this indie rock album that randomly came up in my autoplay.</span></span>
+              <span><a href="https://open.spotify.com/album/6x0nmCMjHeuN3rYBmI5Bor">The Strokes - Reality Awaits</a> <span class="m">— even a hot mess from The Strokes is still a pretty good time.</span></span>
             </li>
           </ul>
         </div>
@@ -371,71 +360,6 @@ const duos = [1, 3, 2, 4, 6, 5];
         stroke-width: 1.2;
       }
 
-      /* ---- Decoupled Days callout ---- */
-      .dd-callout {
-        max-width: 1080px;
-        margin: 0 auto;
-        padding: 18px var(--page-gutter) 0;
-      }
-      .dd-callout-inner {
-        background: var(--surface);
-        border: 2px solid var(--gold);
-        border-radius: 18px;
-        padding: 22px 26px;
-        box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.28);
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 14px 20px;
-      }
-      .dd-callout-inner .tag {
-        font-size: 10px;
-        flex: 0 0 auto;
-      }
-      .dd-callout-inner p {
-        flex: 1 1 280px;
-        margin: 0;
-        color: var(--muted);
-        font-size: 16px;
-        line-height: 1.5;
-      }
-      .dd-callout-inner p a {
-        color: var(--cyan);
-        text-decoration: none;
-        font-weight: 700;
-      }
-      .dd-callout-inner p a:hover {
-        text-decoration: underline;
-      }
-      .dd-callout-cta {
-        flex: 0 0 auto;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-family: "JetBrains Mono", monospace;
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: var(--badge-ink);
-        background: var(--gold);
-        text-decoration: none;
-        padding: 10px 15px;
-        border-radius: 10px;
-        transition: transform 0.12s, box-shadow 0.12s;
-        box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
-      }
-      .dd-callout-cta:hover {
-        transform: translate(-1px, -1px);
-        box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
-      }
-      .dd-callout-cta span {
-        transition: transform 0.12s;
-      }
-      .dd-callout-cta:hover span {
-        transform: translateX(3px);
-      }
-
       /* ---- "all posts" link under Latest ---- */
       .see-all-row {
         display: flex;
@@ -479,7 +403,7 @@ const duos = [1, 3, 2, 4, 6, 5];
         background: var(--surface);
         border: 2px solid var(--line);
         border-radius: 18px;
-        padding: 24px 26px;
+        padding: 24px 26px 14px;
         box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.28);
       }
       .panel h4 {
