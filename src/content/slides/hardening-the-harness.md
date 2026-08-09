@@ -184,7 +184,7 @@ Note:
 
 ![Anakin and Padme meme: "An agent writes my code" / "With tests, right?"](/slides/anakin.jpg)
 
-Lint, typecheck, tests, CI — I'm assuming you have them. Agents make them _more_ necessary, not less.
+Assuming you have linting, formatting, typechecking, tests, CI. Agents make them _more_ necessary, not less.
 
 This talk starts where green PRs stop being enough.
 
@@ -866,8 +866,6 @@ Narrow audits in `tools/garbage-collection/` catch drift
 
 They run in CI. Not when someone remembers to look.
 
-<!-- .element: class="fragment" -->
-
 <span class="small muted">References - Grid: computational sensor · OpenAI's "garbage collection"</span>
 
 Note:
@@ -910,13 +908,13 @@ Note:
 ## Not a checklist. A practice.
 
 - Recurring failure → tighten a control, don't re-prompt
-    <!-- .element: class="fragment" -->
+  <!-- .element: class="fragment" -->
 - Drift is inevitable: agents replicate whatever patterns exist, good or bad
-    <!-- .element: class="fragment" -->
+  <!-- .element: class="fragment" -->
 - Cleanup needs to run on a regular cadence, not just when someone remembers
-  <!-- .element: class="fragment" -->
+      <!-- .element: class="fragment" -->
 - Tip: agents are great at writing the linters that constrain agents
-  <!-- .element: class="fragment" -->
+      <!-- .element: class="fragment" -->
 
 Note:
 
